@@ -1,0 +1,212 @@
+---
+title: "Market Making"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+#gradethis::gradethis_setup()
+library(RTL)
+library(tidyverse)
+library(lubridate)
+library(rhandsontable)
+library(jsonlite)
+library(purrr)
+library(gt)
+
+bd_lo <- function(x,width=700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(cell_fill(color = "royalblue"),
+                               cell_text(color = "white",weight = "bold")),
+                  locations = cells_title(groups = c("title")))
+  y= y %>% tab_options(table.width = px(width),table.font.size = pct(80))
+  return(y)
+}
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## About the Game
+
+This interactive tutorial aims at two objectives:
+
+1. Testing your learning pertaining to pricing Calendar Month Average ("CMA") swaps.
+2. Providing a simplified market making learning experience where you are a trader providing market making services on WTI crude to other internal counterparts and external risk management services to oil producers interested in hedging their production. Examples:
+
+  + The gasoline desk wants to take a position on a crack spread and needs to transact in WTI futures.
+  + Producer `NetZero2050 Inc` wants to hedge the next calendar year production.
+
+```{r}
+tibble(Competency = c("Exposure",
+                      "WTI CMA Swap Pricing",
+                      "Market Making"),
+           Measure = c("Know your exposure at all times.",
+                   "Translate understanding of pricing concepts into exposure.",
+                   "Obtain a quasi-real world experience of being able to operate as a trader in pricing deals and managing risk effectively.")) %>% bd_lo()
+```
+
+A market making desk does not carry exposure to flat price at any time. 
+
++ Your delta limit to flat price exposure is zero.
++ You are allowed to carry time spread exposure as part of the hedging process arising from customer activity only.
+
+
+## WTI CMA Swap Pricing
+
+This section tests your ability to implement base concepts of averaging swap pricing for WTI. 
+
+### Expiry Dates
+
+```{r}
+x = expiry_table %>% dplyr::filter(cmdty == "cmewti", Last.Trade > Sys.Date()) %>% 
+  dplyr::slice(1:20) %>% dplyr::sample_n(1) %>% 
+  dplyr::mutate(ticker = paste0(tick.prefix,Year,Month.Letter)) %>% 
+  dplyr::select(ticker, Last.Trade)
+cc <- stringr::str_replace_all(x$ticker,"[^[:alnum:]]","")
+dd <-  as.character(x$Last.Trade)
+sw <-  expiry_table %>% dplyr::filter(cmdty == "cmewti", Last.Trade >= dd) %>% slice(1:3)
+```
+
+What is expiry date for `r cc`? Type your answer as `"YYYY-MM-DD"` including the quotation marks and click `Submit Answer`.
+
+```{r expiry, exercise = TRUE, exercise.timelimit = 120}
+
+```
+ 
+```{r expiry-check}
+grade_result(
+  pass_if(~identical(.result, as.character(x$Last.Trade)))
+)
+```
+
+### Futures And CMA Swaps
+
+```{r futmonths}
+learnr::question(paste("Select the futures contract(s) applicable to pricing a WTI CMA for",
+                       lubridate::month(sw[1,"Month"]$Month, label = T, abbr = F) %>% as.character(),
+                       sw[1,"Year"]$Year,":"),
+                 learnr::answer(paste(lubridate::month(sw[1,"Month"]$Month, label = T, abbr = F) %>% as.character(),sw[1,"Year"]$Year)),
+                 learnr::answer(paste(lubridate::month(sw[2,"Month"]$Month, label = T, abbr = F) %>% as.character(),sw[2,"Year"]$Year), correct = TRUE),
+                 learnr::answer(paste(lubridate::month(sw[3,"Month"]$Month, label = T, abbr = F) %>% as.character(),sw[3,"Year"]$Year), correct = TRUE))
+```
+
+## Game 1: Swap Exposure
+
+```{r, context = "data"}
+# Base random date prices - wide
+wti <- dfwide %>% dplyr::select(date,tidyselect::contains("CL"))
+dd <- wti %>% 
+  dplyr::filter(lubridate::day(date) <= 15) %>% 
+  dplyr::slice_sample(n = 1) %>% dplyr::select(date) %>% .[[1]]
+wti <- wti %>% dplyr::filter(date >= dd) %>% dplyr::slice(1:6) %>% dplyr::select(colnames(wti)[1:15])
+tickers <- expiry_table %>% dplyr::filter(cmdty == "cmewti", Last.Trade > dd) %>% 
+  dplyr::slice(1:15) %>% dplyr::transmute(ticker = paste0(tick.prefix,Year,Month.Letter),
+                                          ticker = stringr::str_replace_all(ticker,"[^[:alnum:]]","")) %>% .[[1]]
+colnames(wti) <-  paste(c("date", tickers))
+
+# Returns
+ret_long <- wti %>% 
+  tidyr::pivot_longer(-date,names_to = "series",values_to = "value") %>% 
+  dplyr::group_by(series) %>% 
+  dplyr::mutate(ret = value - dplyr::lag(value)) %>% stats::na.omit()
+# swap
+swp.start <-  lubridate::ceiling_date(dd, "quarter")
+swp.end <-  swp.start + months(3) - 1
+swp.qty <-  1
+
+# Base df
+day0 <- wti %>% dplyr::slice(1) %>% dplyr::select(-date)
+day0 <- dplyr::as_tibble(cbind(names(day0),t(day0)),.name_repair = c("minimal"))
+colnames(day0) <-  c("Futures","Settle")   
+day0 <-  day0 %>% 
+  dplyr::mutate(Settle = as.numeric(Settle),
+                CalendarMonth =  seq(lubridate::floor_date(dd,unit = "month") + months(1),lubridate::floor_date(dd,unit = "month") + months(14), by = "months"),
+                DaysInMonth = lubridate::days_in_month(CalendarMonth),
+                FirstFutWeight = purrr::pmap(.l = list(Month = CalendarMonth,contract = "cmewti",exchange = "nymex", output = "first.fut.weight"),
+                                             .f = RTL::swapFutWeight),
+                FirstFutWeight = round(as.numeric(FirstFutWeight),2),
+                SecondFutWeight = round(1 - FirstFutWeight,2),
+                ExpoSwap = 0) %>% 
+  #dplyr::mutate(CalendarMonth = as.character(substr(CalendarMonth,1,7)) ) %>% 
+  dplyr::select(CalendarMonth, everything())
+g1data = list(dd = dd, swp.start = swp.start, swp.end = swp.end, swp.qty = swp.qty,day0 = day0)
+saveRDS(g1data,"g1data.rds")
+```
+
++ We are on `r dd` and you are buying a WTI CMA swap (paying fixed) from a producer.
++ The swap period is from `r swp.start` to `r swp.end`.
++ Volume is `r swp.qty` kbd. Days in months are specified in the table. 
+
+In the column `ExpoSwap` in the table below, type the exposure that you take from the customer deal in futures equivalent.
+
+```{r, echo = F}
+rHandsontableOutput("table")
+```
+
+```{r, context = "server"}
+attach(readRDS("g1data.rds")) 
+
+g1df <- shiny::reactiveValues(data = day0)
+
+observe({
+  if (!is.null(input$table)) {g1df$data <- rhandsontable::hot_to_r(input$table)} 
+  output$table <- renderRHandsontable({
+    rhandsontable::rhandsontable(g1df$data,rowHeaders = NULL) %>% 
+      rhandsontable::hot_col(1:6, readOnly = TRUE) %>% 
+      rhandsontable::hot_col("ExpoSwap", renderer = "function (instance, td, row, col, prop, value, cellProperties) {
+  Handsontable.renderers.TextRenderer.apply(this, arguments);
+  td.style.background = 'lightgreen';
+  td.style.fontWeight = 'bold';
+  }")
+    }) 
+  })
+
+#output$table <- rhandsontable::renderRHandsontable({rhandsontable::rhandsontable(g1df,rowHeaders = NULL)})
+```
+
+Click `Next` when you are done to compare your answer with correct results.
+
+## Game 1: Results
+
+```{r}
+rHandsontableOutput("table2")
+```
+
+```{r, eval = T,context = "server"}
+output$table2 <- rhandsontable::renderRHandsontable({
+  g1res <- g1df$data
+  g1res <- g1res %>% 
+    dplyr::mutate(swp = dplyr::case_when((CalendarMonth >= swp.start & CalendarMonth < swp.end) ~ swp.qty * DaysInMonth,
+                                         TRUE ~ 0),
+                  f1 = swp * FirstFutWeight,
+                  f1 = dplyr::lag(f1),
+                  f2 = swp * SecondFutWeight,
+                  f2 = dplyr::lag(f2,2),
+                  ExpoSwapCorrect = f1 + f2,
+                  Errors = ExpoSwap - ExpoSwapCorrect) %>% 
+    dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0)) %>% 
+    dplyr::select(-swp, -f1,-f2)
+  rhandsontable::rhandsontable(g1res,rowHeaders = NULL) %>% 
+    rhandsontable::hot_col(1:6, readOnly = TRUE) %>% 
+  rhandsontable::hot_col("ExpoSwap", renderer = "function (instance, td, row, col, prop, value, cellProperties) {
+  Handsontable.renderers.TextRenderer.apply(this, arguments);
+  td.style.background = 'lightgreen';
+  td.style.fontWeight = 'bold';
+  }")
+  })
+```
+
+## Game 2 - Hedging
+
++ Now you are offered a calendar year swap that you need to hedge.
++ You will have 
+
+## Gam2 - PL
+
+

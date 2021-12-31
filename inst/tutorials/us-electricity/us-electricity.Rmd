@@ -1,0 +1,149 @@
+---
+title: "US Electriticy Market"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+library(learnr)
+library(tidyverse)
+library(lubridate)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 9,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+library(gt)
+bd_txt <-
+  function(x,
+           title = "Grading",
+           subtitle = "-",
+           width = 700) {
+    if (nchar(gsub(" ", "", subtitle)) == 0) {
+      subtitle <- "-"
+    }
+    y <- x %>% gt::gt() %>%
+      gt::tab_header(title = title, subtitle = subtitle) %>%
+      gt::tab_style(style = cell_text(weight = "bold"),
+                    locations = cells_column_labels(colnames(.))) %>%
+      gt::tab_style(style = list(
+        cell_fill(color = "royalblue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_title(groups = c("title")))
+    y = y %>% tab_options(table.width = px(width),
+                          table.font.size = pct(80))
+    return(y)
+  }
+
+bd_lo <- function(x, width = 700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(
+      cell_fill(color = "royalblue"),
+      cell_text(color = "white", weight = "bold")
+    ),
+    locations = cells_title(groups = c("title")))
+  y = y %>% tab_options(table.width = px(width),
+                        table.font.size = pct(80))
+  return(y)
+}
+
+
+from = as.Date("2008-01-01")
+to = lubridate::rollback(Sys.Date())
+```
+
+## Framing the Problem
+
++ You are an analyst at a research firm.
++ US clients understand that climate policies have resulted in a shift towards less carbon intensive electricity generation.
++ Your leader has asked you to produce a short data-driven report that can be used as summary.
+
+If you take this exercise as part of a graded item in a course, see the Grading section in online notes.
+
+## Skills Practiced
+
++ Use of API.
++ Data wrangling and parsing.
++ Choice of effective visualization in communication.
++ Data analytics and an ability to tell a story from it.
++ Clean rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output.
++ Learning to learn: Using new packages and functions.  
+
+Whilst there are many packages to format tables the following are suggested:
+
++ [gt](https://gt.rstudio.com/).
++ [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+
+## Data
+
+You will be using data from the [US Energy Information Administration](https://www.eia.gov/) and the API webpage is available at [EIA Open Data](https://www.eia.gov/opendata/). You may refer to the `bootcamp` section 7.3 after you have registered and obtained your own API key.
+
+The `eia`, `EIAdata` and `RTL` packages provide functions to access the API once you have your API key.
+
+The dataset and series ID (tickers) can be found at:
+
++ [Electricity Net Generation Total](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.ELETPUS.M).
++ [Electricity Net Generation From Coal](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.CLETPUS.M).
++ [Electricity Net Generation From Conventional Hydroelectric Power](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.HVETPUS.M).
++ [Electricity Net Generation From Natural Gas](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.NGETPUS.M).
++ [Electricity Net Generation From Nuclear](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.NUETPUS.M).
++ [Electricity Net Generation From Solar](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.SOETPUS.M).
++ [Electricity Net Generation From Wind](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.WYETPUS.M).
++ Others is the difference between the total net generation and the sum of the above series. 
+
+## Your Ask
+
+Using Rmarkdown, render into `html` a one or two page concise summary to be sent to clients. 
+
+Amongst questions often asked by clients your analysis must answer:
+
+1. Is Electricity generation growing or decreasing? 
+2. Is coal decreasing and if so what source(s) of generation is (are) replacing it?
+3. What can you tell about the share and growth in wind and solar generation?
+4. What periodic patterns do you notice in total, wind and solar generation time series?  
+
+Write a 2-5 lines summary at the beginning of the document on your findings.
+
+## Additional Information
+
++ Use monthly data since `Jan-2010`.
++ Use tidy data with long and wide dataframes as you see fit. 
++ To compute the monthly changes use the absolute change instead of percentages and beware whether datea are sorted ascending or descending before computing changes.
++ Assume the reader has no knowledge of the EIA series ID: Rename them so it's clear what they are without spaces in the new names to facilitate your workflow.
++ Use tables and/or charts to communicate your story. 
++ As this is marketing material for clients, clean your output of code/warnings/... and format your tables and charts accordingly.
+
+## Grading
+
+This is an advanced class in your learning in your degree and/or professional workplace and you are judged both on absolute and relative standards versus your peers.
+
+```{r, echo=F,include=TRUE, fig.height=3}
+tibble(
+  Competency = c("Summary",
+                 "Presentation",
+                 "Accuracy code and results"),
+  Measure = c(
+    "Ability to distill and communicate key findings.",
+    "Professionally rendered presentations. Clean document of unnecessary clutter not relevant to the story. Clients are interested in the story, not the steps you have taken in coding it. Format properly your charts and tables.",
+    "Accurate implementation for each of the four questions."
+  ),
+  Score = c("2.5 points",
+            "7.5 points",
+            "10 points")
+) %>% bd_lo()
+```
+

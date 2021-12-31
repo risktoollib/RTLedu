@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Getting Started</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+<!-- end tabsets -->
+
+
+<!-- HEAD_CONTENT -->
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-basics" class="section level2">
+<h2>Basics</h2>
+<div id="section-execution" class="section level3">
+<h3>Execution</h3>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="soft-1" class="tutorial-question panel-body">
+<div id="soft-1-answer_container" class="shiny-html-output"></div>
+<div id="soft-1-message_container" class="shiny-html-output"></div>
+<div id="soft-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="soft-2" class="tutorial-question panel-body">
+<div id="soft-2-answer_container" class="shiny-html-output"></div>
+<div id="soft-2-message_container" class="shiny-html-output"></div>
+<div id="soft-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-creating-documents" class="section level3">
+<h3>Creating Documents</h3>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="docs-1" class="tutorial-question panel-body">
+<div id="docs-1-answer_container" class="shiny-html-output"></div>
+<div id="docs-1-message_container" class="shiny-html-output"></div>
+<div id="docs-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="docs-2" class="tutorial-question panel-body">
+<div id="docs-2-answer_container" class="shiny-html-output"></div>
+<div id="docs-2-message_container" class="shiny-html-output"></div>
+<div id="docs-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-data-type" class="section level3">
+<h3>Data Type</h3>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="str-1" class="tutorial-question panel-body">
+<div id="str-1-answer_container" class="shiny-html-output"></div>
+<div id="str-1-message_container" class="shiny-html-output"></div>
+<div id="str-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-packages" class="section level3">
+<h3>Packages</h3>
+<p>If you need to install a new package x for your new project, say a .Rmd document.</p>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="packages-1" class="tutorial-question panel-body">
+<div id="packages-1-answer_container" class="shiny-html-output"></div>
+<div id="packages-1-message_container" class="shiny-html-output"></div>
+<div id="packages-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+</div>
+<div id="section-markdown-document" class="section level2">
+<h2>Markdown Document</h2>
+<p>You see this <code>R chunk</code> in a Markdown document:</p>
+<pre class="r"><code>knitr::opts_chunk$set(echo = FALSE)</code></pre>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="quiz2-1" class="tutorial-question panel-body">
+<div id="quiz2-1-answer_container" class="shiny-html-output"></div>
+<div id="quiz2-1-message_container" class="shiny-html-output"></div>
+<div id="quiz2-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<ol style="list-style-type: decimal">
+<li>You are working in a new empty Rmd document.</li>
+<li>You type the following in your <code>console</code>:</li>
+</ol>
+<pre class="r"><code>a &lt;- 5</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>You confirm your <code>Environment</code> that <code>a = 5</code>. Everything is according to plan!</li>
+<li>You now write this chunk in your .Rmd document and press the <code>Knit</code> button.</li>
+</ol>
+<pre class="r"><code>b &lt;- 10
+c &lt;- a + b
+c</code></pre>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="knitobj-1" class="tutorial-question panel-body">
+<div id="knitobj-1-answer_container" class="shiny-html-output"></div>
+<div id="knitobj-1-message_container" class="shiny-html-output"></div>
+<div id="knitobj-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-my-first-mistakes" class="section level2">
+<h2>My First Mistakes</h2>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="ojbnotfound-1" class="tutorial-question panel-body">
+<div id="ojbnotfound-1-answer_container" class="shiny-html-output"></div>
+<div id="ojbnotfound-1-message_container" class="shiny-html-output"></div>
+<div id="ojbnotfound-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="startnewsession-1" class="tutorial-question panel-body">
+<div id="startnewsession-1-answer_container" class="shiny-html-output"></div>
+<div id="startnewsession-1-message_container" class="shiny-html-output"></div>
+<div id="startnewsession-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><div class="panel-heading tutorial-quiz-title"><span data-i18n="text.quiz">Quiz</span></div></p>
+<div class="panel panel-default">
+<div data-label="workpractice-1" class="tutorial-question panel-body">
+<div id="workpractice-1-answer_container" class="shiny-html-output"></div>
+<div id="workpractice-1-message_container" class="shiny-html-output"></div>
+<div id="workpractice-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::prepare_tutorial_state(session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::i18n_observe_tutorial_language(input, session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "soft-1", question = structure("Which sofware executes the code?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_25c41e6", 
+    option = "R", value = "R", label = structure("R", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_64be905", 
+    option = "RStudio", value = "RStudio", label = structure("RStudio", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc73d10", 
+    option = "Windows", value = "Windows", label = structure("Windows", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_80b8be0", 
+    option = "Mac", value = "Mac", label = structure("Mac", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "soft-1-answer", question = "soft-1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich sofware executes the code?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 258371220.879687, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "soft-2", question = structure("When you execute code, which RStudio pane(s) would you look to see if a variable has been defined?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_9e0ebd6", 
+    option = "Console", value = "Console", label = structure("Console", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7abe64a", 
+    option = "Document", value = "Document", label = structure("Document", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c4dd145", 
+    option = "History", value = "History", label = structure("History", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e160d28", 
+    option = "Environment", value = "Environment", label = structure("Environment", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "soft-2-answer", question = "soft-2"), loading = structure("<strong>Loading:<\u002fstrong> \nWhen you execute code, which RStudio pane(s) would you look to see if a variable has been defined?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 1595519541.25703, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "docs-1", question = structure("You want to create a new document in RStudio, you:", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_dfd413", 
+    option = "go to the File > New File menu.", value = "go to the File > New File menu.", 
+    label = structure("go to the File &gt; New File menu.", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e65608c", 
+    option = "go to the File > New Project menu.", value = "go to the File > New Project menu.", 
+    label = structure("go to the File &gt; New Project menu.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4f71aaf", 
+    option = "go to the Tools > Install Package Menu.", value = "go to the Tools > Install Package Menu.", 
+    label = structure("go to the Tools &gt; Install Package Menu.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c4e764a", 
+    option = "Type install.packages(<your document type>) in the console.", 
+    value = "Type install.packages(<your document type>) in the console.", 
+    label = structure("Type install.packages(<your document type>) in the console.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "docs-1-answer", question = "docs-1"), loading = structure("<strong>Loading:<\u002fstrong> \nYou want to create a new document in RStudio, you:\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 388272112.819197, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "docs-2", question = structure("You want to write a report including analytics, you create a new file of type:", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_75cf6b2", 
+    option = ".Rproj", value = ".Rproj", label = structure(".Rproj", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_aceb6c6", 
+    option = ".R", value = ".R", label = structure(".R", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5c3d03", 
+    option = ".Rmd", value = ".Rmd", label = structure(".Rmd", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "docs-2-answer", question = "docs-2"), loading = structure("<strong>Loading:<\u002fstrong> \nYou want to write a report including analytics, you create a new file of type:\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 835344855.111012, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "str-1", question = structure("You loaded object z in your environment. What would you type to see what type of object it is?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_c648bbc", 
+    option = "summary(z)", value = "summary(z)", label = structure("summary(z)", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ceac7d3", 
+    option = "z", value = "z", label = structure("z", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f5721a6", 
+    option = "RtellMe(z)", value = "RtellMe(z)", label = structure("RtellMe(z)", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_35ff1af", 
+    option = "str(z)", value = "str(z)", label = structure("str(z)", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "str-1-answer", question = "str-1"), loading = structure("<strong>Loading:<\u002fstrong> \nYou loaded object z in your environment. What would you type to see what type of object it is?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 1783699465.6694, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "packages-1", question = structure("Select the correct statements. You should add the following in a chunk:", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_2e7dd11", 
+    option = "install.packages(x) ; library(x)", value = "install.packages(x) ; library(x)", 
+    label = structure("install.packages(x) ; library(x)", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5417e9f", 
+    option = "install.packages(x)", value = "install.packages(x)", 
+    label = structure("install.packages(x)", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8d09422", 
+    option = "Run install.packages(x) in your console then add library(x) in your .Rmd", 
+    value = "Run install.packages(x) in your console then add library(x) in your .Rmd", 
+    label = structure("Run install.packages(x) in your console then add library(x) in your .Rmd", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "packages-1-answer", question = "packages-1"), loading = structure("<strong>Loading:<\u002fstrong> \nSelect the correct statements. You should add the following in a chunk:\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 1151922704.46359, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz2-1", question = structure("What does it do?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_94c7ed", 
+    option = "**Display** and **not execute** the content", value = "**Display** and **not execute** the content", 
+    label = structure("<strong>Display<\u002fstrong> and <strong>not execute<\u002fstrong> the content", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_668e482", 
+    option = "**Not display** and ** not execute** the content", 
+    value = "**Not display** and ** not execute** the content", 
+    label = structure("<strong>Not display<\u002fstrong> and ** not execute** the content", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f1a7bcf", 
+    option = "**Not Display** the content of this specific chunk", 
+    value = "**Not Display** the content of this specific chunk", 
+    label = structure("<strong>Not Display<\u002fstrong> the content of this specific chunk", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2f40014", 
+    option = "**Not Display** the content of all chunks", value = "**Not Display** the content of all chunks", 
+    label = structure("<strong>Not Display<\u002fstrong> the content of all chunks", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "quiz2-1-answer", question = "quiz2-1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat does it do?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 2043342372.04849, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "knitobj-1", question = structure("What will be the result?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_6f74247", 
+    option = "15", value = "15", label = structure("15", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4c96bd4", 
+    option = "c", value = "c", label = structure("c", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ae13a6e", 
+    option = "Error message which you read calmly", value = "Error message which you read calmly", 
+    label = structure("Error message which you read calmly", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "knitobj-1-answer", question = "knitobj-1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat will be the result?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+"character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 2085209311.529, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_checkbox", label = "ojbnotfound-1", 
+    question = structure("You see <strong>Error: object &#39;x&#39; not found<\u002fstrong> in your console. What do you do next?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_1d48ea", 
+        option = "Press the panic button in the RStudio menu.", 
+        value = "Press the panic button in the RStudio menu.", 
+        label = structure("Press the panic button in the RStudio menu.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_aa8345f", 
+        option = "Swear at yourself or your prof!", value = "Swear at yourself or your prof!", 
+        label = structure("Swear at yourself or your prof!", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3192303", 
+        option = "Google what it means if you don't know", value = "Google what it means if you don't know", 
+        label = structure("Google what it means if you don&#39;t know", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5b819f6", 
+        option = "Save your file, start a fresh session and run your .Rmd line by line until you find where x is defined or not defined.", 
+        value = "Save your file, start a fresh session and run your .Rmd line by line until you find where x is defined or not defined.", 
+        label = structure("Save your file, start a fresh session and run your .Rmd line by line until you find where x is defined or not defined.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "ojbnotfound-1-answer", question = "ojbnotfound-1"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nYou see <strong>Error: object &#39;x&#39; not found<\u002fstrong> in your console. What do you do next?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 522354208.25676, options = list()), class = c("learnr_checkbox", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "startnewsession-1", 
+    question = structure("What is best practice when you start a new session to continue working on a .Rmd or .R document?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_180ca2", 
+        option = "Recover your environment from the prior session.", 
+        value = "Recover your environment from the prior session.", 
+        label = structure("Recover your environment from the prior session.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cdec28d", 
+        option = "Start all over again.", value = "Start all over again.", 
+        label = structure("Start all over again.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c54161", 
+        option = "Start with a new clean session and run chunk by chunk or line by line your document until you reach where you left it.", 
+        value = "Start with a new clean session and run chunk by chunk or line by line your document until you reach where you left it.", 
+        label = structure("Start with a new clean session and run chunk by chunk or line by line your document until you reach where you left it.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "startnewsession-1-answer", question = "startnewsession-1"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat is best practice when you start a new session to continue working on a .Rmd or .R document?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 2013484639.0624, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "workpractice-1", 
+    question = structure("What is most likely to land you in trouble when you write a .Rmd documment?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_7c4a998", 
+        option = "Spend two hours writing your code and then knit it.", 
+        value = "Spend two hours writing your code and then knit it.", 
+        label = structure("Spend two hours writing your code and then knit it.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_25fc9ee", 
+        option = "Knit your document periodically to ensure that what you have done to date renders properly.", 
+        value = "Knit your document periodically to ensure that what you have done to date renders properly.", 
+        label = structure("Knit your document periodically to ensure that what you have done to date renders properly.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = NULL), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "workpractice-1-answer", question = "workpractice-1"), 
+    loading = structure("<strong>Loading:<\u002fstrong> \nWhat is most likely to land you in trouble when you write a .Rmd documment?\n<br/><br/><br/>", html = TRUE, class = c("html", 
+    "character")), random_answer_order = FALSE, allow_retry = FALSE, 
+    seed = 1847547569.13967, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.11"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["1.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.11"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9016"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9016"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","checkmate","compiler","curl","datasets","digest","ellipsis","evaluate","fastmap","graphics","grDevices","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","magrittr","markdown","methods","mime","promises","R6","Rcpp","rlang","rmarkdown","rprojroot","sass","shiny","stats","stringi","stringr","tools","utils","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.2.1","4.1.1","0.3.1","2.0.0","4.1.1","4.3.2","4.1.1","0.6.28","0.3.2","0.14","1.1.0","4.1.1","4.1.1","0.5.2","1.5.4","1.6.3","0.1.4","1.7.2","1.36","1.3.0","0.10.1.9016","1.0.1","2.0.1","1.1","4.1.1","0.12","1.2.0.1","2.5.1","1.0.7","0.4.12","2.11","2.0.2","0.4.0","1.7.1","4.1.1","1.7.5","1.4.0","4.1.1","4.1.1","2.4.2","0.27","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Getting Started</h2>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+<!-- Build Tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+---
+title: "Risk Management ETRM"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+library(learnr)
+library(tidyverse)
+library(lubridate)
+library(RTLquiz)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 8,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+```
+
+## Framing
+
++ You are newly employed as a risk analyst for an energy trading firm.
++ The company is a top 100 employer and cares about employee development.
++ It has provided you with training on exposure and Profit and Loss ("PL").
++ Now it is wanting to test the effectiveness of that training. 
+
+## Skills Practiced
+
++ Data wrangling and parsing.
++ Choice of effective visualization in communication.
++ Understanding exposure and PL.
+
+## Data
+
+The `RTLquiz::deals` dataset contains trades in a commodity trading game. 
+
++ `user` refers to the trader.
++ `DEALPRICE` refers to the trade execution price.
++ The prices and units depend on the futures contract traded.
+
+```{r}
+RTLquiz::deals
+```
+
+The `RTLquiz::risk` dataset contains the output of the End Of Day ("EOD") risk process.
+
++ `MARKPRICE` refers to the MTM on each EOD.
+
+```{r}
+RTLquiz::risk
+```
+
+
+## Your Ask
+
+Using Rmarkdown, render into `html` the following information. 
+
+1. A chart showing the cumulative PL of all traders:
+
+<br>
+
+```{r, echo=FALSE}
+rr <- risk %>% 
+  dplyr::mutate(PL = (MARKPRICE - DEALPRICE) * QUANTITY,
+                asofdate = as.Date(asofdate),
+                Contract = paste0(TICKER,"-",CONTRACT),
+                Quantity = dplyr::case_when(UNIT == "GAL" ~ QUANTITY / 42, TRUE ~ QUANTITY),
+                #ContractMonth = tsibble::yearmonth(paste0(as.character(YEAR),as.character(MONTH)),"%Y%m")) %>% 
+                ContractMonth = as.Date(paste(as.character(YEAR),as.character(sprintf("%02d", as.numeric(MONTH))),"01",sep = "-"))) %>% 
+                #ContractMonth = as.character(paste0(as.character(YEAR),as.character(sprintf("%02d", as.numeric(MONTH)))))) %>% 
+  
+  dplyr::group_by(user,asofdate,Contract,ContractMonth,TICKER) %>% 
+  dplyr::summarise(Expo = sum(Quantity),
+                   PL = sum(PL),
+                   .groups = "keep")
+
+allusers <- c("playercl1", "playerrbob1", "playerho1", "playerng1")
+
+rr %>% 
+  dplyr::filter(user %in% allusers) %>% 
+  dplyr::group_by(user,asofdate) %>% 
+  dplyr::summarise(PL = sum(PL), .groups = "drop") %>% 
+  tidyr::pivot_wider(names_from = user, values_from = PL) %>% 
+  dplyr::mutate(across(where(is.numeric), ~replace_na(.x, 0))) %>% 
+  tidyr::pivot_longer(-asofdate, names_to = "user", values_to = "PL") %>% 
+  dplyr::arrange(user, asofdate) %>% 
+  plotly::plot_ly(x = ~asofdate, y = ~PL, name = ~user, type = "scatter", mode = "line") %>% 
+  plotly::layout(xaxis = list(tickformat = "%Y%m", type = "category"))
+```
+
+<br>
+
+2. A heatmap showing the priced exposure in barrels for trader `playerrbob1` for the last EOD run.
+<br>
+```{r, echo=FALSE}
+cPalette <- colorRampPalette(c("hotpink","lawngreen"))
+eod <- max(risk$asofdate)
+rr %>% 
+  dplyr::filter(asofdate == eod,
+                user == "playerrbob1") %>% 
+  plotly::plot_ly(x = ~ContractMonth, y = ~TICKER, z = ~Expo, type = "heatmap", text = ~Expo, colors = cPalette(10)) %>% 
+  plotly::add_annotations(x = ~ContractMonth,
+                          y = ~TICKER,
+                          showarrow = FALSE,
+                          align = "center") %>% 
+  plotly::layout(xaxis = list(tickformat = "%Y%m", type = "category"))
+```
+<br>
+
+3. Using the `deals` dataset, you are interested in assessing how often traders transact. This is an insightful data point to inform their journey towards actively managing market calls in light of changing market conditions.
+
+<br>
+```{r, echo=FALSE}
+gameDates <- dplyr::tibble(date = unique(risk$asofdate))
+deals %>% 
+  dplyr::filter(user %in% allusers) %>% 
+  dplyr::mutate(date = as.Date(EODTime, "%Y-%m-%d")) %>% 
+  dplyr::group_by(user,date) %>% 
+  dplyr::count() %>% 
+  dplyr::rename(trades = n) %>% 
+  dplyr::arrange(date) %>% 
+  plotly::plot_ly(x = ~date, y = ~trades, name = ~user, type = "bar") %>% 
+  plotly::layout(yaxis = list(tickvals = ~trades),
+                 xaxis = list(title = "", tickvals = gameDates))
+```
+
+

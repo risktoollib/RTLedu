@@ -1,0 +1,129 @@
+---
+title: "DSCF Quiz 1"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+library(learnr)
+library(tidyverse)
+library(lubridate)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE,
+                      fig.width = 9, fig.height = 6,fig.align = "center",
+                      tidy = FALSE, strip.white = TRUE, out.width = '100%')
+library(gt)
+bd_txt <- function(x,title = "Grading",subtitle = "-", width = 700) {
+  if (nchar(gsub(" ","",subtitle))==0) {subtitle <- "-"}
+  y <- x %>% gt::gt() %>%
+    gt::tab_header(title = title, subtitle = subtitle) %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(cell_fill(color = "royalblue"),
+                               cell_text(color = "white",weight = "bold")),
+                  locations = cells_title(groups = c("title")))
+  y= y %>% tab_options(table.width = px(width),table.font.size = pct(80))
+  return(y)
+}
+
+bd_lo <- function(x,width=700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(cell_fill(color = "royalblue"),
+                               cell_text(color = "white",weight = "bold")),
+                  locations = cells_title(groups = c("title")))
+  y= y %>% tab_options(table.width = px(width),table.font.size = pct(80))
+  return(y)
+}
+
+
+from = as.Date(paste0(lubridate::year(Sys.Date()),"-01-01"))
+to = lubridate::rollback(Sys.Date())
+
+```
+
+## Problem We Are Solving
+
+**This quiz consists in analysing financial risk in ten stocks in the S&P500.**
+
+The task consists in:
+
++ You are given 10 stock tickers in the S&P500.
++ Your leader knows you have recently acquired data science skills and is looking for a better way of doing things...
++ You need to measure the following for each `Symbol`:
+
+  + Average daily return.
+  + Standard Deviation.
+  + Worst daily return performance.
+
++ Daily returns are `log()` returns.
++ Time period is from `r from` to `r to`.
+
+## Timeline and Format
+
++ Send the results as a `.Rmd` and **properly rendering** `.html` via email before the next class.
++ Name your file `Quiz1_<lastname>_<firstname>`.
+
+## Grading
+
+```{r, echo=F,include=TRUE, fig.height=3}
+tibble(Competency=c("RMardown",
+                    "Presentation",
+                    "Results"),
+           Measure=c(".Rmd renders without errors.",
+                   "It is readable as it would in a Word document and clear without unnecessary code and warnings being displayed.",
+                   "Correct results"),
+           Score=c("2 points",
+                   "3 points",
+                   "5 points")) %>% bd_lo()
+```
+
+## Stock Universe 
+
+```{r, echo = F}
+# library(rvest)
+# url = "https://www.slickcharts.com/sp500"
+# html <- xml2::read_html(url)
+# x = html %>% html_table(.,fill=T) %>% .[[1]] %>% as_tibble() %>% 
+#   dplyr::filter(dplyr::row_number() <= 5 | dplyr::row_number() %in% c(100,200,300,400,450)) %>% 
+#   dplyr::select(Company, Symbol)
+# x %>% bd_txt(title = "Companies and Symbols", subtitle = "use the relevant API from the Data Wrangling Module")
+
+set.seed(1604)
+r <- replicate(3,as.integer(runif(10,1,500)))
+x <- RTLquiz::sp500_desc %>% 
+  dplyr::select(Company = company, Symbol = symbol) %>% dplyr::slice(r[,ceiling(lubridate::month(Sys.Date()) / 4)])
+x %>% bd_txt(title = "Companies and Symbols", subtitle = "use the relevant API from the Data Wrangling Module") #%>% gt::cols_width(starts_with("C") ~ px(150))
+```
+
+## Solution Hint
+
++ Refer to the training material you were provided,
++ Google it, or
++ Ask your peers for help.
+
+```{r, echo = F, eval=T}
+library(tidyquant)
+tidyquant::tq_get(x$Symbol,
+              get  = "stock.prices",
+              from = from,
+              to = to) %>% 
+  dplyr::select(date, symbol,adjusted) %>% 
+  dplyr::group_by(symbol) %>% 
+  dplyr::mutate(ret = log(adjusted / dplyr::lag(adjusted))) %>% 
+  stats::na.omit() %>% 
+  dplyr::summarise(aveRet = mean(ret),
+                   StdV = sd(ret),
+                   WorstRet = min(ret)) %>% 
+  dplyr::arrange(desc(aveRet)) %>%
+  bd_txt(title = "Returns By Stock", subtitle = "Sorted by Ave Return") %>% 
+  gt::fmt_percent(columns = vars(aveRet,StdV,WorstRet), decimals = 2)
+```
+
+
+

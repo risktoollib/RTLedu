@@ -1,0 +1,156 @@
+---
+title: "Getting Started"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Basics
+
+### Execution 
+
+```{r soft}
+learnr::quiz(
+  learnr::question("Which sofware executes the code?",
+    learnr::answer("R", correct = TRUE),
+    learnr::answer("RStudio"),
+    learnr::answer("Windows"),
+    learnr::answer("Mac")
+  ),
+  learnr::question("When you execute code, which RStudio pane(s) would you look to see if a variable has been defined?",
+    learnr::answer("Console", correct = TRUE),
+    learnr::answer("Document"),
+    learnr::answer("History"),
+    learnr::answer("Environment", correct = TRUE)
+  )
+)
+```
+
+### Creating Documents
+
+```{r docs}
+learnr::quiz(
+  learnr::question("You want to create a new document in RStudio, you:",
+    learnr::answer("go to the File > New File menu.", correct = TRUE),
+    learnr::answer("go to the File > New Project menu."),
+    learnr::answer("go to the Tools > Install Package Menu."),
+    learnr::answer("Type install.packages(<your document type>) in the console.")
+  ),
+  learnr::question("You want to write a report including analytics, you create a new file of type:",
+    learnr::answer(".Rproj"),
+    learnr::answer(".R"),
+    learnr::answer(".Rmd", correct = TRUE)
+  )
+)
+```
+
+### Data Type
+
+```{r str}
+learnr::quiz(
+  learnr::question("You loaded object z in your environment. What would you type to see what type of object it is?",
+    learnr::answer("summary(z)"),
+    learnr::answer("z"),
+    learnr::answer("RtellMe(z)"),
+    learnr::answer("str(z)", correct = TRUE)
+  )
+)
+```
+
+### Packages
+
+If you need to install a new package x for your new project, say a .Rmd document.
+
+```{r packages}
+learnr::quiz(
+  learnr::question("Select the correct statements. You should add the following in a chunk:",
+    learnr::answer("install.packages(x) ; library(x)"),
+    learnr::answer("install.packages(x)"),
+    learnr::answer("Run install.packages(x) in your console then add library(x) in your .Rmd", correct = TRUE)
+  )
+)
+```
+
+
+## Markdown Document
+
+You see this `R chunk` in a Markdown document:
+
+```{r, eval = FALSE, echo = T}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r quiz2}
+learnr::quiz(
+  learnr::question("What does it do?",
+    learnr::answer("**Display** and **not execute** the content"),
+    learnr::answer("**Not display** and ** not execute** the content"),
+    learnr::answer("**Not Display** the content of this specific chunk"),
+    learnr::answer("**Not Display** the content of all chunks", correct = TRUE)
+  )
+)
+```
+
+1. You are working in a new empty Rmd document.
+2. You type the following in your `console`:
+
+```{r, eval = F, echo = T}
+a <- 5
+```
+
+3. You confirm your `Environment` that `a = 5`. Everything is according to plan!
+4. You now write this chunk in your .Rmd document and press the `Knit` button. 
+
+```{r, eval = F, echo = T}
+b <- 10
+c <- a + b
+c
+```
+
+```{r knitobj}
+learnr::quiz(
+  learnr::question("What will be the result?",
+    learnr::answer("15"),
+    learnr::answer("c"),
+    learnr::answer("Error message which you read calmly", correct = TRUE)
+  )
+)
+```
+
+## My First Mistakes
+
+```{r ojbnotfound}
+quiz(
+  learnr::question("You see **Error: object 'x' not found** in your console. What do you do next?",
+    learnr::answer("Press the panic button in the RStudio menu."),
+    learnr::answer("Swear at yourself or your prof!"),
+    learnr::answer("Google what it means if you don't know", correct = T),
+    learnr::answer("Save your file, start a fresh session and run your .Rmd line by line until you find where x is defined or not defined.", correct = T)
+  )
+)
+```
+
+```{r startnewsession}
+learnr::quiz(
+  learnr::question("What is best practice when you start a new session to continue working on a .Rmd or .R document?",
+    learnr::answer("Recover your environment from the prior session."),
+    learnr::answer("Start all over again."),
+    learnr::answer("Start with a new clean session and run chunk by chunk or line by line your document until you reach where you left it.", correct = T)
+  )
+)
+```
+
+```{r workpractice}
+learnr::quiz(
+  learnr::question("What is most likely to land you in trouble when you write a .Rmd documment?",
+    learnr::answer("Spend two hours writing your code and then knit it.", correct = T),
+    learnr::answer("Knit your document periodically to ensure that what you have done to date renders properly.")
+  )
+)
+```
+
+

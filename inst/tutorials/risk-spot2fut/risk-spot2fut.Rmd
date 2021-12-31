@@ -1,0 +1,75 @@
+---
+title: "Spot to Forward Relationship"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+fwd <- function(S0 = 1000,
+                r = 0.1,
+                d = 0,
+                T = 1) {
+  tmp <- S0 * exp((r - d) * T)
+  return(tmp)
+}
+```
+
+<br>
+<br>
+
+**Internalizing an Equation: Spot to Forward Equation.**
+
++ **The quality of learning is defined as understanding, not remembering.**
++ **Being mindful, or in the conversation, supports understanding.**
++ **Reading text(book)s primarily supports remembering.**
++ **Creating your own questions allows you to internalize learning and improve recall in other contexts.**
+
+$$\begin{aligned}
+F = S e^{(r-d)*T}\quad
+\end{aligned}$$
+
+## Directional Relationship
+
+```{r IEq1}
+learnr::quiz(
+  learnr::question("Which statement(s) is (are) correct? The value of F increases when:",
+    learnr::answer("S, d and T increase."),
+    learnr::answer("S and T increase.",correct = T),
+    learnr::answer("S, r and T increase.",correct = T),
+    random_answer_order = TRUE
+  )
+)
+```
+
+## Type of Relationship
+
+Thinking of the relationship between $F$ and the dependent variables:
+
+```{r IEq2}
+learnr::quiz(
+  learnr::question("Which dependent variable(s) have a linear relationship to F?",
+    learnr::answer("S",correct = T),
+    learnr::answer("r"),
+    learnr::answer("d"),
+    learnr::answer("T"),
+    random_answer_order = TRUE
+  )
+)
+```
+
+## Exploring the Relathionship
+
+Using the functions `fwd()` and `plot()`, generate a plot showing the value of $F$, when $T$ is between 1 and 100. 
+
+Hints:
+
++ Typing the function name without `()` prints the function. Try with `fwd()`.
++ `plot(fwd(...))` to visualize relationships.
++ Functions may take vectors as arguments and return vectors in the output.
+
+```{r explore, exercise=TRUE}
+
+```

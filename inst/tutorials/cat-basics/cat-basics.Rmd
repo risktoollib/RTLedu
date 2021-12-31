@@ -1,0 +1,127 @@
+---
+title: "Orders and Execution"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(gt)
+```
+
+## Market Orders
+
+### Question 1
+
+The current market is:
+
+```{r}
+depth = 6
+s <- sample(10:100,1)
+bid.step <- -sort(sample(1:10,depth)/10)
+offer.step <- sort(sample(1:10,depth)/10)
+bid.qty <- sample(rep(seq(10,40,10),5),depth,replace = T)
+offer.qty <- sample(rep(seq(10,40,10),2),depth,replace = T)
+
+market <- dplyr::tibble(bid.lots = bid.qty, 
+              bids = s + bid.step, 
+              offer = s + offer.step, 
+              offer.lots = offer.qty)
+market %>% gt::gt() %>% cols_align(align = "center")
+```
+
+```{r mkt1}
+d <-  sample(2:4,1)
+lots = sum(market$bid.lots[1:d])
+cc <- weighted.mean(market$bids[1:d],market$bid.lots[1:d])
+learnr::quiz(
+  learnr::question(paste("You place a market order to sell",lots,"lots. What price do you get filled at?"),
+    learnr::answer(format(round(cc, 2), nsmall = 2), correct = TRUE),
+    learnr::answer(format(round(market$bids[1],2), nsmall = 2)),
+    learnr::answer(format(round(market$bids[d],2), nsmall = 2)),
+    random_answer_order = TRUE
+  )
+)
+```
+
+### Question 2
+
+The current market is:
+
+```{r}
+depth = 4
+s <- sample(10:100,1)
+bid.step <- -sort(sample(1:10,depth)/10)
+offer.step <- sort(sample(1:10,depth)/10)
+bid.qty <- sample(rep(seq(10,40,10),5),depth,replace = T)
+offer.qty <- sample(rep(seq(10,40,10),2),depth,replace = T)
+
+market <- dplyr::tibble(bid.lots = bid.qty, 
+              bids = s + bid.step * 7, 
+              offer = s + offer.step, 
+              offer.lots = offer.qty)
+market %>% gt::gt() %>% cols_align(align = "center")
+```
+
+
+```{r mkt2}
+d <-  sample(2:4,1)
+lots = sum(market$bid.lots[1:d])
+cc <- weighted.mean(market$bids[1:d],market$bid.lots[1:d])
+learnr::quiz(
+  learnr::question(paste("The market closed at",format(round(s, 2), nsmall = 2)," and you are now at the market open.","You place a market order to sell",lots,"lots. What price do you get filled at?"),
+    learnr::answer(format(round(cc, 2), nsmall = 2), correct = TRUE),
+    learnr::answer(format(round(market$bids[1],2), nsmall = 2)),
+    learnr::answer(format(round(market$bids[d],2), nsmall = 2)),
+    random_answer_order = TRUE
+  )
+)
+```
+
+Do you want to place and why?
+
+## Limit Orders
+
+The current market is:
+
+```{r}
+depth = 6
+s <- sample(10:100,1)
+bid.step <- -sort(sample(1:10,depth)/10)
+offer.step <- sort(sample(1:10,depth)/10)
+bid.qty <- sample(rep(seq(10,40,10),5),depth,replace = T)
+offer.qty <- sample(rep(seq(10,40,10),2),depth,replace = T)
+
+market <- dplyr::tibble(bid.lots = bid.qty, 
+              bids = s + bid.step, 
+              offer = s + offer.step, 
+              offer.lots = offer.qty)
+market %>% gt::gt() %>% cols_align(align = "center")
+```
+
+```{r limit1a}
+d <-  sample(2:3,1)
+lots <- sum(market$bid.lots[1:d])
+limit <- s - 0.5 
+tmp <- market %>% 
+  dplyr::mutate(clots=cumsum(bid.lots)) %>% 
+  dplyr::filter(bids >= limit, clots <= lots)# %>% 
+  #dplyr::mutate(cum = dplyr::lag(bid.lots))
+#tmp$cum[1] <- 0
+#tmp %>% dplyr::mutate(cum = cumsum(cum))
+
+cc <- weighted.mean(tmp$bids,tmp$bid.lots)
+
+learnr::quiz(
+  learnr::question(paste0("You place a limit order to sell ",lots," lots at ",format(round(limit, 2), nsmall = 2),". What price do you get filled at and how many lots are executed?"),
+    learnr::answer(paste0(round(sum(tmp$bid.lots),2)," lots executed at ",format(round(cc, 2), nsmall = 2)), correct = TRUE),
+    #learnr::answer(paste0(round(sum(tmp$bid.lots),2)," lots executed at ",format(round(mean(tmp$bids), 2), nsmall = 2))),
+    learnr::answer(paste0(round(lots,2)," lots executed at ",format(round(tmp$bids[1], 2), nsmall = 2))),
+    learnr::answer(paste0(round(lots,2)," lots executed at ",format(round(limit, 2), nsmall = 2))),
+    random_answer_order = T
+  )
+)
+```
+

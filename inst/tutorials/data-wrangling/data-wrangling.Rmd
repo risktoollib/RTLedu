@@ -1,0 +1,304 @@
+---
+title: "Data Wrangling"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+
+## Object Class 
+
+**The data displayed is from the `mtcars` dataset from `tidyverse` until further notice.**
+
+```{r class}
+learnr::quiz(
+  learnr::question("What function would you use to describe the x object class and structure in your environment?",
+    learnr::answer("summary(x)"),
+    learnr::answer("View(x)"),
+    learnr::answer("str(x)", correct = TRUE),
+    learnr::answer("?x"),
+    allow_retry = T
+  )
+) 
+```
+
+## Piping
+
+These questions deals with the `%>%` pipe operator?
+
+```{r pipe}
+learnr::quiz(
+  learnr::question("The pipe operator:",
+    learnr::answer("Allows one to smoke great tobacco."),
+    learnr::answer("Assigns the result of an operation to a variable."),
+    learnr::answer("Passes the output of left command into the input of the right command.", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+You open a new `R` session, type `mtcars %>% dplyr::mutate(cyl = cyl +1)` and get this message:
+
+`Error in mtcars %>% dplyr::mutate(cyl = cyl + 1) : could not find function "%>%"`
+
+
+```{r pipelib}
+learnr::quiz(
+  learnr::question("What does it mean?",
+    learnr::answer("I don't know."),
+    learnr::answer("I forgot to load library(tidyverse).", correct = TRUE),
+    learnr::answer("I forgot to load all my active libraries."),
+    allow_retry = T
+  )
+)
+```
+
+
+The `%>%` operator can simplifies greatly coding logic. 
+
+```{r pipelogic}
+learnr::quiz(
+  learnr::question("When faced with a sequence of piping operators, best practice to learn is to:",
+    learnr::answer("Copy and paste the code provide by the Prof."),
+    learnr::answer("Create my own copy of it in a .Rmd document and display it nicely."),
+    learnr::answer("Be focused on executing each pipe one at a time with a view of understanding the input-transform-output sequence in terms of data class.", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+## Subsetting 
+
+```{r subset}
+learnr::quiz(
+  learnr::question("Which dplyr function would you use to subset a data frame?",
+    learnr::answer("subset()"),
+    learnr::answer("select()"),
+    learnr::answer("filter()", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+## Mutate and Transmute
+
+```{r muttrans}
+learnr::quiz(
+  learnr::question("Select the TRUE statement(s) on what the functions do to a data frame.",
+    learnr::answer("`mutate()` deletes a column and transmute() append a column."),
+    learnr::answer("`transmute()` deletes a column and mutate() append a column."),
+    learnr::answer("`transmute()` only returns the column created.", correct = TRUE),
+    learnr::answer("`mutate()` returns the column created and existing columns.", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+## Select
+
+```{r,echo=FALSE}
+x = mtcars %>% dplyr::mutate(car = rownames(mtcars)) %>% dplyr::select(mpg,cyl,car,dplyr::everything()) %>% as_tibble()
+head(x)
+```
+
+```{r select}
+learnr::quiz(
+  learnr::question("Select the best command to re-order columns to show car first.",
+    learnr::answer("x %>% dplyr::select(car,mpg,cyl,disp,hp,drat,wt,qsec,vs)"),
+    learnr::answer("x %>% dplyr::select(car,everything)"),
+    learnr::answer("x %>% dplyr::select(car,...)"),
+    learnr::answer("x %>% dplyr::select(car,everything())", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+## Filter
+
+```{r, echo = F}
+x %>% dplyr::filter(mpg >30 & cyl >= 4)
+```
+
+You are interested in filtering cars with a mpg > 30 and cyl >= 4.
+
+```{r filter}
+learnr::quiz(
+  learnr::question("Which command(s) would give you the same information?",
+    learnr::answer("x %>% dplyr::filter(mpg >30 & cyl >= 4)", correct = TRUE),
+    learnr::answer("x %>% dplyr::filter(mpg >30 | cyl >= 4)"),
+    learnr::answer("x %>% dplyr::select(cat == CityCar)"),
+    learnr::answer("x %>% dplyr::filter(mpg >30, cyl >= 4)", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+You want to exclude cars with cyl = 8.
+
+```{r notequal}
+learnr::quiz(
+  learnr::question("Which command(s) is (are) correct?",
+    learnr::answer("x %>% dplyr::filter(cyl =! 8)"),
+    learnr::answer("x %>% dplyr::filter(!cyl == 8)", correct = TRUE),
+    learnr::answer("x %>% dplyr::filter(cyl != 8)", correct = TRUE),
+    learnr::answer("x %>% dplyr::filter(cyl <> 8)"),
+    allow_retry = T
+  )
+)
+```
+
+## Sorting
+
+```{r,echo = F}
+x 
+```
+
+You want to find the most fuel efficient cars: 
+
+```{r sorting}
+learnr::quiz(
+  learnr::question("Which command(s) is (are) correct?",
+    learnr::answer("x %>% dplyr::arrange(mpg)"),
+    learnr::answer("x %>% dplyr::sort(mpg)"),
+    learnr::answer("x %>% dplyr::arrange(dplr::desc(mpg))", correct = TRUE),
+    learnr::answer("x %>% sort(mpg)"),
+    learnr::answer("x %>% sort(dlyr::desc(mpg))"),
+    allow_retry = T
+  )
+)
+```
+
+## Long vs Wide Data frames
+
+Using the following data frame `x`:
+
+```{r,echo = F}
+x 
+```
+
+### Long or Wide?
+
+```{r longorwide}
+learnr::quiz(
+  learnr::question("Is it a long or wide data frame?",
+    learnr::answer("Wide", correct = TRUE),
+    learnr::answer("Long"),
+    allow_retry = T
+  )
+)
+```
+
+### Packages and Functions
+
+```{r ff}
+learnr::quiz(
+  learnr::question("Which functions would you use?",
+    learnr::answer("pivot_longer() and pivot_wider()", correct = TRUE),
+    learnr::answer("wide_2_long() and long_2_wide()"),
+    allow_retry = T
+  )
+)
+```
+
+```{r rightlib}
+learnr::quiz(
+  learnr::question("Which package do the right functions belong to?",
+    learnr::answer("tidyr", correct = TRUE),
+    learnr::answer("dplyr"),
+    learnr::answer("convert-df"),
+    learnr::answer("ggplot"),
+    allow_retry = T
+  )
+)
+```
+
+```{r pivot}
+learnr::quiz(
+  learnr::question("Which function has the names_to and values_to arguments?",
+    learnr::answer("pivot_wider"),
+    learnr::answer("pivot_longer", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+### Grouping
+
+You want to compute the average `mpg` by `cyl`.
+
+```{r,echo = F}
+x 
+```
+
+```{r group_by}
+learnr::quiz(
+  learnr::question("Select the appropriate command.",
+    learnr::answer("x %>% dplyr::summarise(mean(mpg))"),
+    learnr::answer("x %>% dplyr::summarise(mean(mpg)) %>% dplyr::group_by(cyl)"),
+    learnr::answer("x %>% dplyr::group_by(cyl) %>% dplyr::summarise(mean(mpg))", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+## Lags
+
+We are now extracting stock prices for ExxonMobil and Citibank.
+
+```{r}
+(y <- tidyquant::tq_get(c("XOM", "C"),
+              get  = "stock.prices",
+              from = "2016-01-01",
+              to = as.character(Sys.Date())) %>% dplyr::select(date,symbol,close) %>% dplyr::arrange(date))
+```
+
+```{r bracket}
+learnr::quiz(
+  learnr::question("Why did we wrap the assignment in ()?",
+    learnr::answer("It looks better on the output."),
+    learnr::answer("It assigns the output to a variable and prints it.", correct = T),
+    learnr::answer("I copied and pasted from a website and don't understand what I did."),
+    allow_retry = T
+  )
+)
+```
+
+You want to compute to compute the average daily change in stock price in simple percentage terms:
+
+```{r ave}
+learnr::quiz(
+  learnr::question("What commands would you run?",
+    learnr::answer("y %>% dplyr::group_by(symbol) %>% dplyr::mutate(return = (close / dplyr::lag(close))-1) %>% dplyr::summarise(mean(return))
+"),
+    learnr::answer("y %>% dplyr::group_by(symbol) %>% dplyr::mutate(return = (close / dplyr::lag(close))-1) %>% stats::na.omit()
+"),
+    learnr::answer("y %>% dplyr::group_by(symbol) %>% dplyr::mutate(return = (close / dplyr::lag(close))-1) %>% stats::na.omit() %>% dplyr::summarise(mean(return))
+
+", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+## xts objects
+
+```{r xts1}
+learnr::quiz(
+  learnr::question("If you wanted to convert stock prices from XOM and C in xts format, what function would you use?",
+    learnr::answer("Convert2xts()"),
+    learnr::answer("dplyr::tk_xts "),
+    learnr::answer("timetk::tk_xts", correct = TRUE),
+    allow_retry = T
+  )
+)
+```
+
+
+
+

@@ -1,0 +1,182 @@
+---
+title: "DSCF Quiz 3"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+library(learnr)
+library(tidyverse)
+library(lubridate)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE,
+                      fig.width = 9, fig.height = 6,fig.align = "center",
+                      tidy = FALSE, strip.white = TRUE, out.width = '100%')
+library(gt)
+bd_txt <- function(x,title = "Grading",subtitle = "-", width = 700) {
+  if (nchar(gsub(" ","",subtitle))==0) {subtitle <- "-"}
+  y <- x %>% gt::gt() %>%
+    gt::tab_header(title = title, subtitle = subtitle) %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(cell_fill(color = "royalblue"),
+                               cell_text(color = "white",weight = "bold")),
+                  locations = cells_title(groups = c("title")))
+  y= y %>% tab_options(table.width = px(width),table.font.size = pct(80))
+  return(y)
+}
+
+bd_lo <- function(x,width=700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(cell_fill(color = "royalblue"),
+                               cell_text(color = "white",weight = "bold")),
+                  locations = cells_title(groups = c("title")))
+  y= y %>% tab_options(table.width = px(width),table.font.size = pct(80))
+  return(y)
+}
+
+
+from = as.Date("2018-01-01")
+to = lubridate::rollback(Sys.Date())
+```
+
+## Problem We Are Solving
+
+**This quiz consists in performing a multivariate regression.**
+
+This exercise is quiz #3 - see grading section.
+
+### Variables considered:
+
++ NANR with the [SPDR® S&P® North American Natural Resources ETF](https://www.ssga.com/us/en/individual/etfs/funds/spdr-sp-north-american-natural-resources-etf-nanr).
++ US equities with the [SPDR S&P 500 ETF](https://etfdb.com/etf/SPY/#etf-ticker-profile).
++ Oil with the [United States Oil Fund](https://etfdb.com/etf/USO/#etf-ticker-profile).
++ Natural Gas with the [United States Natural Gas Fund](https://www.uscfinvestments.com/ung).
++ Gold with the [SPDR Gold Trust](https://etfdb.com/etf/GLD/#etf-ticker-profile).
++ Silver with the [iShares Silver Trust](https://www.ishares.com/us/products/239855/ishares-silver-trust-fund).
+
+```{r}
+tickers <-  c("NANR","SPY","USO","UNG","GLD","SLV")
+```
+
+### Your Ask
+
+The ask consists in demonstrating your ability to explain the performance of `NANR` as a function of the other variables in a multivariate regression framework.
+
+In a concise .Rmd (i.e. no `flexdashboards`), follow the workflow in the class note module on multivariate regressions.
+
+1. Extract data from `r from` to `r to` and compute daily `log()` returns.You do NOT need to print data wrangling in any final document.
+2. Provide a correlation matrix and/or pairs plot and comment on whether and where you see potential issues with multicollinearity.
+3. Compute regressions by recursively adding independent variables.
+4. Compute the Variance Inflation Factor ("VIF") for all your regressions.
+5. Make a clear recommendation on which multivariate regression model you deem best and the reasons why. Use all the knowledge you gained on regressions up to this point in class.
+
+## Grading
+
+This is an advanced class in your degree and/or professional workplace and you are judged both on absolute and relative standards versus your peers. You are focused on building skills to support your future career success.
+
+```{r, echo=F,include=TRUE, fig.height=3}
+tibble(Competency=c("Presentation",
+                    "Cor Matrix / Pairs Plot",
+                    "Recursive Regressions",
+                    "VIF",
+                    "Recommended Regression"),
+           Measure=c("Professionally rendered and document clean of unnecessary code/clutter not relevant to the story. Assume you are presenting to a business leader interested in the story, not how you got to it.",
+                   "Insightful interpretation.",
+                   "Models properly defined and no errors in computations.",
+                   "Correct implementation.",
+                   "Ability to apply concepts towards a final practical recommendation with sound logic."),
+           Score=c("1.5 points",
+                   "1.5 points",
+                   "2 points",
+                   "1 point",
+                   "4 points")) %>% bd_lo()
+```
+
+## Solution Hint
+
+**No hints provided.**
+
+```{r, echo = F, eval=F}
+library(tidyquant)
+ret <- tidyquant::tq_get(tickers,
+              get  = "stock.prices",
+              from = from,
+              to = to) %>% 
+  dplyr::select(date, symbol,close = adjusted) %>% 
+  dplyr::group_by(symbol) %>% 
+  dplyr::mutate(ret = log(close / dplyr::lag(close)))  %>% 
+  tidyr::pivot_wider(date, names_from = symbol, values_from = ret) %>% 
+  stats::na.omit()
+```
+
+```{r, echo = F, eval = F}
+library(gt)
+ret %>% 
+  dplyr::select(-date,-NANR) %>%  # exclude date and outcome, leave only predictors 
+  purrr::map(~lm(NANR ~ .x, data = ret)) %>% 
+  purrr::map(summary) %>% 
+  purrr::map_dbl("r.squared") %>% 
+  tibble::tibble(Predictors = names(.),r.squared = .) %>% 
+  dplyr::arrange(desc(.[[2]])) %>% 
+  gt() %>% 
+  gt::fmt_percent(columns = !matches("Predictors"), decimals = 1)
+```
+
+
+
+```{r, echo = F, eval=F}
+fit1 <- stats::lm(NANR ~ SPY,ret)
+fit2 <- stats::lm(NANR ~ SPY + USO,ret)
+fit3 <- stats::lm(NANR ~ SPY + USO + SLV,ret)
+fit4 <- stats::lm(NANR ~ SPY + USO + SLV + GLD,ret)
+fit5 <- stats::lm(NANR ~ SPY + USO + SLV + GLD + UNG,ret)
+```
+
+```{r, echo = F, eval=F}
+ret %>% GGally::ggpairs()
+```
+
+```{r, echo = F, eval=F}
+ret %>% RTL::chart_pairs()
+```
+
+```{r, echo = F, eval=F}
+library(broom)
+fit1 %>% broom::glance() %>% 
+  dplyr::add_row(fit2 %>% broom::glance()) %>% 
+  dplyr::add_row(fit3 %>% broom::glance()) %>% 
+  dplyr::add_row(fit4 %>% broom::glance()) %>% 
+  dplyr::add_row(fit5 %>% broom::glance()) %>% dplyr::select(1:5)
+```
+
+```{r, echo = F, eval=F}
+dplyr::bind_rows(car::vif(fit2),
+                 car::vif(fit3),
+                 car::vif(fit4),
+                 car::vif(fit5)) %>% 
+  gt() %>% 
+  gt::fmt_number(columns = everything(),decimals = 3) %>% 
+  gt::tab_style(style = list(cell_fill(color = "lightgreen"),
+                                 cell_text(weight = "bold")),
+                    locations = cells_body(columns = everything(),
+                                           rows = everything() <= 2
+                                           )
+  )
+```
+
+```{r, echo = F, eval=F}
+# possible reasonable recommendations
+summary(stats::lm(NANR ~ SPY + USO + GLD,ret))
+summary(stats::lm(NANR ~ SPY + USO + SLV,ret))
+# also possible if purely statistics but not trading
+summary(stats::lm(NANR ~ SPY + USO + SLV + GLD,ret))
+
+```
+
