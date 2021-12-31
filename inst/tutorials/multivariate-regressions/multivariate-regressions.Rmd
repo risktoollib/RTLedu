@@ -1,5 +1,5 @@
 ---
-title: "DSCF Quiz 3"
+title: "Multivariate Regressions"
 output:
   learnr::tutorial:
     progressive: true

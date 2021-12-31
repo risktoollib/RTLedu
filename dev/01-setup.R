@@ -7,9 +7,6 @@ usethis::use_github_actions_badge(name = "R-CMD-check", repo_spec = NULL)
 
 usethis::use_package("PerformanceAnalytics")
 
-
-
-
 attachment::att_from_rscripts()
 urlchecker::url_check()
 urlchecker::url_update()

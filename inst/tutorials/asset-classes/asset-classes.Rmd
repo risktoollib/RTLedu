@@ -1,5 +1,5 @@
 ---
-title: "DSCF Quiz 2"
+title: "Asset Classes"
 output:
   learnr::tutorial:
     progressive: true

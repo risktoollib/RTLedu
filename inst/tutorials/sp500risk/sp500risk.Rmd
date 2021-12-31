@@ -1,5 +1,5 @@
 ---
-title: "DSCF Quiz 1"
+title: "S&P 500 Risk"
 output:
   learnr::tutorial:
     progressive: true
@@ -96,7 +96,7 @@ tibble(Competency=c("RMardown",
 
 set.seed(1604)
 r <- replicate(3,as.integer(runif(10,1,500)))
-x <- RTLquiz::sp500_desc %>% 
+x <- RTLedu::sp500_desc %>% 
   dplyr::select(Company = company, Symbol = symbol) %>% dplyr::slice(r[,ceiling(lubridate::month(Sys.Date()) / 4)])
 x %>% bd_txt(title = "Companies and Symbols", subtitle = "use the relevant API from the Data Wrangling Module") #%>% gt::cols_width(starts_with("C") ~ px(150))
 ```
