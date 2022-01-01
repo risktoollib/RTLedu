@@ -9,8 +9,9 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
 library(learnr)
-library(tidyverse)
+library(dplyr)
 library(lubridate)
+library(RTL)
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE,
                       fig.width = 9, fig.height = 6,fig.align = "center",
                       tidy = FALSE, strip.white = TRUE, out.width = '100%')
@@ -50,8 +51,6 @@ to = lubridate::rollback(Sys.Date())
 
 **This quiz consists in performing a multivariate regression.**
 
-This exercise is quiz #3 - see grading section.
-
 ### Variables considered:
 
 + NANR with the [SPDR® S&P® North American Natural Resources ETF](https://www.ssga.com/us/en/individual/etfs/funds/spdr-sp-north-american-natural-resources-etf-nanr).
@@ -79,7 +78,7 @@ In a concise .Rmd (i.e. no `flexdashboards`), follow the workflow in the class n
 
 ## Grading
 
-This is an advanced class in your degree and/or professional workplace and you are judged both on absolute and relative standards versus your peers. You are focused on building skills to support your future career success.
+If you take this exercise as part of a graded item in a course, see the Grading section in class notes. Grading is consistent with learning objectives.
 
 ```{r, echo=F,include=TRUE, fig.height=3}
 tibble(Competency=c("Presentation",
@@ -91,12 +90,7 @@ tibble(Competency=c("Presentation",
                    "Insightful interpretation.",
                    "Models properly defined and no errors in computations.",
                    "Correct implementation.",
-                   "Ability to apply concepts towards a final practical recommendation with sound logic."),
-           Score=c("1.5 points",
-                   "1.5 points",
-                   "2 points",
-                   "1 point",
-                   "4 points")) %>% bd_lo()
+                   "Ability to apply concepts towards a final practical recommendation with sound logic.")) %>% bd_lo()
 ```
 
 ## Solution Hint

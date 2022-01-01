@@ -40,10 +40,10 @@ usethis::use_data(twtrump, overwrite = T)
 
 
 # run rpanda md game admin outside and then include these objects
-deals <- deals %>% dplyr::select(-TIME,-USERID,-structid, -dealid,-timestamp,-subid,-WEIGHT)
-usethis::use_data(deals, overwrite = T)
-risk <- risk %>% dplyr::select(-TIME,-USERID,-structid, -dealid,-timestamp,-subid,-WEIGHT)
-usethis::use_data(risk, overwrite = T)
+#deals <- deals %>% dplyr::select(-TIME,-USERID,-structid, -dealid,-timestamp,-subid,-WEIGHT)
+#usethis::use_data(deals, overwrite = T)
+#risk <- risk %>% dplyr::select(-TIME,-USERID,-structid, -dealid,-timestamp,-subid,-WEIGHT)
+#usethis::use_data(risk, overwrite = T)
 
 
 # NLP Shell

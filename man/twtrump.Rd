@@ -3,7 +3,7 @@
 \docType{data}
 \name{twtrump}
 \alias{twtrump}
-\title{twtrump}
+\title{Tweets data from Donald Trump}
 \format{
 data frame
 }
@@ -11,6 +11,6 @@ data frame
 twtrump
 }
 \description{
-Trump tweets from 2016: http://www.trumptwitterarchive.com/archive
+Trump tweets from 2016-2020
 }
 \keyword{datasets}

@@ -3,7 +3,7 @@
 \docType{data}
 \name{risk}
 \alias{risk}
-\title{risk}
+\title{Exposure data for Risk Management}
 \format{
 data frame
 }

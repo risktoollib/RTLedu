@@ -3,7 +3,7 @@
 \docType{data}
 \name{sp500_desc}
 \alias{sp500_desc}
-\title{sp500_desc}
+\title{S&P500 components data}
 \format{
 data frame
 }

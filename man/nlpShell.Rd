@@ -3,7 +3,7 @@
 \docType{data}
 \name{nlpShell}
 \alias{nlpShell}
-\title{nlpShell}
+\title{Scraped data from Shell speeches}
 \format{
 list
 }

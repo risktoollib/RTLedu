@@ -1,8 +1,8 @@
 Package: RTLedu
 Type: Package
-Title: Learnr Modules in Finance
+Title: 'Learnr' Modules in Finance
 Version: 0.0.1
-Date: 2021-12-31
+Date: 2022-01-01
 Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")))
 Description: Build to support the 'RTL' package in education and market practitioners learning R, Finance and Commodities.
 License: GPL (>= 3)
@@ -17,10 +17,13 @@ Imports:
     lubridate,
     tidyquant,
     moments,
-    PerformanceAnalytics,
     scales,
-    tibbletime
+    dplyr,
+    timetk,
+    ggplot2,
+    broom,
+    corrr,
+    plotly
 RoxygenNote: 7.1.2
 Depends: 
     R (>= 4.0)
-Remotes: rstudio/gradethis

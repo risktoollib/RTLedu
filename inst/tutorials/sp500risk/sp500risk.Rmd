@@ -9,7 +9,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
 library(learnr)
-library(tidyverse)
+library(dplyr)
 library(lubridate)
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = FALSE,
                       fig.width = 9, fig.height = 6,fig.align = "center",
@@ -71,16 +71,15 @@ The task consists in:
 
 ## Grading
 
+If you take this exercise as part of a graded item in a course, see the Grading section in class notes. Grading is consistent with learning objectives.
+
 ```{r, echo=F,include=TRUE, fig.height=3}
-tibble(Competency=c("RMardown",
+dplyr::tibble(Competency=c("RMardown",
                     "Presentation",
                     "Results"),
            Measure=c(".Rmd renders without errors.",
                    "It is readable as it would in a Word document and clear without unnecessary code and warnings being displayed.",
-                   "Correct results"),
-           Score=c("2 points",
-                   "3 points",
-                   "5 points")) %>% bd_lo()
+                   "Correct results")) %>% bd_lo()
 ```
 
 ## Stock Universe 

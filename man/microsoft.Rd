@@ -3,7 +3,7 @@
 \docType{data}
 \name{microsoft}
 \alias{microsoft}
-\title{microsoft}
+\title{Microsoft stock price data}
 \format{
 data frame
 }

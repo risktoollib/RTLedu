@@ -3,7 +3,7 @@
 \docType{data}
 \name{sp500_prices}
 \alias{sp500_prices}
-\title{sp500_prices}
+\title{sp500_prices data}
 \format{
 data frame
 }

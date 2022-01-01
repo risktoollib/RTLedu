@@ -9,9 +9,10 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
 library(learnr)
-library(tidyverse)
+library(dplyr)
+library(tidyr)
 library(lubridate)
-library(RTLquiz)
+library(RTLedu)
 knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
@@ -40,22 +41,22 @@ knitr::opts_chunk$set(
 
 ## Data
 
-The `RTLquiz::deals` dataset contains trades in a commodity trading game. 
+The `RTLedu::deals` dataset contains trades in a commodity trading game. 
 
 + `user` refers to the trader.
 + `DEALPRICE` refers to the trade execution price.
 + The prices and units depend on the futures contract traded.
 
 ```{r}
-RTLquiz::deals
+RTLedu::deals
 ```
 
-The `RTLquiz::risk` dataset contains the output of the End Of Day ("EOD") risk process.
+The `RTLedu::risk` dataset contains the output of the End Of Day ("EOD") risk process.
 
 + `MARKPRICE` refers to the MTM on each EOD.
 
 ```{r}
-RTLquiz::risk
+RTLedu::risk
 ```
 
 

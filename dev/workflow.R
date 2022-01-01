@@ -1,0 +1,27 @@
+usethis::use_readme_md()
+usethis::use_pipe()
+usethis::use_data_raw()
+usethis::use_github_action_check_release()
+usethis::use_github_actions_badge(name = "R-CMD-check", repo_spec = NULL)
+
+usethis::use_package("corrr")
+usethis::use_package("dplyr")
+usethis::use_package("ggplot2")
+usethis::use_package("learnr")
+usethis::use_package("magrittr")
+usethis::use_package("gt")
+usethis::use_package("lubridate")
+usethis::use_package("tidyquant")
+usethis::use_package("timetk")
+usethis::use_package("moments")
+usethis::use_package("scales")
+usethis::use_package("broom")
+usethis::use_package("RTL")
+usethis::use_package("plotly")
+
+
+# Build
+attachment::att_from_rscripts()
+urlchecker::url_check()
+urlchecker::url_update()
+devtools::check_win_release()

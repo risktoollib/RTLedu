@@ -3,7 +3,7 @@
 \docType{data}
 \name{deals}
 \alias{deals}
-\title{deals}
+\title{Transaction data for Risk Management}
 \format{
 data frame
 }

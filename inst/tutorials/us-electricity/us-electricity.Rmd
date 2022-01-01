@@ -9,7 +9,8 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
 library(learnr)
-library(tidyverse)
+library(dplyr)
+library(gt)
 library(lubridate)
 knitr::opts_chunk$set(
   message = FALSE,
@@ -22,7 +23,6 @@ knitr::opts_chunk$set(
   strip.white = TRUE,
   out.width = '100%'
 )
-library(gt)
 bd_txt <-
   function(x,
            title = "Grading",
@@ -71,8 +71,6 @@ to = lubridate::rollback(Sys.Date())
 + You are an analyst at a research firm.
 + US clients understand that climate policies have resulted in a shift towards less carbon intensive electricity generation.
 + Your leader has asked you to produce a short data-driven report that can be used as summary.
-
-If you take this exercise as part of a graded item in a course, see the Grading section in online notes.
 
 ## Skills Practiced
 
@@ -129,21 +127,18 @@ Write a 2-5 lines summary at the beginning of the document on your findings.
 
 ## Grading
 
-This is an advanced class in your learning in your degree and/or professional workplace and you are judged both on absolute and relative standards versus your peers.
+If you take this exercise as part of a graded item in a course, see the Grading section in class notes. Grading is consistent with learning objectives.
 
 ```{r, echo=F,include=TRUE, fig.height=3}
-tibble(
+dplyr::tibble(
   Competency = c("Summary",
                  "Presentation",
                  "Accuracy code and results"),
   Measure = c(
     "Ability to distill and communicate key findings.",
     "Professionally rendered presentations. Clean document of unnecessary clutter not relevant to the story. Clients are interested in the story, not the steps you have taken in coding it. Format properly your charts and tables.",
-    "Accurate implementation for each of the four questions."
-  ),
-  Score = c("2.5 points",
-            "7.5 points",
-            "10 points")
+    "Accurate implementation"
+  )
 ) %>% bd_lo()
 ```
 

@@ -7,7 +7,6 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
-library(tidyverse)
 fwd <- function(S0 = 1000,
                 r = 0.1,
                 d = 0,

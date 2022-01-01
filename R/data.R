@@ -1,34 +1,34 @@
-#' sp500_desc
+#' S&P500 components data
 #' @description S&P500 components and metadata
 #' @format data frame
 "sp500_desc"
 
-#' sp500_prices
+#' sp500_prices data
 #' @description S&P500 components monthly adjusted stock price returns
 #' @format data frame
 "sp500_prices"
 
-#' twtrump
-#' @description Trump tweets from 2016: http://www.trumptwitterarchive.com/archive
+#' Tweets data from Donald Trump
+#' @description Trump tweets from 2016-2020
 #' @format data frame
 "twtrump"
 
-#' nlpShell
+#' Scraped data from Shell speeches
 #' @description Shell transcripts of speeches during the last 5 years
 #' @format list
 "nlpShell"
 
-#' microsoft
+#' Microsoft stock price data
 #' @description Microsoft Stock prices
 #' @format data frame
 "microsoft"
 
-#' deals
+#' Transaction data for Risk Management
 #' @description Transaction data from an ETRM system
 #' @format data frame
 "deals"
 
-#' risk
+#' Exposure data for Risk Management
 #' @description Risk data from an ETRM system
 #' @format data frame
 "risk"
