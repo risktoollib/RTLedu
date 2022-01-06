@@ -16,9 +16,7 @@ mtmPLexpo(name = "mtmPLexpo")
 Given a set a transaction you must compute Profit and Loss and current Exposure
 }
 \examples{
-\dontrun{
 mtmPLexpo()
-}
 }
 \author{
 Philippe Cote

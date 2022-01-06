@@ -5,9 +5,7 @@
 #' @export spot2fut
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
 #' spot2fut()
-#' }
 
 spot2fut <- function(name = "spot2fut") {
   learnr::run_tutorial(name = name, package = "RTLedu")

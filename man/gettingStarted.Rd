@@ -16,9 +16,7 @@ gettingStarted(name = "getting-started")
 Testing your understanding of R concepts.
 }
 \examples{
-\dontrun{
 gettingStarted()
-}
 }
 \author{
 Philippe Cote

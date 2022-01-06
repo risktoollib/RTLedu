@@ -5,9 +5,7 @@
 #' @export orders
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
 #' orders()
-#' }
 
 orders <- function(name = "orders") {
   learnr::run_tutorial(name = name, package = "RTLedu")

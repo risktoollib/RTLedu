@@ -16,9 +16,7 @@ orders(name = "orders")
 Practice your understanding of market and limit orders.
 }
 \examples{
-\dontrun{
 orders()
-}
 }
 \author{
 Philippe Cote

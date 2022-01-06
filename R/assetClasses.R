@@ -5,10 +5,8 @@
 #' @return 'learnr' module
 #' @export assetClasses
 #' @author Philippe Cote
-#' @examples
-#' \dontrun{
+#' @example
 #' assetClasses()
-#' }
 
 assetClasses <- function(name = "asset-classes") {
   learnr::run_tutorial(name = name, package = "RTLedu")

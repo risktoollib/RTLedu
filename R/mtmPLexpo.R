@@ -5,9 +5,7 @@
 #' @export mtmPLexpo
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
 #' mtmPLexpo()
-#' }
 
 mtmPLexpo <- function(name = "mtmPLexpo") {
   learnr::run_tutorial(name = name, package = "RTLedu")

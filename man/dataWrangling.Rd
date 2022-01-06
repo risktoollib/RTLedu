@@ -16,9 +16,7 @@ dataWrangling(name = "data-wrangling")
 Testing your understanding of basic data wrangling concepts.
 }
 \examples{
-\dontrun{
 dataWrangling()
-}
 }
 \author{
 Philippe Cote

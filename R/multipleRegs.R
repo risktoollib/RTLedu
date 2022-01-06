@@ -6,9 +6,7 @@
 #' @export multipleRegs
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
 #' multipleRegs()
-#' }
 
 multipleRegs <- function(name = "multivariate-regressions") {
   learnr::run_tutorial(name = name, package = "RTLedu")

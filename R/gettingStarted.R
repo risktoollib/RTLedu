@@ -5,9 +5,7 @@
 #' @export gettingStarted
 #' @author Philippe Cote
 #' @examples
-#' \dontrun{
 #' gettingStarted()
-#' }
 
 gettingStarted <- function(name = "getting-started") {
   learnr::run_tutorial(name = name, package = "RTLedu")
