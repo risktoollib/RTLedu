@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/risktoollib/RTLedu/workflows/R-CMD-check/badge.svg)](https://github.com/risktoollib/RTLedu/actions)
+[![Codecov test coverage](https://codecov.io/gh/risktoollib/RTLedu/branch/master/graph/badge.svg)](https://app.codecov.io/gh/risktoollib/RTLedu?branch=master)
 <!-- badges: end -->
 
 Send feedback to `pcote@ualberta.ca`. We welcome feedback, suggestions and collaborators.

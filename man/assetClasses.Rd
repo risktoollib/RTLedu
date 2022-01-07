@@ -16,6 +16,9 @@ assetClasses(name = "asset-classes")
 Analyzing financial returns across multiple asset classes.
 Your task is to perform analysis and render it as effective business communication.
 }
+\examples{
+assetClasses()
+}
 \author{
 Philippe Cote
 }

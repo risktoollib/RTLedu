@@ -1,29 +1,39 @@
-Package: RTLedu
 Type: Package
+Package: RTLedu
 Title: 'Learnr' Modules in Finance
 Version: 0.0.1
 Date: 2022-01-04
-Authors@R: c(person("Philippe", "Cote", email = "pcote@ualberta.ca", role = c("aut", "cre")))
-Description: Build to support the 'RTL' package in education and market practitioners learning R, Finance and Commodities.
+Authors@R: 
+    person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre"))
+Description: Build to support the 'RTL' package in education and market
+    practitioners learning R, Finance and Commodities.
 License: GPL (>= 3)
 URL: https://github.com/risktoollib/RTLedu
+Depends: 
+    R (>= 4.0)
+Imports: 
+    broom,
+    corrr,
+    dplyr,
+    ggplot2,
+    gt,
+    learnr,
+    lubridate,
+    magrittr,
+    moments,
+    rlang,
+    plotly,
+    scales,
+    tidyquant,
+    timetk,
+    lifecycle,
+    cli,
+    glue,
+    withr
+Suggests: 
+    covr
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
-Imports: 
-    learnr,
-    magrittr,
-    gt,
-    lubridate,
-    tidyquant,
-    moments,
-    scales,
-    dplyr,
-    timetk,
-    ggplot2,
-    broom,
-    corrr,
-    plotly
 RoxygenNote: 7.1.2
-Depends: 
-    R (>= 4.0)
+Roxygen: list(markdown = TRUE)
