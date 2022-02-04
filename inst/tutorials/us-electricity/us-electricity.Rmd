@@ -120,7 +120,7 @@ Write a 2-5 lines summary at the beginning of the document on your findings.
 
 + Use monthly data since `Jan-2010`.
 + Use tidy data with long and wide dataframes as you see fit. 
-+ To compute the monthly changes use the absolute change instead of percentages and beware whether datea are sorted ascending or descending before computing changes.
++ To compute the monthly changes use the absolute change instead of percentages and beware whether dates are sorted ascending or descending before computing changes.
 + Assume the reader has no knowledge of the EIA series ID: Rename them so it's clear what they are without spaces in the new names to facilitate your workflow.
 + Use tables and/or charts to communicate your story. 
 + As this is marketing material for clients, clean your output of code/warnings/... and format your tables and charts accordingly.
