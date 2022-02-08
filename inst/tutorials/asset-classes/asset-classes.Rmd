@@ -14,6 +14,8 @@ library(lubridate)
 library(gt)
 library(ggplot2)
 library(moments)
+library(glue)
+
 
 knitr::opts_chunk$set(
   message = FALSE,
@@ -66,13 +68,17 @@ bd_lo <- function(x, width = 700) {
 }
 
 
-from = as.Date("2008-01-01")
+from = as.Date("2012-01-01")
 to = lubridate::rollback(Sys.Date())
+tickers <-  c("TLT","USO","GLD","VNQ","SPY")
+asset1 <- tickers[2] 
+asset2 <- tickers[3] 
+cors <- c(20,100,252)
 ```
 
 ## Problem We Are Solving
 
-**This quiz consists in analyzing financial returns across multiple asset classes.**
+**This quiz consists in analyzing returns across multiple asset classes.**
 
 ### Asset classes considered:
 
@@ -83,25 +89,24 @@ to = lubridate::rollback(Sys.Date())
 + US equities with the [SPDR S&P 500 ETF](https://etfdb.com/etf/SPY/#etf-ticker-profile).
 
 ```{r}
-tickers <-  c("TLT","USO","GLD","VNQ","SPY")
+tickers
 ```
 
 ### Your Ask
 
-In a concise .Rmd using `tidy` (i.e. no `xts`), do the following:
+In a concise .Rmd using `tidy` workflow (i.e. no `xts`), do the following:
 
-1. Extract data from `r from` to `r to` and compute daily `log()` returns. It is not necessary to display in your document as this is the data wrangling of it.
-2. Plot a histogram of returns by asset class.
-3. Show a table of return distribution with each moments with a short commentary on they compare with a normal distribution.
-4. Show a plot of the correlation matrix between all assets.
-5. Show a chart of rolling correlation between `VNQ` and `SPY` with a rolling window of 20, 252 and 100 business days. You will be required to use `timetk::slidify()`.
-6. Compute the Jarque-Bera statistics.
+1. I am your business leader and, despite knowing markets at a high level, my Finance background is quite limited. Add a summary at the beginning of your document telling me in a few bullet points what key messages I should draw from your analysis so I can cut and paste them in a PowerPoint for my boss.   
+2. Extract data from `r from` to `r to` and compute daily `log()` returns adjusted for splits and dividends. Do not display in your document as this is the data wrangling of it and it serves no purpose in a business document.
+3. Plot histograms of returns by asset class in a manner that you can effectively visualize the comparison.
+4. Show a table of distribution moments of all assets. Complement with a short commentary on how they compare with a normal distribution.
+5. Show a plot of the correlation matrix between all assets.
+6. Show a chart of rolling correlations between `r asset1` and `r asset2` with windows of `r cors[1]`, `r cors[2]` and `r cors[3]` business days.
+7. Compute the Jarque-Bera statistics on all assets
 
-  + Display the results.
-  + State which one are normally distributed and which ones are not. 
-7. Compute the Kolmogorov-Smirnov (“KS”) on `SPY` returns and state whether the results indicate that the returns are normally distributed.
-8. I am your business leader and, despite knowing markets at a high level, my Finance background is quite limited... Tell me in a few bullet points what the key messages I should draw from your analysis so I can cut and paste them in a PowerPoint to my boss. Add this section at the beginning of the document in a summary section.  
-
+  + Display the results in a single table.
+  + State which one(s) are normally distributed and why. 
+8. Compute the Kolmogorov-Smirnov (“KS”) on `SPY` returns and state whether the results indicate that the returns are normally distributed.
 
 ## Grading
 
@@ -119,97 +124,4 @@ tibble(
   )
 ) %>% bd_lo()
 ```
-
-## Solution Hint
-
-Sample formatted charts and tables.
-
-```{r, echo = F, eval=T}
-#from = "2008-01-01"
-#to = "2021-01-31"
-
-r = "adjusted"
-#r = "close"
-
-ret <- tidyquant::tq_get(tickers,
-              get  = "stock.prices",
-              from = from,
-              to = to) %>% 
-  dplyr::transmute(date, symbol,value = get(r)) %>% 
-  dplyr::group_by(symbol) %>% 
-  dplyr::mutate(ret = log(value / dplyr::lag(value))) %>% stats::na.omit() 
-```
-
-
-```{r, r, echo = F, eval=T}
-ret %>% ggplot2::ggplot(aes(x = ret, col = symbol, fill = symbol)) + 
-  geom_histogram(aes(y = stat(width*density)), bins = 200,show.legend = FALSE) +
-  geom_rug(col = "black") +
-  facet_grid(symbol ~ .) +
-  coord_cartesian(xlim = c(-max(abs(ret$ret)),max(abs(ret$ret))))+
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) + 
-  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +
-  labs(title = "Log Returns Density Histogram",
-       y = "Density", x = "Log Returns")
-```
-
-```{r, echo = F, eval=T}
-ret %>% 
-  dplyr::summarise(mu = mean(ret),
-                   sigma = sd(ret),
-                   skew = moments::skewness(ret),
-                   kurt = moments::kurtosis(ret),
-                   .groups = "keep") %>% 
-  dplyr::mutate(dplyr::across(where(is.numeric), round, 5)) %>% 
-  dplyr::ungroup() %>% 
-  bd_txt(title = "Distribution Moments", subtitle = "") %>% 
-  gt::fmt_number(columns = c(skew,kurt), decimals = 2) %>% 
-  gt::fmt_percent(columns = c(mu, sigma), decimals = 3)
-```
-
-
-```{r, echo = F, eval=T}
-ret.wide <- ret %>%  
-  tidyr::pivot_wider(date, names_from = symbol, values_from = ret) %>% 
-  stats::na.omit() 
-corrr::correlate(ret.wide %>% dplyr::select(-date), 
-                 use = "everything") %>% 
-  corrr::shave() %>% 
-  corrr::fashion(leading_zeros = TRUE)
-```
-
-
-```{r, echo = F, eval=T}
-fig.title = "Correlation Instability between VNQ and SPY"
-cor20 <- timetk::slidify(.f = ~cor(.x, .y),
-                         .period = 20,
-                         .align = "right")
-cor252 <- timetk::slidify(.f = ~cor(.x, .y),
-                         .period = 252,
-                         .align = "right")
-cor1000 <- timetk::slidify(.f = ~cor(.x, .y),
-                         .period = 1000,
-                         .align = "right")
-
-ret.wide %>% dplyr::mutate(cor20 = cor20(VNQ,SPY),
-                           cor252 = cor252(VNQ,SPY),
-                           cor1000 = cor1000(VNQ,SPY),
-                           cor = cor(VNQ,SPY)) %>% 
-  stats::na.omit() %>%
-  dplyr::select(date,dplyr::starts_with("cor")) %>% 
-  tidyr::pivot_longer(-date, "series","value") %>% 
-  ggplot(aes(x = date,y = value, col = series)) + geom_line() +
-  labs(title = fig.title,x = "",y = "")
-```
-
-```{r, echo = F, eval=T}
-library(broom)
-ret %>% dplyr::do(broom::tidy(tseries::jarque.bera.test(.$ret)))
-```
-
-```{r, echo = F, eval=T}
-spy <- ret %>% dplyr::filter(symbol == "SPY") %>% dplyr::ungroup() %>% dplyr::select(ret)
-stats::ks.test(spy, y = "pnorm")
-```
-
 
