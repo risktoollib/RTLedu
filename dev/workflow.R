@@ -18,7 +18,8 @@ usethis::use_package("scales")
 usethis::use_package("broom")
 usethis::use_package("RTL")
 usethis::use_package("plotly")
-
+usethis::use_package("RTL")
+usethis::use_package("sp")
 
 # Build
 attachment::att_from_rscripts()

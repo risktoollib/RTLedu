@@ -32,3 +32,18 @@
 #' @description Risk data from an ETRM system
 #' @format data frame
 "risk"
+
+#' Crude Oil Trading Hubs
+#' @description Crude Oil Trading Hubs
+#' @format data frame
+"tradeHubs"
+
+#' EIA Crude Pipelines
+#' @description EIA Crude Pipelines GIS coordinates
+#' @format data frame
+"crudepipelines"
+
+#' EIA Refineries
+#' @description EIA Refineries GIS coordinates
+#' @format data frame
+"refineries"

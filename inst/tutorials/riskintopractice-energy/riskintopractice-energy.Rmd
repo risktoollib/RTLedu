@@ -1,0 +1,231 @@
+---
+title: "Canadian Energy Exports"
+output: 
+  html_document:
+    theme:
+      version: 5
+      bg: rgb(43, 62, 80)
+      fg: rgb(235, 235, 235)
+      primary: "lime"
+      secondary: "#51616F"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+# global variables
+from = as.Date("2010-01-01")
+to = lubridate::rollback(Sys.Date())
+storageDay <- "2020-05-15"
+WorkingCapCost <- .05
+storageCost <- 0.4
+
+
+#if (requireNamespace("thematic")) thematic::thematic_rmd(font = "auto")
+library(dplyr)
+library(gt)
+library(lubridate)
+library(tidyverse)
+library(RTL)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 9,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+bd_txt <-
+  function(x,
+           title = "Grading",
+           subtitle = "-",
+           width = 700) {
+    if (nchar(gsub(" ", "", subtitle)) == 0) {
+      subtitle <- "-"
+    }
+    y <- x %>% gt::gt() %>%
+      gt::tab_header(title = title, subtitle = subtitle) %>%
+      gt::tab_style(style = cell_text(weight = "bold"),
+                    locations = cells_column_labels(colnames(.))) %>%
+      gt::tab_style(style = list(
+        cell_fill(color = "royalblue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_title(groups = c("title")))
+    y = y %>% tab_options(table.width = px(width),
+                          table.font.size = pct(80))
+    return(y)
+  }
+
+bd_lo <- function(x, width = 700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(
+      cell_fill(color = "royalblue"),
+      cell_text(color = "white", weight = "bold")
+    ),
+    locations = cells_title(groups = c("title")))
+  y = y %>% tab_options(table.width = px(width),
+                        table.font.size = pct(80))
+  return(y)
+}
+
+
+
+```
+
+## {.tabset .tabset-pills}
+
+You are asked to demonstrate your recently acquired skills in risk management in a business context. The  project will also prepare you gradually for the final Risk Management hedging project.
+
+### Framing the Problem
+
++ You were recently hired by a top tier Investment Bank, `EverRight Securities`.
++ `EverRight` hires MBAs both for their expertise and professionalism in communication with clients.
++ `EverRight` was recently approached by `GreatPlains` to produce a fact-based short paper to understand context and risk associated with Oil and Natural Gas in Canada.
++ `GreatPlains` is a consortium of senior executives with a background in extracting industries and require this knowledge to better understand the economics of monetizing resources after a molecule is produced.
+
+### Skills Practiced & Requirements
+
++ Use of APIs for Enterprise workflow i.e. strictly no Excel, csv or use of other local files.
++ Data wrangling and parsing. You must use tidy data with long and wide data frames.
++ Choice of effective visualization in communication.
++ Data analytics and an ability to tell a story from it.
++ Foundation risk management skills.
++ Clean, clear and concise rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. I reserve the right to award a maximum of `r scales::percent(.5)` for any document not properly presented. Some characteristics of a properly presented document:
+
+    + A clear heading with title and who it is from.
+    + Cleaning organized by business questions asked i.e. not a technical step rendering of your workflow.
+    + Charts properly formatted and self explanatory.
+    + ...
+
++ Each question should be answered as if you were presenting to a client, not a demonstration of code and steps taken. You would not show code to a client!
++ Learning to learn: Using new packages and functions as you see fit to achieve the desired outcome.
+
+Whilst there are many packages to format tables the following are suggested:
+
++ [gt](https://gt.rstudio.com/).
++ [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+
+### Data
+
+You will use the following sources of data:
+
+1. You will be using data from the [US Energy Information Administration](https://www.eia.gov/) and the API webpage is available at [EIA Open Data](https://www.eia.gov/opendata/). You may refer to the `bootcamp` section 7.3 after you have registered and obtained your own API key. The `eia`, `EIAdata` and `RTL` packages provide functions to access the API once you have your API key.
+2. `Morningstar Commodities` for futures contracts using `RTL::getPrices()` and your credentials.
+3. The `RTL::fizdiffs` randomized data sets of Crude oil prices in key trading locations across North America:
+      
+    + Edmonton, AB.
+    + Hardisty, AB.
+    + Cushing, OK.
+    + Houston, TX.
+
+```{r, fig.cap = fig.title, out.width="800px"}
+fig.title = "Simplified NA Energy Infrastructure Maps"
+require(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = -98, lat = 42, zoom = 3.5) %>%
+  leaflet::addLegend(
+    "topleft",
+    colors = c("red", "blue"),
+    labels = c("Refinery", "Oil Pipelines"),
+    opacity = 0.8
+  ) %>%
+  addPolylines(
+    data = RTLedu::crudepipelines,
+    color = "blue",
+    weight = 0.8,
+    popup = ~ Pipename,
+    group = "oil"
+  ) %>%
+  addCircleMarkers(
+    data = RTLedu::refineries,
+    color = ~ "red",
+    radius =  ~ AD_Mbpd / 100,
+    popup = ~ paste0(Corp, "-", Site),
+    group = "oil"
+  ) %>% 
+  addMarkers(data = tradeHubs, lng = ~long, lat = ~lat,popup = ~hub,label = ~hub)
+```
+
+### Your Ask
+
+Using Rmarkdown, render into a clean, clear, concise `html` document to be sent to the client. 
+
+Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca`.
+
+#### Part 1: Canadian Exports (3.5 points)
+
+`GreatPlains` needs context on the level and trends of Canadian exports to the US since `r from`.
+
+Use the following data from the `EIA` to tell the story.
+
++ [U.S. Net Imports from Canada of Crude Oil, Monthly](https://www.eia.gov/opendata/qb.php?category=323934&sdid=PET.MCRNTUSCA2.M).
++ [U.S. Natural Gas Pipeline Imports From Canada, Monthly](https://www.eia.gov/opendata/qb.php?category=475737&sdid=NG.N9102CN2.M).
+
+#### Part 2: Commodity Valuation (5 points)
+
+The benchmark crude oil grade in Alberta is `Western Canadian Select ("WCS")`.  `GreatPlains` executives need factual information on the value of `WCS` a producer may obtain by selling in Alberta or exporting to Houston. This export additional value is then compared to the costs and risks of taking on pipeline commitments.
+
+Using the `RTL::fizdiffs` randomized dataset below, prepare the following in your report:
+
+1. Plot a time series of the values in Alberta, Houston and the price difference that could be realized by selling the crude in Houston instead of Albert (a delivery location arbitrage).
+2. Show what would be the average gain of exporting from Alberta to Houston.
+2. Compute and discuss the average daily risk in dollars per barrel for the value in Alberta, in Houston and in the export arbitrage.
+
+```{r, echo = TRUE}
+RTL::fizdiffs %>% 
+  dplyr::transmute(date = date,
+                   Alberta = WTI.CMA01 + WCS.HDY,
+                   Houston = WTI.CMA01 + WCS.HOU)
+```
+
+#### Part 3: Delivery Timing  (12.5 points)  
+
+`GreatPlains` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html). They are considering making decisions on storing from the **2nd** to the **3rd** contract month.
+
+You, as a specialist, know that there are futures contracts for different delivery months and using data from Morningstar from `r as.Date(from)` to `r as.Date(to)`:
+
+1. Describe and explain the relevance of the futures contract delivery location, settlement date and settlement method.
+2. Chart the time series of this storage spread over time assuming zero costs of storage and financing.
+3. Using `r as.Date(storageDay)`, compute whether it would economical to store assuming a financing cost of `r scales::percent(WorkingCapCost)` per annum and monthly storage costs of `r scales::dollar(storageCost)` per barrel.
+4. As different firms may have different working capital costs, show a sensitivity chart of the value of storage versus working capital costs between `r scales::percent(.01)` and `r scales::percent(.1)`. Use `mapply()`...
+
+#### Part 4: Project Financing (4 points)  
+
+```{r}
+bankOffer <- dplyr::tibble(maturity = c(1,3,5,7,10), rate = c(0.03,0.035,.04,.0425,0.05))
+```
+
+`GreatPlains` often has to provide advice on matters of financing terms. In this specific case, the client has the choice of financing for:
+
++ A `r bankOffer$maturity[4]`-year term that will then be refinanced at maturity for 3 years.
++ A full `r bankOffer$maturity[5]`-year term. 
+
+The problem they have is that their usual decision-making process is of low quality: they have no idea as of today what the implied refinancing rate is and therefore engage in broad qualitative conversations around the future path of interest rates.
+
+1. Assuming interest rates are simple annual compounding, what is the implied 3-year annualized refinancing rate?
+1. Assuming interest rates are continuous compounding, what is the implied 3-year annualized refinancing rate?
+
+```{r, echo=TRUE}
+bankOffer
+```
+
+
+### Grading
+
+This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty.
+
+See Grading section of the class notes for more details.

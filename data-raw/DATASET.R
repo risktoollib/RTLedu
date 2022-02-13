@@ -4,6 +4,16 @@ library(jsonlite)
 library(quantmod)
 library(timetk)
 
+## Trading Hubs
+
+tradeHubs <- dplyr::tibble(lat = c(53.54623,52.6735,35.94068,30.00623), long = c(-113.34684,-111.3075,-96.74536,-93.96882), hub = c("Edmonton","Hardisty", "Cushing", "Nederland"))
+usethis::use_data(tradeHubs, overwrite = T)
+
+crudepipelines <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
+usethis::use_data(crudepipelines, overwrite = T)
+
+refineries <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")
+usethis::use_data(refineries, overwrite = T)
 
 sp500_desc <- tq_index("SP500") %>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B|KEYS|WEC|XRAY"))
 sp500_prices <- tidyquant::tq_get(sp500_desc$symbol,
