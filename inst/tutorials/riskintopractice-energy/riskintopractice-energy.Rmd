@@ -102,7 +102,7 @@ You are asked to demonstrate your recently acquired skills in risk management in
 + Data wrangling and parsing. You must use tidy data with long and wide data frames.
 + Choice of effective visualization in communication.
 + Data analytics and an ability to tell a story from it.
-+ Foundation risk management skills.
++ Foundational risk management skills.
 + Clean, clear and concise rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. I reserve the right to award a maximum of `r scales::percent(.5)` for any document not properly presented. Some characteristics of a properly presented document:
 
     + A clear heading with title and who it is from.
@@ -110,7 +110,7 @@ You are asked to demonstrate your recently acquired skills in risk management in
     + Charts properly formatted and self explanatory.
     + ...
 
-+ Each question should be answered as if you were presenting to a client, not a demonstration of code and steps taken. You would not show code to a client!
++ Each question should be answered as if you were presenting to a client: you would not show code to a client!
 + Learning to learn: Using new packages and functions as you see fit to achieve the desired outcome.
 
 Whilst there are many packages to format tables the following are suggested:
@@ -129,7 +129,7 @@ You will use the following sources of data:
     + Edmonton, AB.
     + Hardisty, AB.
     + Cushing, OK.
-    + Houston, TX.
+    + Houston (Nederland), TX.
 
 ```{r, fig.cap = fig.title, out.width="800px"}
 fig.title = "Simplified NA Energy Infrastructure Maps"
@@ -157,7 +157,7 @@ leaflet() %>%
     popup = ~ paste0(Corp, "-", Site),
     group = "oil"
   ) %>% 
-  addMarkers(data = tradeHubs, lng = ~long, lat = ~lat,popup = ~hub,label = ~hub)
+  addMarkers(data = RTLedu::tradeHubs, lng = ~long, lat = ~lat,popup = ~hub,label = ~hub)
 ```
 
 ### Your Ask
@@ -194,14 +194,27 @@ RTL::fizdiffs %>%
 
 #### Part 3: Delivery Timing  (12.5 points)  
 
-`GreatPlains` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html). They are considering making decisions on storing from the **2nd** to the **3rd** contract month.
+`GreatPlains` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html).
+
+```{r}
+RTL::dflong %>% 
+  dplyr::filter(series == "CL01") %>% 
+  plotly::plot_ly(x=~date, y = ~value,type="scatter", mode="lines") %>% 
+   plotly::layout(
+    title = list(text = "WTI Price", x = 0.05),
+    xaxis = list(title = ""),
+    yaxis = list(title = "$ per barrel")
+   )
+```
+
+They are considering making decisions on storing from the **2nd** to the **3rd** contract month.
 
 You, as a specialist, know that there are futures contracts for different delivery months and using data from Morningstar from `r as.Date(from)` to `r as.Date(to)`:
 
 1. Describe and explain the relevance of the futures contract delivery location, settlement date and settlement method.
 2. Chart the time series of this storage spread over time assuming zero costs of storage and financing.
-3. Using `r as.Date(storageDay)`, compute whether it would economical to store assuming a financing cost of `r scales::percent(WorkingCapCost)` per annum and monthly storage costs of `r scales::dollar(storageCost)` per barrel.
-4. As different firms may have different working capital costs, show a sensitivity chart of the value of storage versus working capital costs between `r scales::percent(.01)` and `r scales::percent(.1)`. Use `mapply()`...
+3. With `r as.Date(storageDay)` futures prices, compute whether it would economical to store assuming a financing cost of `r scales::percent(WorkingCapCost)` per annum and monthly storage costs of `r scales::dollar(storageCost)` per barrel.
+4. As different firms may have different working capital costs, show a sensitivity chart of the value of storage versus working capital costs between `r scales::percent(.01)` and `r scales::percent(.1)`. Use `mapply()` as covered in class or `purrr::pmap()` if you want to experiment. We will use the latter for more complex risk management problems at a later stage.
 
 #### Part 4: Project Financing (4 points)  
 
@@ -211,7 +224,7 @@ bankOffer <- dplyr::tibble(maturity = c(1,3,5,7,10), rate = c(0.03,0.035,.04,.04
 
 `GreatPlains` often has to provide advice on matters of financing terms. In this specific case, the client has the choice of financing for:
 
-+ A `r bankOffer$maturity[4]`-year term that will then be refinanced at maturity for 3 years.
++ A `r bankOffer$maturity[4]`-year term that will then be refinanced at maturity for the remaining `r bankOffer$maturity[5] - bankOffer$maturity[4] ` years.
 + A full `r bankOffer$maturity[5]`-year term. 
 
 The problem they have is that their usual decision-making process is of low quality: they have no idea as of today what the implied refinancing rate is and therefore engage in broad qualitative conversations around the future path of interest rates.
