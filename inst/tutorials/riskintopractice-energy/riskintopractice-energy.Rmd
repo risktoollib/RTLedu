@@ -166,7 +166,7 @@ Using Rmarkdown, render into a clean, clear, concise `html` document to be sent 
 
 Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca`.
 
-#### Part 1: Canadian Exports (3.5 points)
+#### Part A: Canadian Exports (3.5 points)
 
 `GreatPlains` needs context on the level and trends of Canadian exports to the US since `r from`.
 
@@ -175,7 +175,7 @@ Use the following data from the `EIA` to tell the story.
 + [U.S. Net Imports from Canada of Crude Oil, Monthly](https://www.eia.gov/opendata/qb.php?category=323934&sdid=PET.MCRNTUSCA2.M).
 + [U.S. Natural Gas Pipeline Imports From Canada, Monthly](https://www.eia.gov/opendata/qb.php?category=475737&sdid=NG.N9102CN2.M).
 
-#### Part 2: Commodity Valuation (5 points)
+#### Part B: Commodity Valuation (5 points)
 
 The benchmark crude oil grade in Alberta is `Western Canadian Select ("WCS")`.  `GreatPlains` executives need factual information on the value of `WCS` a producer may obtain by selling in Alberta or exporting to Houston. This export additional value is then compared to the costs and risks of taking on pipeline commitments.
 
@@ -183,7 +183,7 @@ Using the `RTL::fizdiffs` randomized dataset below, prepare the following in you
 
 1. Plot a time series of the values in Alberta, Houston and the price difference that could be realized by selling the crude in Houston instead of Albert (a delivery location arbitrage).
 2. Show what would be the average gain of exporting from Alberta to Houston.
-2. Compute and discuss the average daily risk in dollars per barrel for the value in Alberta, in Houston and in the export arbitrage.
+3. Compute and discuss the average daily risk in dollars per barrel for the value in Alberta, in Houston and in the export arbitrage.
 
 ```{r, echo = TRUE}
 RTL::fizdiffs %>% 
@@ -192,7 +192,7 @@ RTL::fizdiffs %>%
                    Houston = WTI.CMA01 + WCS.HOU)
 ```
 
-#### Part 3: Delivery Timing  (12.5 points)  
+#### Part C: Delivery Timing  (12.5 points)  
 
 `GreatPlains` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html).
 
@@ -216,7 +216,7 @@ You, as a specialist, know that there are futures contracts for different delive
 3. With `r as.Date(storageDay)` futures prices, compute whether it would economical to store assuming a financing cost of `r scales::percent(WorkingCapCost)` per annum and monthly storage costs of `r scales::dollar(storageCost)` per barrel.
 4. As different firms may have different working capital costs, show a sensitivity chart of the value of storage versus working capital costs between `r scales::percent(.01)` and `r scales::percent(.1)`. Use `mapply()` as covered in class or `purrr::pmap()` if you want to experiment. We will use the latter for more complex risk management problems at a later stage.
 
-#### Part 4: Project Financing (4 points)  
+#### Part D: Project Financing (4 points)  
 
 ```{r}
 bankOffer <- dplyr::tibble(maturity = c(1,3,5,7,10), rate = c(0.03,0.035,.04,.0425,0.05))
@@ -230,7 +230,7 @@ bankOffer <- dplyr::tibble(maturity = c(1,3,5,7,10), rate = c(0.03,0.035,.04,.04
 The problem they have is that their usual decision-making process is of low quality: they have no idea as of today what the implied refinancing rate is and therefore engage in broad qualitative conversations around the future path of interest rates.
 
 1. Assuming interest rates are simple annual compounding, what is the implied 3-year annualized refinancing rate?
-1. Assuming interest rates are continuous compounding, what is the implied 3-year annualized refinancing rate?
+2. Assuming interest rates are continuous compounding, what is the implied 3-year annualized refinancing rate?
 
 ```{r, echo=TRUE}
 bankOffer
