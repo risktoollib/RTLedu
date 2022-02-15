@@ -1,13 +1,13 @@
 ---
 title: "Market Making"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    theme: cosmo
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(gradethis)
-#gradethis::gradethis_setup()
 library(RTL)
 library(tidyverse)
 library(lubridate)
@@ -64,24 +64,31 @@ This section tests your ability to implement base concepts of averaging swap pri
 ### Expiry Dates
 
 ```{r}
-x = RTL::expiry_table %>% dplyr::filter(cmdty == "cmewti", Last.Trade > Sys.Date()) %>% 
+y <- RTL::expiry_table %>% dplyr::filter(cmdty == "cmewti", Last.Trade > Sys.Date()) %>% 
   dplyr::slice(1:20) %>% dplyr::sample_n(1) %>% 
-  dplyr::mutate(ticker = paste0(tick.prefix,Year,Month.Letter)) %>% 
-  dplyr::select(ticker, Last.Trade)
+  dplyr::mutate(ticker = paste0(tick.prefix,Year,Month.Letter)) 
+x <- y %>% dplyr::select(ticker, Last.Trade)
 cc <- stringr::str_replace_all(x$ticker,"[^[:alnum:]]","")
 dd <-  as.character(x$Last.Trade)
 sw <-  expiry_table %>% dplyr::filter(cmdty == "cmewti", Last.Trade >= dd) %>% slice(1:3)
 ```
 
-What is expiry date for `r cc`? Type your answer as `"YYYY-MM-DD"` including the quotation marks and click `Submit Answer`.
 
-```{r expiry, exercise = TRUE, exercise.timelimit = 120}
-
-```
- 
 ```{r expiry-check}
-gradethis::grade_result(
-  gradethis::pass_if(~identical(.result, as.character(x$Last.Trade)))
+learnr::quiz(
+  learnr::question_radio(
+    paste("What is expiry date for",cc,"?"),
+    learnr::answer(y$First.Delivery),
+    learnr::answer(lubridate::rollback(y$First.Delivery)),
+    learnr::answer(lubridate::rollback(y$Last.Trade)),
+    learnr::answer(y$Last.Trade, correct = TRUE),
+    learnr::answer(y$Last.Trade - 1),
+    learnr::answer(y$Last.Trade + 1),
+    learnr::answer(y$Last.Trade + 2),
+    incorrect = "See [Contract Specifications](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html) and try again.",
+    random_answer_order = TRUE,
+    allow_retry = FALSE
+  )
 )
 ```
 
@@ -96,7 +103,7 @@ learnr::question(paste("Select the futures contract(s) applicable to pricing a W
                  learnr::answer(paste(lubridate::month(sw[3,"Month"]$Month, label = T, abbr = F) %>% as.character(),sw[3,"Year"]$Year), correct = TRUE))
 ```
 
-## Game 1: Swap Exposure
+## Game 1 :: Swap Exposure
 
 ```{r, context = "data"}
 # Base random date prices - wide
@@ -172,7 +179,7 @@ observe({
 
 Click `Next` when you are done to compare your answer with correct results.
 
-## Game 1: Results
+## Game 1 :: Results
 
 ```{r}
 rHandsontableOutput("table2")
@@ -202,11 +209,11 @@ output$table2 <- rhandsontable::renderRHandsontable({
   })
 ```
 
-## Game 2 - Hedging
+## Game 2 :: Hedging
 
 + Now you are offered a calendar year swap that you need to hedge.
 + You will have 
 
-## Gam2 - PL
+## Gam2 :: PL
 
 
