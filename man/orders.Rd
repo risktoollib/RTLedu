@@ -16,7 +16,9 @@ orders(name = "orders")
 Practice your understanding of market and limit orders.
 }
 \examples{
-orders()
+if (interactive()) {
+  orders()
+}
 }
 \author{
 Philippe Cote

@@ -5,7 +5,9 @@
 #' @export orders
 #' @author Philippe Cote
 #' @examples
-#' orders()
+#' if (interactive()) {
+#'   orders()
+#' }
 
 orders <- function(name = "orders") {
   learnr::run_tutorial(name = name, package = "RTLedu")

@@ -5,7 +5,10 @@
 #' @return 'learnr' module
 #' @export assetClasses
 #' @author Philippe Cote
-#' @examples assetClasses()
+#' @examples
+#' if (interactive()) {
+#'   assetClasses()
+#' }
 
 assetClasses <- function(name = "asset-classes") {
   learnr::run_tutorial(name = name, package = "RTLedu")

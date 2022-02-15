@@ -17,7 +17,9 @@ Assignment using data from the Energy Information Administration (EIA) API.
 Your task is to perform analysis and render it as effective business communication.
 }
 \examples{
-usElectricity()
+if (interactive()) {
+  usElectricity()
+}
 }
 \author{
 Philippe Cote

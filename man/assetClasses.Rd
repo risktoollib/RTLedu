@@ -17,7 +17,9 @@ Analyzing financial returns across multiple asset classes.
 Your task is to perform analysis and render it as effective business communication.
 }
 \examples{
-assetClasses()
+if (interactive()) {
+  assetClasses()
+}
 }
 \author{
 Philippe Cote

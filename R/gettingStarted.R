@@ -5,7 +5,9 @@
 #' @export gettingStarted
 #' @author Philippe Cote
 #' @examples
-#' gettingStarted()
+#' if (interactive()) {
+#'   gettingStarted()
+#' }
 
 gettingStarted <- function(name = "getting-started") {
   learnr::run_tutorial(name = name, package = "RTLedu")

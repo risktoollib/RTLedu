@@ -5,7 +5,9 @@
 #' @export mtmPLexpo
 #' @author Philippe Cote
 #' @examples
-#' mtmPLexpo()
+#' if (interactive()) {
+#'   mtmPLexpo()
+#' }
 
 mtmPLexpo <- function(name = "mtmPLexpo") {
   learnr::run_tutorial(name = name, package = "RTLedu")

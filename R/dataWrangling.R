@@ -5,7 +5,9 @@
 #' @export dataWrangling
 #' @author Philippe Cote
 #' @examples
-#' dataWrangling()
+#' if (interactive()) {
+#'   dataWrangling()
+#' }
 
 dataWrangling <- function(name = "data-wrangling") {
   learnr::run_tutorial(name = name, package = "RTLedu")

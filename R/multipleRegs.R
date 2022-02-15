@@ -6,7 +6,9 @@
 #' @export multipleRegs
 #' @author Philippe Cote
 #' @examples
-#' multipleRegs()
+#' if (interactive()) {
+#'   multipleRegs()
+#' }
 
 multipleRegs <- function(name = "multivariate-regressions") {
   learnr::run_tutorial(name = name, package = "RTLedu")

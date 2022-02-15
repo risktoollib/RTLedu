@@ -17,7 +17,9 @@ Apply a practitioner's mindset to decide what to include and excludes in your mu
 Your task is to perform analysis and render it as effective business communication.
 }
 \examples{
-multipleRegs()
+if (interactive()) {
+  multipleRegs()
+}
 }
 \author{
 Philippe Cote

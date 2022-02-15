@@ -16,7 +16,9 @@ gettingStarted(name = "getting-started")
 Testing your understanding of R concepts.
 }
 \examples{
-gettingStarted()
+if (interactive()) {
+  gettingStarted()
+}
 }
 \author{
 Philippe Cote

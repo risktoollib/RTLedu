@@ -6,7 +6,9 @@
 #' @export usElectricity
 #' @author Philippe Cote
 #' @examples
-#' usElectricity()
+#' if (interactive()) {
+#'   usElectricity()
+#' }
 
 usElectricity <- function(name = "us-electricity") {
   learnr::run_tutorial(name = name, package = "RTLedu")

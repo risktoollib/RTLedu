@@ -16,7 +16,9 @@ spot2fut(name = "spot2fut")
 Deepen and test our understanding of the important spot to futures relationship in Finance.
 }
 \examples{
-spot2fut()
+if (interactive()) {
+  spot2fut()
+}
 }
 \author{
 Philippe Cote

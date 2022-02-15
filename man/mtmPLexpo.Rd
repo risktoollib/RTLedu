@@ -16,7 +16,9 @@ mtmPLexpo(name = "mtmPLexpo")
 Given a set a transaction you must compute Profit and Loss and current Exposure
 }
 \examples{
-mtmPLexpo()
+if (interactive()) {
+  mtmPLexpo()
+}
 }
 \author{
 Philippe Cote

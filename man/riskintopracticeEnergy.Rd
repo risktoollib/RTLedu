@@ -16,7 +16,9 @@ riskintopracticeEnergy(name = "riskintopractice-energy")
 Practice RM skills and presentation with a real life context problem.
 }
 \examples{
-riskintopracticeEnergy()
+if (interactive()) {
+  riskintopracticeEnergy()
+}
 }
 \author{
 Philippe Cote

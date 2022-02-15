@@ -16,7 +16,9 @@ dataWrangling(name = "data-wrangling")
 Testing your understanding of basic data wrangling concepts.
 }
 \examples{
-dataWrangling()
+if (interactive()) {
+  dataWrangling()
+}
 }
 \author{
 Philippe Cote
