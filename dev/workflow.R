@@ -20,6 +20,8 @@ usethis::use_package("RTL")
 usethis::use_package("plotly")
 usethis::use_package("RTL")
 usethis::use_package("sp")
+usethis::use_package("bslib")
+
 
 # Build
 attachment::att_from_rscripts()

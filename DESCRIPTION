@@ -30,7 +30,8 @@ Imports:
     cli,
     glue,
     withr,
-    sp
+    sp,
+    bslib
 Suggests: 
     covr
 Encoding: UTF-8

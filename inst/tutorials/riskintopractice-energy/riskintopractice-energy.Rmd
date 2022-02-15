@@ -4,8 +4,8 @@ output:
   html_document:
     theme:
       version: 5
-      bg: rgb(43, 62, 80)
-      fg: rgb(235, 235, 235)
+      bg: "#2B3E50"
+      fg: "#EBEBEB"
       primary: "lime"
       secondary: "#51616F"
       base_font:
