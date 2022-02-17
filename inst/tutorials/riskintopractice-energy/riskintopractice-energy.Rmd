@@ -3,7 +3,6 @@ title: "Canadian Energy Exports"
 output: 
   html_document:
     theme:
-      version: 5
       bg: "#2B3E50"
       fg: "#EBEBEB"
       primary: "lime"
