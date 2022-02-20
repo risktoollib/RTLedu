@@ -180,7 +180,7 @@ The benchmark crude oil grade in Alberta is `Western Canadian Select ("WCS")`.  
 
 Using the `RTL::fizdiffs` randomized dataset below, prepare the following in your report:
 
-1. Plot a time series of the values in Alberta, Houston and the price difference that could be realized by selling the crude in Houston instead of Albert (a delivery location arbitrage).
+1. Plot a time series of the values in Alberta, Houston and the price difference that could be realized by selling the crude in Houston instead of Alberta (a delivery location arbitrage).
 2. Show what would be the average gain of exporting from Alberta to Houston.
 3. Compute and discuss the average daily risk in dollars per barrel for the value in Alberta, in Houston and in the export arbitrage.
 
