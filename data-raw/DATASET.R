@@ -27,6 +27,27 @@ sp500_prices <- tidyquant::tq_get(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B",
 usethis::use_data(sp500_desc, overwrite = T)
 usethis::use_data(sp500_prices, overwrite = T)
 
+# lpg eia data set
+source("~/now/keys.R")
+lpg <- tibble::tribble(~ticker, ~series,
+                       "PET.MLPEXUS2.M", "Exports",
+                       "PET.MLPFPUS2.M","Production") %>%
+  dplyr::mutate(key = EIAkey) %>%
+  dplyr::mutate(df = purrr::pmap(list(ticker, key, name = series),.f = RTL::eia2tidy)) %>%
+  dplyr::select(df) %>% tidyr::unnest(cols = c(df)) %>%
+  dplyr::filter(date > "1990-01-01") %>%
+  dplyr::arrange(date) %>%
+  tsibble::as_tsibble(key = series, index = date) %>%
+  tsibble::group_by_key(series) %>%
+  tsibble::index_by(freq = tsibble::yearquarter(date)) %>%
+  dplyr::summarise(value = mean(value)) %>%
+  dplyr::mutate(freq = lubridate::rollback(as.Date(freq) + months(3))) %>%
+  dplyr::rename(date = freq) %>%
+  dplyr::ungroup() %>%
+  dplyr::as_tibble()
+usethis::use_data(lpg, overwrite = T)
+
+
 # parsing exercisea
 quantmod::getSymbols('MSFT', src = 'yahoo')
 microsoft <- MSFT %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")

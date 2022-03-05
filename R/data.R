@@ -33,6 +33,11 @@
 #' @format data frame
 "reg1"
 
+#' eia data
+#' @description Production and Imports of LPG
+#' @format data frame
+"lpg"
+
 #' Transaction data for Risk Management
 #' @description Transaction data from an ETRM system
 #' @format data frame
