@@ -2,7 +2,7 @@ Type: Package
 Package: RTLedu
 Title: 'Learnr' Modules in Finance
 Version: 0.1.0
-Date: 2022-02-15
+Date: 2022-03-04
 Authors@R: 
     person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre"))
 Description: Build to support the 'RTL' package in education and market

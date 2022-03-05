@@ -23,6 +23,16 @@
 #' @format data frame
 "microsoft"
 
+#' Apple stock price data
+#' @description Apple Stock prices
+#' @format data frame
+"apple"
+
+#' regression data
+#' @description regression toy dataset
+#' @format data frame
+"reg1"
+
 #' Transaction data for Risk Management
 #' @description Transaction data from an ETRM system
 #' @format data frame

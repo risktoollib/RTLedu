@@ -15,10 +15,10 @@ usethis::use_data(crudepipelines, overwrite = T)
 refineries <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")
 usethis::use_data(refineries, overwrite = T)
 
-sp500_desc <- tq_index("SP500") %>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B|KEYS|WEC|XRAY"))
-sp500_prices <- tidyquant::tq_get(sp500_desc$symbol,
+sp500_desc <- tq_index("SP500") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
+sp500_prices <- tidyquant::tq_get(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B", value = TRUE, invert = TRUE),
                                   get  = "stock.prices",
-                                  from = "2008-08-01",
+                                  from = "2010-01-01",
                                   to = Sys.Date()) %>%
   stats::na.omit() %>%
   dplyr::group_by(symbol) %>%
@@ -27,12 +27,21 @@ sp500_prices <- tidyquant::tq_get(sp500_desc$symbol,
 usethis::use_data(sp500_desc, overwrite = T)
 usethis::use_data(sp500_prices, overwrite = T)
 
-# parsing exercise
-quantmod::getSymbols('MSFT',src='yahoo')
+# parsing exercisea
+quantmod::getSymbols('MSFT', src = 'yahoo')
 microsoft <- MSFT %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
 usethis::use_data(microsoft, overwrite = T)
 
-# tweets
+quantmod::getSymbols('AAPL', src = 'yahoo')
+apple <- AAPL %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
+usethis::use_data(apple, overwrite = T)
+
+# nonlin relationships
+
+reg1 <- dplyr::tibble(x = 1:100, y = x + x^2 + x^5)
+usethis::use_data(reg1, overwrite = T)
+
+ tweets
 
 # http://www.trumptwitterarchive.com/archive
 # use geany text editor in Linux for very large files
