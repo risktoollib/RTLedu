@@ -29,14 +29,16 @@ usethis::use_data(sp500_prices, overwrite = T)
 
 # lpg eia data set
 source("~/now/keys.R")
-lpg <- tibble::tribble(~ticker, ~series,
+lpgMonthly <- tibble::tribble(~ticker, ~series,
                        "PET.MLPEXUS2.M", "Exports",
                        "PET.MLPFPUS2.M","Production") %>%
   dplyr::mutate(key = EIAkey) %>%
   dplyr::mutate(df = purrr::pmap(list(ticker, key, name = series),.f = RTL::eia2tidy)) %>%
   dplyr::select(df) %>% tidyr::unnest(cols = c(df)) %>%
-  dplyr::filter(date > "1990-01-01") %>%
-  dplyr::arrange(date) %>%
+  dplyr::filter(date >= "1990-01-01") %>%
+  dplyr::arrange(date)
+
+lpgQuarterly <- lpgMonthly %>%
   tsibble::as_tsibble(key = series, index = date) %>%
   tsibble::group_by_key(series) %>%
   tsibble::index_by(freq = tsibble::yearquarter(date)) %>%
@@ -45,7 +47,9 @@ lpg <- tibble::tribble(~ticker, ~series,
   dplyr::rename(date = freq) %>%
   dplyr::ungroup() %>%
   dplyr::as_tibble()
-usethis::use_data(lpg, overwrite = T)
+
+usethis::use_data(lpgMonthly, overwrite = T)
+usethis::use_data(lpgQuarterly, overwrite = T)
 
 
 # parsing exercisea
