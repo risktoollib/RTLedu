@@ -4,7 +4,7 @@
 \name{RTLedu-package}
 \alias{RTLedu}
 \alias{RTLedu-package}
-\title{RTLedu: 'Learnr' Modules in Finance}
+\title{RTLedu: Education tutorials to accompany RTL package.}
 \description{
 Build to support the 'RTL' package in education and market practitioners learning R, Finance and Commodities.
 }
