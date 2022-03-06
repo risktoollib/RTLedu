@@ -34,7 +34,10 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/lpg.html</loc>
+    <loc>/reference/lpgMonthly.html</loc>
+  </url>
+  <url>
+    <loc>/reference/lpgQuarterly.html</loc>
   </url>
   <url>
     <loc>/reference/marketMaking.html</loc>
