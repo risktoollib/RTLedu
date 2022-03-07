@@ -3,6 +3,8 @@ library(tidyquant)
 library(jsonlite)
 library(quantmod)
 library(timetk)
+library(RTL)
+source("~/now/keys.R")
 
 ## Trading Hubs
 
@@ -28,7 +30,6 @@ usethis::use_data(sp500_desc, overwrite = T)
 usethis::use_data(sp500_prices, overwrite = T)
 
 # lpg eia data set
-source("~/now/keys.R")
 lpgMonthly <- tibble::tribble(~ticker, ~series,
                        "PET.MLPEXUS2.M", "Exports",
                        "PET.MLPFPUS2.M","Production") %>%
@@ -132,6 +133,17 @@ expo <- risk %>%
 expo <- expo %>%
   tidyr::pivot_wider(names_from = MONTH, values_from = QUANTITY, values_fn = sum)
 usethis::use_data(expo, overwrite = T)
+
+# swap pricing
+
+futs <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD",
+  contracts = c("@CL22K","@CL22M", "@CL22N", "@CL22Q","@CL22U"),
+  from = "2022-03-04",
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
+)
+usethis::use_data(futs, overwrite = T)
 
 
 # Global

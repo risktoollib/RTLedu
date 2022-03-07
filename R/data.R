@@ -58,6 +58,11 @@
 #' @format data frame
 "expo"
 
+#' Futures prices
+#' @description WTI crude Nymex futures prices
+#' @format data frame
+"futs"
+
 #' Crude Oil Trading Hubs
 #' @description Crude Oil Trading Hubs
 #' @format data frame
