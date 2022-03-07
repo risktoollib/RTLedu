@@ -43,7 +43,7 @@ lpgQuarterly <- lpgMonthly %>%
   tsibble::group_by_key(series) %>%
   tsibble::index_by(freq = tsibble::yearquarter(date)) %>%
   dplyr::summarise(value = mean(value)) %>%
-  dplyr::mutate(freq = lubridate::rollback(as.Date(freq) + months(3))) %>%
+  dplyr::mutate(freq = lubridate::rollback(as.Date(freq) + months(3,abbreviate = TRUE))) %>%
   dplyr::rename(date = freq) %>%
   dplyr::ungroup() %>%
   dplyr::as_tibble()
@@ -95,9 +95,9 @@ usethis::use_data(twtrump, overwrite = T)
 library(rvest)
 url <- "https://www.shell.com/media/speeches-and-articles.html"
 urls <- rvest::read_html(url) %>%
-  rvest::html_elements(".main__base") %>%
-  rvest::html_elements("a") %>%
-  rvest::html_attr("href") %>%
+  rvest::html_elements(css = ".main__base") %>%
+  rvest::html_elements(css = "a") %>%
+  rvest::html_attr(name = "href") %>%
   grep("/media/speeches-and-articles/", . ,value = TRUE) %>%
   unique(.) %>%
   grep("articles-by-date|speeches-and-articles-per-speaker", . ,value = TRUE,invert = TRUE) %>%
@@ -116,6 +116,22 @@ for (u in urls) {
 }
 
 usethis::use_data(nlpShell, overwrite = T)
+
+# expo
+load("~/RTLedu/data/risk.rda")
+m1 <- lubridate::rollback(Sys.Date() + months(2, abbreviate = TRUE), roll_to_first = TRUE)
+expo <- risk %>%
+  dplyr::slice(5) %>%
+  dplyr::select(1,8) %>%
+  dplyr::mutate(QUANTITY = 1e5, MONTH = m1) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = -150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "RB",QUANTITY = 150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = 150000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = -150000,MONTH = m1 + months(1, abbreviate = TRUE))
+
+expo <- expo %>%
+  tidyr::pivot_wider(names_from = MONTH, values_from = QUANTITY, values_fn = sum)
+usethis::use_data(expo, overwrite = T)
 
 
 # Global

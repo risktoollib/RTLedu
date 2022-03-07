@@ -53,6 +53,11 @@
 #' @format data frame
 "risk"
 
+#' Summary exposure of a trader
+#' @description Summary exposure data from an ETRM system
+#' @format data frame
+"expo"
+
 #' Crude Oil Trading Hubs
 #' @description Crude Oil Trading Hubs
 #' @format data frame
