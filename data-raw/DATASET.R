@@ -145,6 +145,42 @@ futs <- RTL::getPrices(
 )
 usethis::use_data(futs, overwrite = T)
 
+# ercot
+setwd(paste0(here::here(),"/data-raw/"))
+library(rvest)
+library(readxl)
+url = "https://www.ercot.com/misapp/GetReports.do?reportTypeId=13060&reportTitle=Historical%20DAM%20Load%20Zone%20and%20Hub%20Prices&showHTMLView=&mimicKey"
+urls <- rvest::read_html(url) %>%
+  rvest::html_elements("body > form > table") %>%
+  rvest::html_elements("a") %>%
+  rvest::html_attr("href") %>%
+  paste0("https://www.ercot.com",.)
+
+for (i in 1:length(urls)) {
+
+  url <- urls[i]
+  destfile <- paste0("ercot.zip")
+  curl::curl_download(url, destfile)
+  utils::unzip(destfile)
+  ff <- list.files(pattern = "rpt",)
+  if (i == 1) {
+    ercot <- lapply(readxl::excel_sheets(ff), read_excel, path = ff) %>% do.call(rbind, .)
+  } else {
+    tmp <- lapply(readxl::excel_sheets(ff), read_excel, path = ff) %>% do.call(rbind, .)
+    ercot <- rbind(ercot, tmp)
+  }
+  file.remove(ff)
+  file.remove(destfile)
+}
+
+ercot <- ercot %>%
+  dplyr::as_tibble(.name_repair = "universal") %>%
+  dplyr::mutate(Delivery.Date = as.Date(Delivery.Date, "%m/%d/%Y"),
+                Hour.Ending = lubridate::hm(Hour.Ending),
+                Date = lubridate::as_datetime(paste(Delivery.Date, Hour.Ending))) %>%
+  dplyr::select(Date, everything())
+
+usethis::use_data(ercot, overwrite = T)
 
 # Global
 devtools::document()

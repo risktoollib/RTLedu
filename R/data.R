@@ -77,3 +77,8 @@
 #' @description EIA Refineries GIS coordinates
 #' @format data frame
 "refineries"
+
+#' Ercot hourly data
+#' @description Real time ercot electricity prices
+#' @format data frame
+"ercot"
