@@ -138,12 +138,32 @@ usethis::use_data(expo, overwrite = T)
 
 futs <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD",
-  contracts = c("@CL22K","@CL22M", "@CL22N", "@CL22Q","@CL22U"),
-  from = "2022-03-04",
+  contracts = c("@CL22U","@CL22V", "@CL22X", "@CL22Z"),
+  from = "2022-04-06",
   iuser = mstar[[1]],
   ipassword = mstar[[2]]
 )
 usethis::use_data(futs, overwrite = T)
+
+# payoffs
+
+callpayoff <- function(price,strike) {max(price - strike,0)}
+putpayoff <- function(price,strike) {max(strike - price,0)}
+payoffs <- dplyr::tibble(Price = seq(0, 80, 1),
+              PayoffatMaturity = (mapply(callpayoff,Price,strike = 45)
+                                  + mapply(callpayoff,Price,strike = 50)
+                                  - 2 * mapply(callpayoff,Price,strike = 60)
+                                  - 1 * mapply(callpayoff,Price,strike = 70)
+                                  + mapply(putpayoff,Price,strike = 35)
+                                  + mapply(putpayoff,Price,strike = 30)
+                                  - 2 * mapply(putpayoff,Price,strike = 20))
+              - mapply(putpayoff,Price,strike = 10))
+payoffs %>%
+  plotly::plot_ly(x = ~Price, y = ~PayoffatMaturity)
+
+usethis::use_data(payoffs, overwrite = T)
+
+
 
 # ercot
 setwd(paste0(here::here(),"/data-raw/"))

@@ -63,6 +63,11 @@
 #' @format data frame
 "futs"
 
+#' Option Strategies
+#' @description Payoff profile
+#' @format data frame
+"payoffs"
+
 #' Crude Oil Trading Hubs
 #' @description Crude Oil Trading Hubs
 #' @format data frame
