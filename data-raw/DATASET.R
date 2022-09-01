@@ -4,21 +4,14 @@ library(jsonlite)
 library(quantmod)
 library(timetk)
 library(RTL)
-source("~/now/keys.R")
+library(tidyquant)
+source("~/now/packages.R")
 
 ## Trading Hubs
 
-tradeHubs <- dplyr::tibble(lat = c(53.54623,52.6735,35.94068,30.00623), long = c(-113.34684,-111.3075,-96.74536,-93.96882), hub = c("Edmonton","Hardisty", "Cushing", "Nederland"))
-usethis::use_data(tradeHubs, overwrite = T)
+sp500_desc <- tidyquant::tq_index("SP500") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
 
-crudepipelines <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
-usethis::use_data(crudepipelines, overwrite = T)
-
-refineries <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")
-usethis::use_data(refineries, overwrite = T)
-
-sp500_desc <- tq_index("SP500") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
-sp500_prices <- tidyquant::tq_get(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B", value = TRUE, invert = TRUE),
+sp500_prices <- tidyquant::tq_get(sort(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B", value = TRUE, invert = TRUE)),
                                   get  = "stock.prices",
                                   from = "2010-01-01",
                                   to = Sys.Date()) %>%
@@ -138,7 +131,7 @@ usethis::use_data(expo, overwrite = T)
 
 futs <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD",
-  contracts = c("@CL22U","@CL22V", "@CL22X", "@CL22Z"),
+  contracts = c("@CL23U","@CL23V", "@CL23X", "@CL23Z"),
   from = "2022-04-06",
   iuser = mstar[[1]],
   ipassword = mstar[[2]]
