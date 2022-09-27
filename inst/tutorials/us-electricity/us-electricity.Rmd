@@ -105,7 +105,7 @@ The dataset and series ID (tickers) can be found at:
 
 ## Your Ask
 
-Using Rmarkdown, render into `html` a one or two page concise summary to be sent to clients. 
+Using Rmarkdown, render into `html` a maximum two-three page concise summary to be sent to clients. 
 
 Amongst questions often asked by clients your analysis must answer:
 
@@ -114,7 +114,7 @@ Amongst questions often asked by clients your analysis must answer:
 3. What can you tell about the share and growth in wind and solar generation?
 4. What periodic patterns do you notice in total, wind and solar generation time series?  
 
-Write a 2-5 lines summary at the beginning of the document on your findings.
+**Write a 2-5 lines summary at the beginning of the document on your findings.**
 
 ## Additional Information
 
@@ -133,7 +133,7 @@ If you take this exercise as part of a graded item in a course, see the Grading 
 dplyr::tibble(
   Competency = c("Summary",
                  "Presentation",
-                 "Accuracy code and results"),
+                 "Accuracy of code and results"),
   Measure = c(
     "Ability to distill and communicate key findings.",
     "Professionally rendered presentations. Clean document of unnecessary clutter not relevant to the story. Clients are interested in the story, not the steps you have taken in coding it. Format properly your charts and tables.",

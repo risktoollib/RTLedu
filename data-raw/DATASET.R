@@ -1,3 +1,28 @@
+attachment::att_from_rscripts()
+attachment::att_from_rmd(path = "./inst/tutorials/asset-classes/asset-classes.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/data-wrangling/data-wrangling.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/getting-started/getting-started.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/marketMaking/marketMaking.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/mtmPLexpo/mtmPLexpo.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/multivariate-regressions/multivariate-regressions.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/orders/orders.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/sp500risk/sp500risk.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/spot2fut/risk-spot2fut.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/us-electricity/us-electricity.Rmd")
+
+
+usethis::use_pipe()
+usethis::use_package("RTL")
+usethis::use_package("sp")
+usethis::use_package("lubridate")
+usethis::use_package("gt")
+usethis::use_package("dplyr")
+usethis::use_package("tidyr")
+usethis::use_package("ggplot2")
+usethis::use_package("plotly")
+
+
+
 library(tidyverse)
 library(tidyquant)
 library(jsonlite)
@@ -11,7 +36,7 @@ source("~/now/packages.R")
 
 sp500_desc <- tidyquant::tq_index("SP500") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
 
-sp500_prices <- tidyquant::tq_get(sort(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B", value = TRUE, invert = TRUE)),
+sp500_prices <- tidyquant::tq_get(sort(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B|DD", value = TRUE, invert = TRUE)),
                                   get  = "stock.prices",
                                   from = "2010-01-01",
                                   to = Sys.Date()) %>%
