@@ -80,6 +80,10 @@ quantmod::getSymbols('AAPL', src = 'yahoo')
 apple <- AAPL %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
 usethis::use_data(apple, overwrite = T)
 
+quantmod::getSymbols('CVX', src = 'yahoo')
+chevron <- CVX %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
+usethis::use_data(chevron, overwrite = T)
+
 # nonlin relationships
 
 reg1 <- dplyr::tibble(x = 1:100, y = x + x^2 + x^5)

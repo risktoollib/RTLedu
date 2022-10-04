@@ -28,6 +28,11 @@
 #' @format data frame
 "apple"
 
+#' Chevron stock price data
+#' @description Chevron Stock prices
+#' @format data frame
+"chevron"
+
 #' regression data
 #' @description regression toy dataset
 #' @format data frame
