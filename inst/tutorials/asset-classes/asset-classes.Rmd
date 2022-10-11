@@ -68,12 +68,12 @@ bd_lo <- function(x, width = 700) {
 }
 
 
-from = as.Date("2012-01-01")
+from = as.Date("2014-01-01")
 to = lubridate::rollback(Sys.Date())
 tickers <-  c("TLT","USO","GLD","VNQ","SPY")
 asset1 <- tickers[2] 
 asset2 <- tickers[3] 
-cors <- c(20,100,252)
+cors <- c(25,75,252)
 ```
 
 ## Problem We Are Solving
