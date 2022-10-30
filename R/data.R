@@ -28,6 +28,12 @@
 #' @format data frame
 "apple"
 
+#' Stock prices for Real Estate and sp500
+#' @description Stock prices
+#' @format data frame
+"correlation"
+
+
 #' Chevron stock price data
 #' @description Chevron Stock prices
 #' @format data frame
@@ -37,6 +43,16 @@
 #' @description regression toy dataset
 #' @format data frame
 "reg1"
+
+#' regression data
+#' @description regression toy dataset
+#' @format data frame
+"reg2"
+
+#' regression data
+#' @description regression toy dataset
+#' @format data frame
+"reg3"
 
 #' eia data lpg monthly
 #' @description Production and Imports of LPG
@@ -92,3 +108,18 @@
 #' @description Real time ercot electricity prices
 #' @format data frame
 "ercot"
+
+#' US unemployment data
+#' @description FRED toy dataset
+#' @format data frame
+"unemployment"
+
+#' hint for updates
+#' @description object to check if update worked
+#' @format string
+"toy"
+
+#' Sample chart for spreads trading
+#' @description Effective understanding of risk of specific contract pairs
+#' @format list
+"spreads"

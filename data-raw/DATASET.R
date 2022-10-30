@@ -50,7 +50,8 @@ usethis::use_data(sp500_prices, overwrite = T)
 # lpg eia data set
 lpgMonthly <- tibble::tribble(~ticker, ~series,
                        "PET.MLPEXUS2.M", "Exports",
-                       "PET.MLPFPUS2.M","Production") %>%
+                       "PET.MLPFPUS2.M","Production",
+                       "PET.MLPIMUS2.M", "Imports") %>%
   dplyr::mutate(key = EIAkey) %>%
   dplyr::mutate(df = purrr::pmap(list(ticker, key, name = series),.f = RTL::eia2tidy)) %>%
   dplyr::select(df) %>% tidyr::unnest(cols = c(df)) %>%
@@ -71,7 +72,7 @@ usethis::use_data(lpgMonthly, overwrite = T)
 usethis::use_data(lpgQuarterly, overwrite = T)
 
 
-# parsing exercisea
+# parsing exercises
 quantmod::getSymbols('MSFT', src = 'yahoo')
 microsoft <- MSFT %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
 usethis::use_data(microsoft, overwrite = T)
@@ -85,12 +86,44 @@ chevron <- CVX %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
 usethis::use_data(chevron, overwrite = T)
 
 # nonlin relationships
-
 reg1 <- dplyr::tibble(x = 1:100, y = x + x^2 + x^5)
 usethis::use_data(reg1, overwrite = T)
+reg2 <- dplyr::tibble(x = seq(from =0,4*pi,,100),
+                      y = 2 * sin(2 * x) + x * 0.75)
+#reg2 %>% ggplot(aes(x=x,y=y)) + geom_line()
+#reg <- lm(y ~ x,data = RTLedu::reg2)
+#summary(reg)
+usethis::use_data(reg2, overwrite = T)
+reg3 <- tidyquant::tq_get(x = c("ICLN","XLE"), get = "stock.prices",
+                            from = lubridate::rollback(Sys.Date() - months(120)), to = lubridate::rollback(Sys.Date())) %>%
+  dplyr::transmute(date, series = symbol, value = adjusted) %>%
+  dplyr::group_by(series) %>%
+  dplyr::mutate(value = log(value/dplyr::lag(value))) %>%
+  tidyr::drop_na() %>%
+  tidyr::pivot_wider(names_from = series,values_from = value)
+usethis::use_data(reg3, overwrite = T)
 
- tweets
+# seasonality
+library(tidyverse)
+unemployment <- tidyquant::tq_get(x = c("AKURN","CAURN","NJURN"), get = "economic.data",
+                                  from = "1990-01-01", to = Sys.Date()) %>%
+  dplyr::transmute(date,
+                   state = case_when(symbol == "NJURN" ~ "NewJersey",
+                                      symbol == "AKURN" ~ "Alaska",
+                                     symbol == "CAURN" ~ "California"),
+                   rate = price/100) %>%
+  dplyr::filter(date != dplyr::last(date)) %>%
+  dplyr::group_by(state)
+usethis::use_data(unemployment, overwrite = T)
 
+# correlation
+
+correlation <- tidyquant::tq_get(c("IYR","SPY") ,get = "stock.prices",from = "2017-01-01", to = Sys.Date()) %>%
+  dplyr::select(date, series = symbol, value = adjusted) %>%
+  dplyr::mutate(series = stringr::str_replace_all(series,c("IYR" = "RealEstate", "SPY" = "sp500" )))
+usethis::use_data(correlation, overwrite = T)
+
+# tweets
 # http://www.trumptwitterarchive.com/archive
 # use geany text editor in Linux for very large files
 twtrump <- jsonlite::fromJSON("./data-raw/twtrump.json")
@@ -147,10 +180,11 @@ expo <- risk %>%
   dplyr::slice(5) %>%
   dplyr::select(1,8) %>%
   dplyr::mutate(QUANTITY = 1e5, MONTH = m1) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = -150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = -300000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
   tibble::add_row(TICKER = "RB",QUANTITY = 150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = 150000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = -150000,MONTH = m1 + months(1, abbreviate = TRUE))
+  tibble::add_row(TICKER = "HO",QUANTITY = 150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = 200000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = -200000,MONTH = m1 + months(1, abbreviate = TRUE))
 
 expo <- expo %>%
   tidyr::pivot_wider(names_from = MONTH, values_from = QUANTITY, values_fn = sum)
@@ -161,7 +195,7 @@ usethis::use_data(expo, overwrite = T)
 futs <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD",
   contracts = c("@CL23U","@CL23V", "@CL23X", "@CL23Z"),
-  from = "2022-04-06",
+  from = Sys.Date() - months(2),
   iuser = mstar[[1]],
   ipassword = mstar[[2]]
 )
@@ -223,6 +257,31 @@ ercot <- ercot %>%
   dplyr::select(Date, everything())
 
 usethis::use_data(ercot, overwrite = T)
+
+
+toy <- dplyr::tibble(RTLeduUpdate = "RTLedu is updated")
+usethis::use_data(toy, overwrite = T)
+
+
+# use of chart pairs
+cpairs <- dplyr::tibble(
+  year = c("2018", "2019", "2020","2021","2022"),
+  first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H"),
+  second = c("@CL8H", "@CL9H", "@CL0H","@HO21H","@HO22H")
+)
+
+spreads = list()
+
+spreads[[1]] <- RTL::chart_spreads(
+  cpairs = cpairs, daysFromExpiry = 200, from = "2012-01-01",
+  conversion = c(42, 1), feed = "CME_NymexFutures_EOD",
+  iuser = mstar[[1]], ipassword = mstar[[2]],
+  title = "March ULSD vs WTI Nymex Crack Spreads",
+  yaxis = "$ per bbl",
+  output = "chart"
+)
+usethis::use_data(spreads, overwrite = T)
+
 
 # Global
 devtools::document()
