@@ -265,9 +265,9 @@ usethis::use_data(toy, overwrite = T)
 
 # use of chart pairs
 cpairs <- dplyr::tibble(
-  year = c("2018", "2019", "2020","2021","2022"),
-  first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H"),
-  second = c("@CL8H", "@CL9H", "@CL0H","@HO21H","@HO22H")
+  year = c("2018", "2019", "2020","2021","2022","2023"),
+  first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H","@HO23H"),
+  second = c("@CL8H", "@CL9H", "@CL0H","@CL21H","@CL22H","@CL23H")
 )
 
 spreads = list()
