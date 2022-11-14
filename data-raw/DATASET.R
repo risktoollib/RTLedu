@@ -267,14 +267,15 @@ usethis::use_data(toy, overwrite = T)
 cpairs <- dplyr::tibble(
   year = c("2018", "2019", "2020","2021","2022","2023"),
   first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H","@HO23H"),
-  second = c("@CL8H", "@CL9H", "@CL0H","@CL21H","@CL22H","@CL23H")
+  second = c("@HO8J", "@HO9J", "@HO0J","@HO21J","@HO22J","@HO23J"),
+  expiry = c(NA,NA,NA,NA,NA,"2023-02-23")
 )
 
 spreads = list()
 
 spreads[[1]] <- RTL::chart_spreads(
-  cpairs = cpairs, daysFromExpiry = 200, from = "2012-01-01",
-  conversion = c(42, 1), feed = "CME_NymexFutures_EOD",
+  cpairs = cpairs, daysFromExpiry = 200, from = "2017-01-01",
+  conversion = c(42, 42), feed = "CME_NymexFutures_EOD",
   iuser = mstar[[1]], ipassword = mstar[[2]],
   title = "March ULSD vs WTI Nymex Crack Spreads",
   yaxis = "$ per bbl",
