@@ -48,13 +48,12 @@ usethis::use_data(sp500_desc, overwrite = T)
 usethis::use_data(sp500_prices, overwrite = T)
 
 # lpg eia data set
-lpgMonthly <- tibble::tribble(~ticker, ~series,
-                       "PET.MLPEXUS2.M", "Exports",
-                       "PET.MLPFPUS2.M","Production",
-                       "PET.MLPIMUS2.M", "Imports") %>%
-  dplyr::mutate(key = EIAkey) %>%
-  dplyr::mutate(df = purrr::pmap(list(ticker, key, name = series),.f = RTL::eia2tidy)) %>%
-  dplyr::select(df) %>% tidyr::unnest(cols = c(df)) %>%
+
+lpgMonthly <- RTL::eia2tidy_all(tickers = tibble::tribble(~ticker, ~name,
+                                       "PET.MLPEXUS2.M", "Exports",
+                                       "PET.MLPFPUS2.M","Production",
+                                       "PET.MLPIMUS2.M", "Imports"),
+             key = EIAkey, long = TRUE) %>%
   dplyr::filter(date >= "1990-01-01") %>%
   dplyr::arrange(date)
 
@@ -147,29 +146,51 @@ usethis::use_data(twtrump, overwrite = T)
 
 
 # NLP Shell
-
 library(rvest)
+library(RSelenium)
 url <- "https://www.shell.com/media/speeches-and-articles.html"
-urls <- rvest::read_html(url) %>%
-  rvest::html_elements(css = ".main__base") %>%
+rD <- rsDriver(browser = "firefox", chromever = NULL)
+remDr <- rD[["client"]]
+Sys.sleep(2)
+remDr$navigate(url)
+Sys.sleep(2)
+#remDr$findElement(using = 'class', value = 'productTemplate')$clickElement()
+page <- remDr$getPageSource()
+
+urls <- read_html(page[[1]]) %>%
+  rvest::html_elements(css = ".grid") %>%
   rvest::html_elements(css = "a") %>%
   rvest::html_attr(name = "href") %>%
   grep("/media/speeches-and-articles/", . ,value = TRUE) %>%
   unique(.) %>%
   grep("articles-by-date|speeches-and-articles-per-speaker", . ,value = TRUE,invert = TRUE) %>%
-  paste0("https://www.shell.com",.)
+  grep("2018|2017", . ,value = TRUE,invert = TRUE)
 
 nlpShell <- list()
 
 for (u in urls) {
-   tmp <- u %>%
-    rvest::read_html() %>%
+  print(u)
+  remDr$navigate(u)
+  Sys.sleep(5)
+  page <- remDr$getPageSource()
+  Sys.sleep(3)
+  page <- rvest::read_html(page[[1]])
+  Sys.sleep(3)
+  tmp <- page %>%
     rvest::html_elements("p") %>%
     rvest::html_text2() %>%
     dplyr::as_tibble()
-   d <- as.character(as.Date(as.character(tmp[1,1]), "%b %d, %Y"))
+   d <- page %>% rvest::html_element(".time") %>% rvest::html_attr("datetime") %>% substr(.,1,10)
+   if (is.na(d)) {
+     d <- page %>% rvest::html_element("#main > div:nth-child(1) > section:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)") %>%
+       rvest::html_elements(".p")  %>% .[2] %>%
+       rvest::html_text() %>% as.Date(.,"%d  %b %Y") %>% as.character(.)
+   }
    nlpShell[[d]] <- tmp %>% dplyr::slice(-1)
 }
+
+remDr$close()
+rD[["server"]]$stop()
 
 usethis::use_data(nlpShell, overwrite = T)
 
@@ -258,8 +279,7 @@ ercot <- ercot %>%
 
 usethis::use_data(ercot, overwrite = T)
 
-
-toy <- dplyr::tibble(RTLeduUpdate = "RTLedu is updated")
+toy <- dplyr::tibble(RTLeduUpdate = paste("RTLedu is updated as of:",Sys.Date()))
 usethis::use_data(toy, overwrite = T)
 
 

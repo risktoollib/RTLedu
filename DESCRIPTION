@@ -2,7 +2,7 @@ Type: Package
 Package: RTLedu
 Title: Education tutorials to accompany RTL package 
 Version: 0.1.4
-Date: 2022-11-29
+Date: 2023-01-08
 Authors@R: 
     person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre"))
 Description: Build to support the 'RTL' package in education and market
@@ -30,5 +30,5 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
