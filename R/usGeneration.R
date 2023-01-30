@@ -3,13 +3,13 @@
 #' Your task is to perform analysis and render it as effective business communication.
 #' @param name Tutorial name
 #' @return 'learnr' module
-#' @export usElectricity
+#' @export usGeneration
 #' @author Philippe Cote
 #' @examples
 #' if (interactive()) {
-#'   usElectricity()
+#'   usGeneration()
 #' }
 
-usElectricity <- function(name = "us-electricity") {
+usGeneration <- function(name = "usGeneration") {
   learnr::run_tutorial(name = name, package = "RTLedu")
 }
