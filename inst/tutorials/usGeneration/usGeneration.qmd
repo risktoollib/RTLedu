@@ -2,6 +2,7 @@
 title: "US Electricity Generation"
 format: 
   html:
+    theme: cosmo
     margin: 0.25em
     css: ../../www/quarto.css
     embed-resources: true
@@ -79,11 +80,12 @@ to = lubridate::rollback(Sys.Date())
 
 ## Skills Practiced & Requirements
 
-+ Use of API.
++ Use of APIs for data extraction.
 + Data wrangling and parsing.
 + Choice of effective visualization in communication.
 + Data analytics and an ability to tell a story from it.
-+ Clean rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output.
++ Clean rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. As this is marketing material for clients, clean your output of code/warnings/... and format your tables and charts accordingly.
+
 + Learning to learn: Using new packages and functions.  
 
 Whilst there are many packages to format tables the following are suggested:
@@ -94,8 +96,6 @@ Whilst there are many packages to format tables the following are suggested:
 ## Data
 
 You will be using data from the [US Energy Information Administration](https://www.eia.gov/) and the API webpage is available at [EIA Open Data](https://www.eia.gov/opendata/). You may refer to the `bootcamp` section 7.2 after you have registered and obtained your own API key.
-
-The `eia`, `EIAdata` and `RTL` packages provide functions to access the API once you have your API key.
 
 The dataset and series ID (tickers) can be found at:
 
@@ -113,7 +113,6 @@ The dataset and series ID (tickers) can be found at:
 + To compute the monthly changes use the absolute change instead of percentages and beware whether dates are sorted ascending or descending before computing changes.
 + Assume the reader has no knowledge of the EIA series ID: Rename them so it's clear what they are without spaces in the new names to facilitate your workflow.
 + Use tables and/or charts to communicate your story. 
-+ As this is marketing material for clients, clean your output of code/warnings/... and format your tables and charts accordingly.
 
 ## Your Ask
 
@@ -123,26 +122,13 @@ The client requested answers to the following questions:
 
 1. Is Electricity generation growing or decreasing? 
 2. Is coal decreasing and if so what source(s) of generation is (are) replacing it?
-3. What can you tell about the share and growth in wind and solar generation?
+3. What can you tell about the share AND growth in wind and solar generation?
 4. What periodic patterns do you notice in total, wind and solar generation time series?  
 
 Write a bullet point summary on your findings at the beginning of the document.
 
 ## Grading
 
-If you take this exercise as part of a graded item in a course, see the Grading section in class notes. Grading is consistent with learning objectives.
-
-```{r, echo=F,include=TRUE, fig.height=3}
-dplyr::tibble(
-  Competency = c("Summary",
-                 "Presentation",
-                 "Accuracy of code and results"),
-  Measure = c(
-    "Ability to distill and communicate key findings.",
-    "Professionally rendered presentations. Clean document of unnecessary clutter not relevant to the story. Clients are interested in the story, not the steps you have taken in coding it. Format properly your charts and tables.",
-    "Accurate implementation"
-  )
-) %>% bd_lo()
-```
+If you take this exercise as part of a graded item in a course, see the Grading section in class notes. 
 
 :::

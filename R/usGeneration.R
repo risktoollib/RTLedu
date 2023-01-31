@@ -11,5 +11,5 @@
 #' }
 
 usGeneration <- function(name = "usGeneration") {
-  learnr::run_tutorial(name = name, package = "RTLedu")
+  quarto::quarto_run("inst/tutorials/usGeneration/usGeneration.qmd", render = FALSE)
 }
