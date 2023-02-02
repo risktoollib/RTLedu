@@ -24,8 +24,7 @@ Imports:
     dplyr,
     ggplot2,
     tidyr,
-    plotly,
-    quarto
+    plotly
 Suggests: 
     covr
 Encoding: UTF-8
