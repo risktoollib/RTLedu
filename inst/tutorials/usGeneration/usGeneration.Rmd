@@ -1,0 +1,140 @@
+---
+title: "US Electricity Generation"
+output: 
+  html_document:
+    self_contained: true
+    theme:
+      bg: "#2B3E50"
+      fg: "#EBEBEB"
+      primary: "lime"
+      secondary: "#51616F"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+---
+
+##  {.tabset .tabset-pills}
+
+Read carefully what is being asked to deploy your newly acquired data science skills to deploy quality business documents. 
+
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+library(dplyr)
+library(gt)
+library(lubridate)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 9,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+bd_txt <-
+  function(x,
+           title = "Grading",
+           subtitle = "-",
+           width = 700) {
+    if (nchar(gsub(" ", "", subtitle)) == 0) {
+      subtitle <- "-"
+    }
+    y <- x %>% gt::gt() %>%
+      gt::tab_header(title = title, subtitle = subtitle) %>%
+      gt::tab_style(style = cell_text(weight = "bold"),
+                    locations = cells_column_labels(colnames(.))) %>%
+      gt::tab_style(style = list(
+        cell_fill(color = "royalblue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_title(groups = c("title")))
+    y = y %>% tab_options(table.width = px(width),
+                          table.font.size = pct(80))
+    return(y)
+  }
+
+bd_lo <- function(x, width = 700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(
+      cell_fill(color = "royalblue"),
+      cell_text(color = "white", weight = "bold")
+    ),
+    locations = cells_title(groups = c("title")))
+  y = y %>% tab_options(table.width = px(width),
+                        table.font.size = pct(80))
+  return(y)
+}
+
+
+from = as.Date("2008-01-01")
+to = lubridate::rollback(Sys.Date())
+```
+
+### Framing the Problem
+
++ You are an analyst at a research firm.
++ US clients understand that climate policies have resulted in a shift towards less carbon intensive electricity generation.
++ Your leader has asked you to produce a short data-driven report that can be used as summary.
+
+### Skills Practiced & Requirements
+
++ Use of APIs for data extraction.
++ Data wrangling and parsing.
++ Choice of effective visualization in communication.
++ Data analytics and an ability to tell a story from it.
++ Clean rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. As this is marketing material for clients, clean your output of code/warnings/... and format your tables and charts accordingly.
+
++ Learning to learn: Using new packages and functions.  
+
+Whilst there are many packages to format tables the following are suggested:
+
++ [gt](https://gt.rstudio.com/).
++ [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+
+### Data
+
+You will be using data from the [US Energy Information Administration](https://www.eia.gov/) and the API webpage is available at [EIA Open Data](https://www.eia.gov/opendata/). You may refer to the `bootcamp` section 7.2 after you have registered and obtained your own API key.
+
+The dataset and series ID (tickers) can be found at:
+
++ [Electricity Net Generation Total](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.ELETPUS.M).
++ [Electricity Net Generation From Coal](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.CLETPUS.M).
++ [Electricity Net Generation From Conventional Hydroelectric Power](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.HVETPUS.M).
++ [Electricity Net Generation From Natural Gas](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.NGETPUS.M).
++ [Electricity Net Generation From Nuclear](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.NUETPUS.M).
++ [Electricity Net Generation From Solar](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.SOETPUS.M).
++ [Electricity Net Generation From Wind](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.WYETPUS.M).
++ Others is the difference between the total net generation and the sum of the above series. 
+
++ Use monthly data since `Jan-2009`.
++ Use tidy data with long and wide dataframes as you see fit. 
++ To compute the monthly changes use the absolute change instead of percentages and beware whether dates are sorted ascending or descending before computing changes.
++ Assume the reader has no knowledge of the EIA series ID: Rename them so it's clear what they are without spaces in the new names to facilitate your workflow.
++ Use tables and/or charts to communicate your story. 
+
+### Your Ask
+
+Using Rmarkdown or Quarto, render into `html` a maximum two or three page concise summary to be sent to clients. 
+
+The client requested answers to the following questions:
+
+1. Is Electricity generation growing or decreasing? 
+2. Is coal decreasing and if so what source(s) of generation is (are) replacing it?
+3. What can you tell about the share AND growth in wind and solar generation?
+4. What periodic patterns do you notice in total, wind and solar generation time series?  
+
+Write a bullet point summary on your findings at the beginning of the document.
+
+### Grading
+
+If you take this exercise as part of a graded item in a course, see the Grading section in class notes. 
+

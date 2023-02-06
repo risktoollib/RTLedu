@@ -176,5 +176,26 @@ Explain in a paragraph or two:
 
 With the above information nicely presented, tell the story of what the Committee key takeaways should be on what happened in 2022. `BEB` is purchasing spot and could potentially hedge with futures contracts.
 
+```{r, echo=FALSE,eval=FALSE}
+source("~/now/packages.R")
+spot <- RTL::eia2tidy(ticker = "PET.EER_EPD2DXL0_PF4_Y35NY_DPG.D", key = EIAkey,name = "Spot")
+fut <- RTL::getPrice(contract = "@HO22Z",iuser = mstar[[1]], ipassword = mstar[[2]], from = from)
+dat <- fut %>% dplyr::left_join(spot, by = c("date")) %>% 
+  dplyr::filter(date <= to) %>% 
+  tidyr::drop_na() %>% 
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
 
+dat %>% 
+  plotly::plot_ly(x = ~date, y = ~value, name = ~series, type = "scatter", mode = "lines")
+```
+
+```{r, echo=FALSE,eval=FALSE}
+dat %>% 
+  dplyr::group_by(series) %>% 
+  dplyr::mutate(return = (value - dplyr::lag(value) - 1)) %>% 
+  tidyr::drop_na() %>% 
+  dplyr::summarise(risk = sd(return)) %>% 
+  gt::gt() %>% 
+  gt::fmt_percent(columns = c(risk))
+```
 
