@@ -1,0 +1,201 @@
+---
+title: "Beyond Emissions Burgers (BEB)"
+output: 
+  html_document:
+    theme:
+      bg: "#2B3E50"
+      fg: "#EBEBEB"
+      primary: "lime"
+      secondary: "#51616F"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+# global variables
+from = as.Date("2022-01-01")
+to = as.Date("2022-12-31")
+
+library(gt)
+library(tidyverse)
+library(RTL)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 9,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+bd_txt <-
+  function(x,
+           title = "Grading",
+           subtitle = "-",
+           width = 700) {
+    if (nchar(gsub(" ", "", subtitle)) == 0) {
+      subtitle <- "-"
+    }
+    y <- x %>% gt::gt() %>%
+      gt::tab_header(title = title, subtitle = subtitle) %>%
+      gt::tab_style(style = cell_text(weight = "bold"),
+                    locations = cells_column_labels(colnames(.))) %>%
+      gt::tab_style(style = list(
+        cell_fill(color = "royalblue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_title(groups = c("title")))
+    y = y %>% tab_options(table.width = px(width),
+                          table.font.size = pct(80))
+    return(y)
+  }
+
+bd_lo <- function(x, width = 700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(
+      cell_fill(color = "royalblue"),
+      cell_text(color = "white", weight = "bold")
+    ),
+    locations = cells_title(groups = c("title")))
+  y = y %>% tab_options(table.width = px(width),
+                        table.font.size = pct(80))
+  return(y)
+}
+```
+
+##  {.tabset .tabset-pills}
+
++ You are asked to demonstrate your recently acquired Financial skills in a business context.
++ This case pertains to Ultra-Low Sulphur Diesel Transportation (ULSD), or transportation diesel.
++ You were recently hired by `Beyond Emissions Burgers` (BEB), the current IPO darling of Wall Street on NASDAQ.
+
++ `BEB`'s mission statement is definitely not about [greenwashing](https://en.wikipedia.org/wiki/Greenwashing){target="_blank"} and very specific in their target market:
+
+    -   We are serving the traditional meat burger-lover market.
+    -   We have a presence in all major US cities.
+    -   We are committed to reducing our [GHG](https://www.epa.gov/ghgemissions){target="_blank"} emissions from transportation and beef production over time and will be transparent as and we when make strategic decisions based on commercially viable projects.
+    -   All our ingredients are and will remain of the highest quality standards.
+
+### Framing the Problem
+
+-   `BEB`'s management team is highly experienced from a venture capital standpoint.
+
+-   `BEB` hired you as a recent MBA graduate reporting to the CFO.
+
+-   The CFO is a great leader and understands very well that she needs your skills in helping enroll other Executives as they move towards managing growth in a financially sound manner.
+
+-   They hired you based on your MBA designation with the following expectations that you:
+
+    -   Demonstrate a well-rounded knowledge base.
+
+    -   Have solids skills in business communication and critical thinking that goes beyond business common sense which they already have.
+
+    -   Effectively draw from your Finance knowledge to educate members of the Board's Risk Management Committee. `BEB` practices [decision quality](https://en.wikipedia.org/wiki/Decision_quality){target="_blank"}.
+
++ Your first assignment from the CFO is to write a business document for the Risk Committee pertaining to concepts that are related to risk-managing their exposure to the cost of diesel. With the wild ride in diesel prices as a result of events in 2022, the Board is concerned about the cost of transportation from their warehouses in New York and their nationwide locations.
+
+### Skills Practiced & Requirements
+
+-   Use of APIs for Enterprise-ready skill in working efficiently:
+
+    -   EIA.
+    -   Morningstar Commodities.
+    -   Strictly no Excel, csv or use of other local files in any work you do.
+
+-   Data wrangling and parsing. You must use tidy data with long and wide data frames.
+
+-   Quality presentation skills with effective choice of visualization in communication - after all, the ability to tell a story and enroll leaders is what they expect from an MBA.
+
+-   Foundational risk management skills.
+
+-   Clean, clear and concise rendering of a business document. You may refer to the rmarkdown, quarto resources or any other online document to customize your output. I reserve the right to award a maximum of `50%` for any document that is not worthy of a proper business communication. For clarity, the metric I use is simple: if I feel I could not press the forward button in Outlook it's short on quality. This is not a technical rendering of what you did to your Professor - I can read code in your `.Rmd` document if I need to but I don't expect to see it in a business document. Some characteristics of a properly presented document:
+
+    -   A clear heading with title and who it is from.
+    -   Cleaning organized by business questions asked.
+    -   Charts and tables properly formatted and self explanatory.
+    -   ...
+
+-   Each question should be answered as if you were presenting to `BEB`'s management team.
+
+-   "Learn to learn" is a core objective of higher education: Using new packages and functions as you see fit to achieve your desired outcome.
+
+Whilst there are many packages to format tables the following are suggested:
+
+-   [gt](https://gt.rstudio.com/).
+-   [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+
+### Data
+
+Use the following data from `2022-01-01` to `2022-12-31` inclusive:
+
+- Spot price is from the `EIA`: [New York Harbor Ultra-Low Sulfur No 2 Diesel Spot Price, Daily](https://www.eia.gov/opendata/v1/qb.php?category=241335&sdid=PET.EER_EPD2DXL0_PF4_Y35NY_DPG.D). You may refer to the `bootcamp appendix on APIs` after you have registered and obtained your own API key. The `RTL` packages provide functions to access the API once you have your API key.
+- Extract historical settlement prices for the `December 2022` [CME NY Harbor ULSD futures contract](https://www.cmegroup.com/markets/energy/refined-products/heating-oil.html){target={"_blank"} form `Morningstar Commodities` for futures contracts using `RTL::getPrices()` and your credentials. This is covered in the `Data Wrangling in Tidyverse` module of the course. 
+
+You will need to merge the two resulting dataframes. To join, or the equivalent of a VLOOKUP in Excel, you can use `dplyr::left_join()`:
+
++ `?dplyr::left_join`
++ In this example, the left dataframe is `x` and the right dataframe is `y` and we join them by the variable `date`.
+
+```{r,echo=TRUE}
+x <- dplyr::tibble(date = as.Date("2022-01-01"), a = 10)
+y <- dplyr::tibble(date = as.Date("2022-01-01"), b = 20)
+x %>% dplyr::left_join(y, by = c("date"))
+```
+
+### Your Ask
+
++ Using `Rmarkdown` or `quarto`, render into a clean and concise `html` document. 
++ Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca` before the deadline. 
++ This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty. For clarity this includes any online chat platforms (e.g. Discord) where I or the UoA might find evidence of communication in a formal investigation.  
++ Grading is in the class note `Grading` module and any late submission will be assigned a grade of 0% - no questions asked. 
+
+#### Part A: Spot and Futures Contracts: What are they?
+
+All the Board understands is that `BEB` is purchasing diesel directly from a wholesaler for its truck fleet at whatever price is offered on that day. You, however, know that you can use other instruments to manage the price risk. You will be using the specific spot and futures contracts detailed in the data section for this memo. 
+
+Explain in a paragraph or two:
+
++ What are spot and futures prices?
++ The important aspects of the futures contract specifications and how they related to the context provided on `BEB`'s operations.
+
+#### Part B: Spot versus futures prices: Risk
+
++ Using relative returns ($\frac{price_t}{price_{t-1}}-1$) compute the daily risk of the respective spot and futures contracts.
++ Build a time series chart of the the spot price and futures price data.
+
+With the above information nicely presented, tell the story of what the Committee key takeaways should be on what happened in 2022. `BEB` is purchasing spot and could potentially hedge with futures contracts.
+
+```{r, echo=FALSE}
+source("~/now/packages.R")
+spot <- RTL::eia2tidy(ticker = "PET.EER_EPD2DXL0_PF4_Y35NY_DPG.D", key = EIAkey,name = "Spot")
+fut <- RTL::getPrice(contract = "@HO22Z",iuser = mstar[[1]], ipassword = mstar[[2]], from = from)
+dat <- fut %>% dplyr::left_join(spot, by = c("date")) %>% 
+  dplyr::filter(date <= to) %>% 
+  tidyr::drop_na() %>% 
+  tidyr::pivot_longer(-date, names_to = "series", values_to = "value")
+
+dat %>% 
+  plotly::plot_ly(x = ~date, y = ~value, name = ~series, type = "scatter", mode = "lines")
+```
+
+```{r, fig.height=2}
+dat %>% 
+  dplyr::group_by(series) %>% 
+  dplyr::mutate(return = (value - dplyr::lag(value) - 1)) %>% 
+  tidyr::drop_na() %>% 
+  dplyr::summarise(risk = sd(return)) %>% 
+  gt::gt() %>% 
+  gt::fmt_percent(columns = c(risk))
+```
+
