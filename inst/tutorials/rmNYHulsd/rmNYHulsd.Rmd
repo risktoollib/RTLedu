@@ -156,7 +156,7 @@ x %>% dplyr::left_join(y, by = c("date"))
 
 + Using `Rmarkdown` or `quarto`, render into a clean and concise `html` document. 
 + Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca` before the deadline. 
-+ This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty. For clarity this includes any online chat platforms (e.g. Discord) where I or the UoA might find evidence of communication in a formal investigation.  
++ This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty. For clarity this includes any online chat platforms (e.g. Discord).  
 + Grading is in the class notes, `Grading` module, and any late submission will be assigned a grade of 0% - no questions asked. 
 
 #### Part A: Spot and Futures Contracts: What are they?
@@ -173,7 +173,7 @@ Explain in a paragraph or two:
 + Using relative returns ($\frac{price_t}{price_{t-1}}-1$) compute the daily risk of the respective spot and futures contracts as represented by their standard deviation.
 + Build a time series chart of the the spot price and futures price data.
 
-With the above information nicely presented, tell the story of what the Committee key takeaways should be on what happened in 2022. `BEB` is purchasing spot and could potentially hedge with futures contracts.
+With the above information nicely presented, draw insights and tell the story of what the Committee key takeaways should be based on what happened in 2022. `BEB` is purchasing spot and could potentially hedge with futures contracts.
 
 
 
