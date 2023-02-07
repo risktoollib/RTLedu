@@ -95,7 +95,7 @@ bd_lo <- function(x, width = 700) {
 
 -   The CFO is a great leader and understands very well that she needs your skills in helping enroll other Executives as they move towards managing growth in a financially sound manner.
 
--   They hired you based on your MBA designation with the following expectations that you:
+-   They hired you based on your MBA designation with the expectations that you:
 
     -   Demonstrate a well-rounded knowledge base.
 
@@ -103,7 +103,7 @@ bd_lo <- function(x, width = 700) {
 
     -   Effectively draw from your Finance knowledge to educate members of the Board's Risk Management Committee. `BEB` practices [decision quality](https://en.wikipedia.org/wiki/Decision_quality){target="_blank"}.
 
-+ Your first assignment from the CFO is to write a business document for the Risk Committee pertaining to concepts that are related to risk-managing their exposure to the cost of diesel. With the wild ride in diesel prices as a result of events in 2022, the Board is concerned about the cost of transportation from their warehouses in New York and their nationwide locations.
++ Your first assignment from the CFO is to write a business document for the Risk Committee pertaining to concepts that are related to risk-managing their exposure to the cost of diesel. With the wild ride in diesel prices as a result of events in 2022, the Board is concerned about the cost of transportation from their warehouses in New York to their nationwide locations.
 
 ### Skills Practiced & Requirements
 
@@ -124,7 +124,6 @@ bd_lo <- function(x, width = 700) {
     -   A clear heading with title and who it is from.
     -   Cleaning organized by business questions asked.
     -   Charts and tables properly formatted and self explanatory.
-    -   ...
 
 -   Each question should be answered as if you were presenting to `BEB`'s management team.
 
@@ -140,7 +139,7 @@ Whilst there are many packages to format tables the following are suggested:
 Use the following data from `2022-01-01` to `2022-12-31` inclusive:
 
 - Spot price is from the `EIA`: [New York Harbor Ultra-Low Sulfur No 2 Diesel Spot Price, Daily](https://www.eia.gov/opendata/v1/qb.php?category=241335&sdid=PET.EER_EPD2DXL0_PF4_Y35NY_DPG.D). You may refer to the `bootcamp appendix on APIs` after you have registered and obtained your own API key. The `RTL` packages provide functions to access the API once you have your API key.
-- Extract historical settlement prices for the `December 2022` [CME NY Harbor ULSD futures contract](https://www.cmegroup.com/markets/energy/refined-products/heating-oil.html){target={"_blank"} form `Morningstar Commodities` for futures contracts using `RTL::getPrices()` and your credentials. This is covered in the `Data Wrangling in Tidyverse` module of the course. 
+- Extract historical settlement prices for the `December 2022` [CME NY Harbor ULSD futures contract](https://www.cmegroup.com/markets/energy/refined-products/heating-oil.html){target={"_blank"} from `Morningstar Commodities` for futures contracts using `RTL::getPrices()` and your credentials. This is covered in the `Data Wrangling in Tidyverse` module of the course. 
 
 You will need to merge the two resulting dataframes. To join, or the equivalent of a VLOOKUP in Excel, you can use `dplyr::left_join()`:
 
@@ -158,20 +157,20 @@ x %>% dplyr::left_join(y, by = c("date"))
 + Using `Rmarkdown` or `quarto`, render into a clean and concise `html` document. 
 + Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca` before the deadline. 
 + This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty. For clarity this includes any online chat platforms (e.g. Discord) where I or the UoA might find evidence of communication in a formal investigation.  
-+ Grading is in the class note `Grading` module and any late submission will be assigned a grade of 0% - no questions asked. 
++ Grading is in the class notes, `Grading` module, and any late submission will be assigned a grade of 0% - no questions asked. 
 
 #### Part A: Spot and Futures Contracts: What are they?
 
-All the Board understands is that `BEB` is purchasing diesel directly from a wholesaler for its truck fleet at whatever price is offered on that day. You, however, know that you can use other instruments to manage the price risk. You will be using the specific spot and futures contracts detailed in the data section for this memo. 
+All the Board understands is that `BEB` is purchasing diesel directly from a wholesaler for its truck fleet at the price offered on that day. You, however, know that you can use other instruments to manage the price risk.  
 
 Explain in a paragraph or two:
 
-+ What are spot and futures prices?
++ What do spot and futures prices represent?
 + The important aspects of the futures contract specifications and how they related to the context provided on `BEB`'s operations.
 
 #### Part B: Spot versus futures prices: Risk
 
-+ Using relative returns ($\frac{price_t}{price_{t-1}}-1$) compute the daily risk of the respective spot and futures contracts.
++ Using relative returns ($\frac{price_t}{price_{t-1}}-1$) compute the daily risk of the respective spot and futures contracts as represented by their standard deviation.
 + Build a time series chart of the the spot price and futures price data.
 
 With the above information nicely presented, tell the story of what the Committee key takeaways should be on what happened in 2022. `BEB` is purchasing spot and could potentially hedge with futures contracts.

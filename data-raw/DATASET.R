@@ -21,8 +21,6 @@ usethis::use_package("tidyr")
 usethis::use_package("ggplot2")
 usethis::use_package("plotly")
 
-
-
 library(tidyverse)
 library(tidyquant)
 library(jsonlite)
