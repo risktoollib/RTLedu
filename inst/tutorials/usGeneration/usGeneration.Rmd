@@ -92,7 +92,6 @@ to = lubridate::rollback(Sys.Date())
 + Choice of effective visualization in communication.
 + Data analytics and an ability to tell a story from it.
 + Clean rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. As this is marketing material for clients, clean your output of code/warnings/... and format your tables and charts accordingly.
-
 + Learning to learn: Using new packages and functions.  
 
 Whilst there are many packages to format tables the following are suggested:

@@ -1,14 +1,22 @@
 ---
 title: "Asset Classes"
-output:
-  learnr::tutorial:
-    progressive: true
-    allow_skip: false
-runtime: shiny_prerendered
+output: 
+  html_document:
+    self_contained: true
+    theme:
+      bg: "#2B3E50"
+      fg: "#EBEBEB"
+      primary: "lime"
+      secondary: "#51616F"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
-library(learnr)
 library(dplyr)
 library(lubridate)
 library(gt)
@@ -76,11 +84,22 @@ asset2 <- tickers[3]
 cors <- c(25,75,252)
 ```
 
-## Problem We Are Solving
+##  {.tabset .tabset-pills}
 
-**This quiz consists in analyzing returns across multiple asset classes.**
++ This exercise consists in analyzing returns across multiple asset classes.
++ You are an analyst at a research firm tasked to prepare a report to be sent to clients. The firm expects from you a clean business document. 
++ For clarity, the expectations are that you took on the feedback from the first quiz and the standards are both higher now and more consequential if your performance is short of them. 
++ The clients, despite knowing markets at a high level, have a limited knowledge of Finance and statistics. So do NOT assume they know what you mean with acronyms or concepts. 
++ Add a summary at the beginning of your document with few short bullet points on what key messages they should draw from your analysis.   
 
-### Asset classes considered:
+### Skills Practiced & Requirements
+
++ Use of APIs for data extraction.
++ Data wrangling and parsing WITHOUT manual filtering or data.
++ Choice of effective visualization in communication with clean formatting.
++ Data analytics and an ability to tell a story from it.
+
+### Data
 
 + US Long Term bonds with the [iShares 20+ Year Treasury Bond ETF](https://etfdb.com/etf/TLT/#etf-ticker-profile).
 + Energy Liquids with the [United States Oil Fund](https://etfdb.com/etf/USO/#etf-ticker-profile).
@@ -94,34 +113,16 @@ tickers
 
 ### Your Ask
 
-In a concise .Rmd using `tidy` workflow (i.e. no `xts`), do the following:
-
-1. I am your business leader and, despite knowing markets at a high level, my Finance background is quite limited. Add a summary at the beginning of your document telling me in a few bullet points what key messages I should draw from your analysis so I can cut and paste them in a PowerPoint for my boss.   
-2. Extract data from `r from` to `r to` and compute daily `log()` returns adjusted for splits and dividends. Do not display in your document as this is the data wrangling of it and it serves no purpose in a business document.
-3. Plot histograms of returns by asset class in a manner that you can effectively visualize the comparison.
-4. Show a table of distribution moments of all assets. Complement with a short commentary on how they compare with a normal distribution.
-5. Show a plot of the correlation matrix between all assets.
-6. Show a chart of rolling correlations between `r asset1` and `r asset2` with windows of `r cors[1]`, `r cors[2]` and `r cors[3]` business days.
-7. Compute the Jarque-Bera statistics on all assets
+1. Extract data from `r from` to `r to` and compute daily `log()` returns adjusted for splits and dividends. Do not display in your document as this is the data wrangling of it and it serves no purpose in a business document.
+2. Plot histograms of returns by asset class in a manner that you can effectively visualize the comparison.
+3. Show a table of distribution moments of all assets. Complement with a short commentary on how they compare with a normal distribution.
+4. Show a plot of the correlation matrix between all assets.
+5. Show a chart of rolling correlations between `r asset1` and `r asset2` with windows of `r cors[1]`, `r cors[2]` and `r cors[3]` business days.
+6. Compute the Jarque-Bera statistics on all assets
 
   + Display the results in a single table.
   + State which one(s) are normally distributed and why. 
-8. Compute the Kolmogorov-Smirnov (“KS”) on `SPY` returns and state whether the results indicate that the returns are normally distributed.
+7. Compute the Kolmogorov-Smirnov (“KS”) on `SPY` returns and state whether the results indicate that the returns are normally distributed.
 
-## Grading
 
-If you take this exercise as part of a graded item in a course, see the Grading section in class notes. Grading is consistent with learning objectives.
-
-```{r, echo=F,include=TRUE, fig.height=3}
-tibble(
-  Competency = c("Summary",
-                 "Presentation",
-                 "Accuracy of code and results"),
-  Measure = c(
-    "Ability to distill and communicate the key findings.",
-    "Professionally rendered presentations. Clean document of unnecessary clutter not relevant to the story. Assume I am a business leader and interested in the story, not how you got to it. Format properly your charts and tables.",
-    "No errors in computations."
-  )
-) %>% bd_lo()
-```
 
