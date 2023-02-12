@@ -123,3 +123,8 @@
 #' @description Effective understanding of risk of specific contract pairs
 #' @format list
 "spreads"
+
+#' bankOffer
+#' @description Corporate Funding Zero Rates
+#' @format data frame
+"bankOffer"

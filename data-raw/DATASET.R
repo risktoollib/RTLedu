@@ -300,6 +300,13 @@ spreads[[1]] <- RTL::chart_spreads(
 )
 usethis::use_data(spreads, overwrite = T)
 
+# bankOffer
+
+bankOffer <- tidyquant::tq_get(x = c("DGS1","DGS3","DGS5","DGS7","DGS10"),get = "economic.data") %>%
+  dplyr::filter(date == max(date)) %>%
+  dplyr::transmute(maturity = round(readr::parse_number(symbol),3),
+                   rate = price / 100)
+usethis::use_data(bankOffer, overwrite = T)
 
 # Global
 devtools::document()
