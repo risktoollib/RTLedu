@@ -117,7 +117,7 @@
 #' hint for updates
 #' @description object to check if update worked
 #' @format string
-"toy"
+"toyz"
 
 #' Sample chart for spreads trading
 #' @description Effective understanding of risk of specific contract pairs

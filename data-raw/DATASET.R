@@ -277,8 +277,8 @@ ercot <- ercot %>%
 
 usethis::use_data(ercot, overwrite = T)
 
-toy <- dplyr::tibble(RTLeduUpdate = paste("RTLedu is updated as of:",Sys.Date()))
-usethis::use_data(toy, overwrite = T)
+toyz <- dplyr::tibble(RTLeduUpdate = paste("RTLedu is updated as of:",Sys.Date()))
+usethis::use_data(toyz, overwrite = T)
 
 # use of chart pairs
 cpairs <- dplyr::tibble(
