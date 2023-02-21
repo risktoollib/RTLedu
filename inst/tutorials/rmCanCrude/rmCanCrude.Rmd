@@ -203,14 +203,14 @@ RTL::fizdiffs %>%
 
 #### Part 3: Delivery Timing  (8 points)  
 
-`SmartOil` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html).
+`SmartOil` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of the [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html){target="_blank"}. As an additional example, you can find on [Marketwatch Crude Oil Continuous Contract](https://www.marketwatch.com/investing/future/cl00){target="_blank"} the same information on a different commercial data vendor. Hint: the first example of how to extract these type of contracts from Morningstar is in the tutorial on how to use Morningstar.  
 
 ```{r}
 RTL::dflong %>% 
   dplyr::filter(series == "CL01") %>% 
   plotly::plot_ly(x=~date, y = ~value,type="scatter", mode="lines") %>% 
    plotly::layout(
-    title = list(text = "WTI Price", x = 0.05),
+    title = list(text = "WTI ContinPrice - 1st (front) Contract", x = 0.05),
     xaxis = list(title = ""),
     yaxis = list(title = "$ per barrel")
    )
