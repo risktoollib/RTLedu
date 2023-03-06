@@ -220,6 +220,15 @@ futs <- RTL::getPrices(
 )
 usethis::use_data(futs, overwrite = T)
 
+futs2 <- RTL::getPrices(
+  feed = "CME_NymexFutures_EOD",
+  contracts = c("@CL23M","@CL23N", "@CL23Q", "@CL23U"),
+  from = Sys.Date() - months(2),
+  iuser = mstar[[1]],
+  ipassword = mstar[[2]]
+)
+usethis::use_data(futs2, overwrite = T)
+
 # payoffs
 
 callpayoff <- function(price,strike) {max(price - strike,0)}

@@ -84,6 +84,11 @@
 #' @format data frame
 "futs"
 
+#' Futures prices
+#' @description WTI crude Nymex futures prices
+#' @format data frame
+"futs2"
+
 #' Option Strategies
 #' @description Payoff profile
 #' @format data frame
