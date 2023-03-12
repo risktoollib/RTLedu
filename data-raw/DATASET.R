@@ -82,6 +82,10 @@ quantmod::getSymbols('CVX', src = 'yahoo')
 chevron <- CVX %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
 usethis::use_data(chevron, overwrite = T)
 
+quantmod::getSymbols('CAT', src = 'yahoo')
+caterpillar <- CAT %>% timetk::tk_tbl(preserve_index = TRUE, rename_index = "date")
+usethis::use_data(caterpillar, overwrite = T)
+
 # nonlin relationships
 reg1 <- dplyr::tibble(x = 1:100, y = x + x^2 + x^5)
 usethis::use_data(reg1, overwrite = T)
@@ -294,7 +298,7 @@ cpairs <- dplyr::tibble(
   year = c("2018", "2019", "2020","2021","2022","2023"),
   first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H","@HO23H"),
   second = c("@HO8J", "@HO9J", "@HO0J","@HO21J","@HO22J","@HO23J"),
-  expiry = c(NA,NA,NA,NA,NA,"2023-02-23")
+  expiry = c(NA,NA,NA,NA,NA,NA)
 )
 
 spreads = list()

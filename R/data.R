@@ -28,11 +28,15 @@
 #' @format data frame
 "apple"
 
+#' Caterpillar stock price data
+#' @description Caterpillar Stock prices
+#' @format data frame
+"caterpillar"
+
 #' Stock prices for Real Estate and sp500
 #' @description Stock prices
 #' @format data frame
 "correlation"
-
 
 #' Chevron stock price data
 #' @description Chevron Stock prices

@@ -2,7 +2,7 @@ Type: Package
 Package: RTLedu
 Title: Education tutorials to accompany RTL package 
 Version: 0.1.5
-Date: 2023-03-05
+Date: 2023-03-11
 Authors@R: 
     person("Philippe", "Cote", , "pcote@ualberta.ca", role = c("aut", "cre"))
 Description: Build to support the 'RTL' package in education and market
