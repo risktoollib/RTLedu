@@ -202,12 +202,16 @@ m1 <- lubridate::rollback(Sys.Date() + months(2, abbreviate = TRUE), roll_to_fir
 expo <- risk %>%
   dplyr::slice(5) %>%
   dplyr::select(1,8) %>%
-  dplyr::mutate(QUANTITY = 1e5, MONTH = m1) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = -300000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "RB",QUANTITY = 150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "HO",QUANTITY = 150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = 200000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = -200000,MONTH = m1 + months(1, abbreviate = TRUE))
+  dplyr::mutate(QUANTITY = 0, MONTH = m1) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = -100000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "RB",QUANTITY = 200000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "RB",QUANTITY = -200000,MONTH = m1 + months(2, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "HO",QUANTITY = -50000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "HO",QUANTITY = -150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "HO",QUANTITY = +150000,MONTH = m1 + months(2, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = -200000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = 100000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "CL",QUANTITY = 100000,MONTH = m1 + months(2, abbreviate = TRUE))
 
 expo <- expo %>%
   tidyr::pivot_wider(names_from = MONTH, values_from = QUANTITY, values_fn = sum)
