@@ -13,7 +13,6 @@ attachment::att_from_rmd(path = "./inst/tutorials/us-electricity/us-electricity.
 
 usethis::use_pipe()
 usethis::use_package("RTL")
-usethis::use_package("sp")
 usethis::use_package("lubridate")
 usethis::use_package("gt")
 usethis::use_package("dplyr")
@@ -324,6 +323,16 @@ bankOffer <- tidyquant::tq_get(x = c("DGS1","DGS3","DGS5","DGS7","DGS10"),get = 
   dplyr::transmute(maturity = round(readr::parse_number(symbol),3),
                    rate = price / 100)
 usethis::use_data(bankOffer, overwrite = T)
+
+
+# Strava
+
+strava <- readr::read_csv("../now/data/Activities.csv") %>%
+  dplyr::rename_with(make.names) %>%
+  dplyr::mutate(Date = as.Date(Date)) %>%
+  dplyr::filter(Distance > 5,
+                Avg.Stride.Length > 1)
+usethis::use_data(strava, overwrite = T)
 
 # Global
 devtools::document()

@@ -137,3 +137,8 @@
 #' @description Corporate Funding Zero Rates
 #' @format data frame
 "bankOffer"
+
+#' strava
+#' @description Strava user data
+#' @format data frame
+"strava"
