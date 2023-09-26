@@ -103,17 +103,17 @@ Whilst there are many packages to format tables the following are suggested:
 
 You will be using data from the [US Energy Information Administration](https://www.eia.gov/) and the API webpage is available at [EIA Open Data](https://www.eia.gov/opendata/). You may refer to the `bootcamp` section 7.2 after you have registered and obtained your own API key.
 
-The dataset and series ID (tickers) can be found at:
+Go to [Electricity Data Browser](https://www.eia.gov/electricity/data/browser/) and download the data from the Download button in the table (not the chart) using the skills you learned for Monthly data.
 
-+ [Electricity Net Generation Total](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.ELETPUS.M).
-+ [Electricity Net Generation From Coal](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.CLETPUS.M).
-+ [Electricity Net Generation From Conventional Hydroelectric Power](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.HVETPUS.M).
-+ [Electricity Net Generation From Natural Gas](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.NGETPUS.M).
-+ [Electricity Net Generation From Nuclear](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.NUETPUS.M).
-+ [Electricity Net Generation From Solar](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.SOETPUS.M).
-+ [Electricity Net Generation From Wind](https://www.eia.gov/opendata/qb.php?category=711280&sdid=TOTAL.WYETPUS.M).
-+ Others is the difference between the total net generation and the sum of the above series. 
-
++ The generation source we care about are as follows when you organize your data:
+  + Total Net Generation
+  + From Coal
+  + From Conventional Hydroelectric
+  + From Natural Gas
+  + From Nuclear
+  + From Solar
+  + From Wind
+  + Others is the difference between the total net generation and the sum of the above 
 + Use monthly data since `Jan-2009`.
 + Use tidy data with long and wide dataframes as you see fit. 
 + To compute the monthly changes use the absolute change instead of percentages and beware whether dates are sorted ascending or descending before computing changes.
