@@ -647,27 +647,25 @@ suggested:</p>
 <div id="data" class="section level3">
 <h3>Data</h3>
 <p>You will be using data from the <a href="https://www.eia.gov/">US
-Energy Information Administration</a> and the API webpage is available
-at <a href="https://www.eia.gov/opendata/">EIA Open Data</a>. You may
-refer to the <code>bootcamp</code> section 7.2 after you have registered
-and obtained your own API key.</p>
-<p>Go to <a href="https://www.eia.gov/electricity/data/browser/">Electricity Data
-Browser</a> and download the data from the Download button in the table
-(not the chart) using the skills you learned for Monthly data.</p>
+Energy Information Administration</a>. The API webpage is <a href="https://www.eia.gov/opendata/">EIA Open Data</a> and you must
+register to obtain your API key.</p>
+<p>You will be doing analysis on <a href="https://www.eia.gov/electricity/data/browser/">Electricity Data
+Browser</a>.</p>
 <ul>
 <li>The generation source we care about are as follows when you organize
 your data:
 <ul>
-<li>Total Net Generation</li>
-<li>From Coal</li>
-<li>From Conventional Hydroelectric</li>
-<li>From Natural Gas</li>
-<li>From Nuclear</li>
-<li>From Solar</li>
-<li>From Wind</li>
-<li>Others is the difference between the total net generation and the
-sum of the above</li>
+<li>Total Net Generation (TOTAL.ELETPUS.M)</li>
+<li>From Coal (TOTAL.CLETPUS.M)</li>
+<li>From Conventional Hydroelectric (TOTAL.HVETPUS.M)</li>
+<li>From Natural Gas (TOTAL.NGETPUS.M)</li>
+<li>From Nuclear (TOTAL.NUETPUS.M)</li>
+<li>From Solar (TOTAL.SOETPUS.M)</li>
+<li>From Wind (TOTAL.WYETPUS.M)</li>
 </ul></li>
+<li>Use <code>RTL::eia2tidy()</code> or <code>RTL::eia2tidy_all()</code>
+to extract data from the API. Tickers are provided next to the names
+above.</li>
 <li>Use monthly data since <code>Jan-2009</code>.</li>
 <li>Use tidy data with long and wide dataframes as you see fit.</li>
 <li>To compute the monthly changes use the absolute change instead of
