@@ -93,7 +93,7 @@ knitr::include_graphics(url)
 
 + Defining a problem to solve. Here I am not giving you how we define `fitness`, much like in a real-world problem. This is your first experimentation developing a skill that is critical in the workplace. 
 + Data wrangling and parsing.
-+ Data type conversion which is part of the `learn-to-learn` objectives of this class.  
++ Data type conversion which is part of the `learn-to-learn` objectives of this class. For example, you will have to make decisions on how you express the pace of a runner, defined in minutes:seconds in the dataset.  
 + Choice of effective visualization in communication.
 + Data analytics and an ability to tell a story from it.
 + Clean rendering of a business document. The standard for assessment will be higher than the prior assignment as you obtained feedback from it.
