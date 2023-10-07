@@ -3,6 +3,7 @@
 export("%>%")
 export(assetClass)
 export(dataWrangling)
+export(fitness)
 export(gettingStarted)
 export(mtmPLexpo)
 export(multipleRegs)
