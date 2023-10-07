@@ -1,0 +1,122 @@
+---
+title: "Assessing Fitness with Strave Data"
+output: 
+  html_document:
+    self_contained: true
+    theme:
+      bg: "#2B3E50"
+      fg: "#EBEBEB"
+      primary: "lime"
+      secondary: "#51616F"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+---
+
+##  {.tabset .tabset-pills}
+
+Read carefully what is being asked to deploy your newly acquired data science skills to deploy quality business documents. 
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+library(dplyr)
+library(gt)
+library(lubridate)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 9,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+bd_txt <-
+  function(x,
+           title = "Grading",
+           subtitle = "-",
+           width = 700) {
+    if (nchar(gsub(" ", "", subtitle)) == 0) {
+      subtitle <- "-"
+    }
+    y <- x %>% gt::gt() %>%
+      gt::tab_header(title = title, subtitle = subtitle) %>%
+      gt::tab_style(style = cell_text(weight = "bold"),
+                    locations = cells_column_labels(colnames(.))) %>%
+      gt::tab_style(style = list(
+        cell_fill(color = "royalblue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_title(groups = c("title")))
+    y = y %>% tab_options(table.width = px(width),
+                          table.font.size = pct(80))
+    return(y)
+  }
+
+bd_lo <- function(x, width = 700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(
+      cell_fill(color = "royalblue"),
+      cell_text(color = "white", weight = "bold")
+    ),
+    locations = cells_title(groups = c("title")))
+  y = y %>% tab_options(table.width = px(width),
+                        table.font.size = pct(80))
+  return(y)
+}
+
+
+from = as.Date("2008-01-01")
+to = lubridate::rollback(Sys.Date())
+```
+
+### Framing the Problem
+
++ You are a Running coach specializing in what you might consider `oldish!` people. You know the type that may provide you guidance that you quickly discard because `things are different now and you are old!`.
++ Your goal here extends beyond measuring statistics and running code.
++ You will need to provide an assessment of fitness for these two individuals.
+
+```{r, echo=FALSE}
+url <- "https://i2.wp.com/kevinspear.com/wp-content/uploads/2017/09/Spear-4096.jpg?resize=750%2C496"
+knitr::include_graphics(url)
+```
+
+### Skills Practiced & Requirements
+
++ Defining a problem to solve. Here I am not giving you how we define `fitness`, much like in a real-world problem. This is your first experimentation developing a skill that is critical in the workplace. 
++ Data wrangling and parsing.
++ Data type conversion which is part of the `learn-to-learn` objectives of this class.  
++ Choice of effective visualization in communication.
++ Data analytics and an ability to tell a story from it.
++ Clean rendering of a business document. The standard for assessment will be higher than the prior assignment as you obtained feedback from it.
+
+### Data
+
+The data is provided in the `RTLedu::strava` dataset. You will need to update `RTLedu` on the day the assignment is given in class. 
+
+### Your Ask
+
+The client requested answers to the following questions:
+
+1. Explain how you define fitness.
+2. Tell me about which individual is fitter?
+3. Tell me about which individual has improved more in fitness?
+4. Make a clear and concise recommendation on which individual you would want to coach. There is no `it depends here`, you have to make a decision.
+
+Write a bullet point summary on your findings at the beginning of the document.
+
+You must use a quarto document (<FirstnameLastname>.qmd) and render it into `html`.  **I will not accept a <quiz2.qmd> document as an acceptable document. It will attract a 25% penalty before I grade it.**
+
+
+### Grading
+
+If you take this exercise as part of a graded item in a course, see the Grading section in class notes. 
+

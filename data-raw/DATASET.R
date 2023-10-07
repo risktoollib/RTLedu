@@ -19,6 +19,7 @@ usethis::use_package("dplyr")
 usethis::use_package("tidyr")
 usethis::use_package("ggplot2")
 usethis::use_package("plotly")
+usethis::use_package("sf", type = "Suggest")
 
 library(tidyverse)
 library(tidyquant)
@@ -327,11 +328,23 @@ usethis::use_data(bankOffer, overwrite = T)
 
 # Strava
 
-strava <- readr::read_csv("../now/data/Activities.csv") %>%
+stravaPhil <- readr::read_csv("../now/data/Activities_phil.csv") %>%
   dplyr::rename_with(make.names) %>%
-  dplyr::mutate(Date = as.Date(Date)) %>%
-  dplyr::filter(Distance > 5,
-                Avg.Stride.Length > 1)
+  dplyr::mutate(Date = as.Date(Date),
+                Runner = "Collie") %>%
+  dplyr::filter(Avg.HR > 130)
+
+stravaAndras <- readr::read_csv("../now/data/Activities_andras.csv") %>%
+  dplyr::rename_with(make.names) %>%
+  dplyr::mutate(Date = as.Date(Date),
+                Runner = "Hound") %>%
+  dplyr::filter(Distance > 6,
+                !Activity.Type %in% c("Virtual","Treadmill"),
+                Avg.HR > 136,
+                Avg.Run.Cadence > 150)
+strava <- rbind(stravaAndras,stravaPhil) %>%
+  dplyr::select(-Grit, -Total.Reps)
+
 usethis::use_data(strava, overwrite = T)
 
 # Global
