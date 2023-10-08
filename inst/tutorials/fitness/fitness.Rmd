@@ -1,5 +1,5 @@
 ---
-title: "Assessing Fitness with Strave Data"
+title: "Assessing Fitness with Strava Data"
 output: 
   html_document:
     self_contained: true
@@ -80,9 +80,9 @@ to = lubridate::rollback(Sys.Date())
 
 ### Framing the Problem
 
-+ You are a Running coach specializing in what you might consider `oldish!` people. You know the type that may provide you guidance that you quickly discard because `things are different now and you are old!`.
++ You are a Running coach specializing in what you might consider `...oldish...` people. You know the type that may provide you guidance that you quickly discard because `things are different now and you are young!`
 + Your goal here extends beyond measuring statistics and running code.
-+ You will need to provide an assessment of fitness for these two individuals.
++ You will need to provide an assessment of fitness (level and improvement) for these two individuals.
 
 ```{r, echo=FALSE}
 url <- "https://i2.wp.com/kevinspear.com/wp-content/uploads/2017/09/Spear-4096.jpg?resize=750%2C496"
@@ -93,7 +93,8 @@ knitr::include_graphics(url)
 
 + Defining a problem to solve. Here I am not giving you how we define `fitness`, much like in a real-world problem. This is your first experimentation developing a skill that is critical in the workplace. 
 + Data wrangling and parsing.
-+ Data type conversion which is part of the `learn-to-learn` objectives of this class. For example, you will have to make decisions on how you express the pace of a runner, defined in minutes:seconds in the dataset.  
++ Data type conversion which is part of the `learn-to-learn` objectives of this class. For example, you will have to make decisions on how you express the pace of a runner, defined in minutes:seconds in the dataset. 
++ You must make use of the material covered up to and inclusive to the class prior to handling over the assignment.
 + Choice of effective visualization in communication.
 + Data analytics and an ability to tell a story from it.
 + Clean rendering of a business document. The standard for assessment will be higher than the prior assignment as you obtained feedback from it.
