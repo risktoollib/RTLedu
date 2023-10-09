@@ -18,7 +18,7 @@ output:
 
 ##  {.tabset .tabset-pills}
 
-Read carefully what is being asked to deploy your newly acquired data science skills to deploy quality business documents. 
+Read carefully what is being asked to deploy your newly acquired data science skills producing quality business documents. 
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
 library(dplyr)
@@ -80,9 +80,10 @@ to = lubridate::rollback(Sys.Date())
 
 ### Framing the Problem
 
-+ You are a Running coach specializing in what you might consider `...oldish...` people. You know the type that may provide you guidance that you quickly discard because `things are different now and you are young!`
-+ Your goal here extends beyond measuring statistics and running code.
-+ You will need to provide an assessment of fitness (level and improvement) for these two individuals.
++ You are a running coach specializing in what you might consider `...older...` people. You know the generation that may provide  guidance you quickly discard because `...things are different...`. 
++ Your goal here extends beyond measuring statistics and executing code.
++ You will need to provide an assessment of fitness (level and improvement) for these two individuals. The data comes from two of your Professors so be kind in your assessments!
++ Extra points if you also add yours or another individual.
 
 ```{r, echo=FALSE}
 url <- "https://i2.wp.com/kevinspear.com/wp-content/uploads/2017/09/Spear-4096.jpg?resize=750%2C496"
