@@ -204,14 +204,16 @@ expo <- risk %>%
   dplyr::slice(5) %>%
   dplyr::select(1,8) %>%
   dplyr::mutate(QUANTITY = 0, MONTH = m1) %>%
+  # flat price short 100 lots
   tibble::add_row(TICKER = "CL",QUANTITY = -100000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "RB",QUANTITY = 200000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "RB",QUANTITY = -200000,MONTH = m1 + months(2, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "HO",QUANTITY = -50000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
+  # RB long time spread
+  #tibble::add_row(TICKER = "RB",QUANTITY = 200000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  #tibble::add_row(TICKER = "RB",QUANTITY = -200000,MONTH = m1 + months(2, abbreviate = TRUE)) %>%
+  # HO/RB short
   tibble::add_row(TICKER = "HO",QUANTITY = -150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "HO",QUANTITY = +150000,MONTH = m1 + months(2, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = -200000,MONTH = m1 + months(0, abbreviate = TRUE)) %>%
-  tibble::add_row(TICKER = "CL",QUANTITY = 100000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  tibble::add_row(TICKER = "RB",QUANTITY = +150000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
+  # CL time spread
+  tibble::add_row(TICKER = "CL",QUANTITY = -100000,MONTH = m1 + months(1, abbreviate = TRUE)) %>%
   tibble::add_row(TICKER = "CL",QUANTITY = 100000,MONTH = m1 + months(2, abbreviate = TRUE))
 
 expo <- expo %>%
@@ -300,19 +302,19 @@ usethis::use_data(toyz, overwrite = T)
 
 # use of chart pairs
 cpairs <- dplyr::tibble(
-  year = c("2018", "2019", "2020","2021","2022","2023"),
-  first = c("@HO8H", "@HO9H", "@HO0H","@HO21H","@HO22H","@HO23H"),
-  second = c("@HO8J", "@HO9J", "@HO0J","@HO21J","@HO22J","@HO23J"),
-  expiry = c(NA,NA,NA,NA,NA,NA)
+  year = c("2021","2022","2023","2024"),
+  first = c("@HO21H","@HO22H","@HO23H","@HO24H"),
+  second = c("@HO21J","@HO22J","@HO23J","@HO24J"),
+  expiry = c(NA,NA,NA,"2024-02-29")
 )
 
 spreads = list()
 
 spreads[[1]] <- RTL::chart_spreads(
-  cpairs = cpairs, daysFromExpiry = 200, from = "2017-01-01",
+  cpairs = cpairs, daysFromExpiry = 200, from = "2019-01-01",
   conversion = c(42, 42), feed = "CME_NymexFutures_EOD",
   iuser = mstar[[1]], ipassword = mstar[[2]],
-  title = "March ULSD vs WTI Nymex Crack Spreads",
+  title = "March / April ULSD Spreads",
   yaxis = "$ per bbl",
   output = "chart"
 )
