@@ -6,7 +6,7 @@ attachment::att_from_rmd(path = "./inst/tutorials/marketMaking/marketMaking.Rmd"
 attachment::att_from_rmd(path = "./inst/tutorials/mtmPLexpo/mtmPLexpo.Rmd")
 attachment::att_from_rmd(path = "./inst/tutorials/multivariate-regressions/multivariate-regressions.Rmd")
 attachment::att_from_rmd(path = "./inst/tutorials/orders/orders.Rmd")
-attachment::att_from_rmd(path = "./inst/tutorials/sp500risk/sp500risk.Rmd")
+attachment::att_from_rmd(path = "./inst/tutorials/sp400risk/sp400risk.Rmd")
 attachment::att_from_rmd(path = "./inst/tutorials/spot2fut/risk-spot2fut.Rmd")
 attachment::att_from_rmd(path = "./inst/tutorials/us-electricity/us-electricity.Rmd")
 
@@ -32,18 +32,19 @@ source("~/now/packages.R")
 
 ## Trading Hubs
 
-sp500_desc <- tidyquant::tq_index("SP500") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
+sp400_desc <- tidyquant::tq_index("SP400") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
 
-sp500_prices <- tidyquant::tq_get(sort(grep(sp500_desc$symbol,pattern = "BRK.B|BF.B|DD", value = TRUE, invert = TRUE)),
+sp400_prices <- tidyquant::tq_get(sort(sp400_desc$symbol),
+                                  #sort(grep(sp400_desc$symbol,pattern = "BRK.B|BF.B|DD", value = TRUE, invert = TRUE)),
                                   get  = "stock.prices",
-                                  from = "2010-01-01",
+                                  from = "2011-01-01",
                                   to = Sys.Date()) %>%
   stats::na.omit() %>%
   dplyr::group_by(symbol) %>%
   dplyr::select(symbol, date, close = adjusted) %>%
   tidyquant::tq_transmute(select = close, mutate_fun = to.monthly, indexAt = "lastof")
-usethis::use_data(sp500_desc, overwrite = T)
-usethis::use_data(sp500_prices, overwrite = T)
+usethis::use_data(sp400_desc, overwrite = T)
+usethis::use_data(sp400_prices, overwrite = T)
 
 # lpg eia data set
 
@@ -107,7 +108,7 @@ usethis::use_data(reg3, overwrite = T)
 # seasonality
 library(tidyverse)
 unemployment <- tidyquant::tq_get(x = c("AKURN","CAURN","NJURN"), get = "economic.data",
-                                  from = "1990-01-01", to = Sys.Date()) %>%
+                                  from = "1999-01-01", to = Sys.Date()) %>%
   dplyr::transmute(date,
                    state = case_when(symbol == "NJURN" ~ "NewJersey",
                                       symbol == "AKURN" ~ "Alaska",
@@ -121,7 +122,7 @@ usethis::use_data(unemployment, overwrite = T)
 
 correlation <- tidyquant::tq_get(c("IYR","SPY") ,get = "stock.prices",from = "2017-01-01", to = Sys.Date()) %>%
   dplyr::select(date, series = symbol, value = adjusted) %>%
-  dplyr::mutate(series = stringr::str_replace_all(series,c("IYR" = "RealEstate", "SPY" = "sp500" )))
+  dplyr::mutate(series = stringr::str_replace_all(series,c("IYR" = "RealEstate", "SPY" = "sp400" )))
 usethis::use_data(correlation, overwrite = T)
 
 # tweets
@@ -221,7 +222,7 @@ usethis::use_data(expo, overwrite = T)
 
 futs <- RTL::getPrices(
   feed = "CME_NymexFutures_EOD",
-  contracts = c("@CL23U","@CL23V", "@CL23X", "@CL23Z"),
+  contracts = c("@CL24H","@CL24J", "@CL24K", "@CL24M"),
   from = Sys.Date() - months(2),
   iuser = mstar[[1]],
   ipassword = mstar[[2]]
