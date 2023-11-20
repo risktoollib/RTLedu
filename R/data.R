@@ -1,12 +1,22 @@
 #' S&P400 components data
-#' @description S&P500 components and metadata
+#' @description S&P400 components and metadata
 #' @format data frame
 "sp400_desc"
 
 #' sp400_prices data
-#' @description S&P500 components monthly adjusted stock price returns
+#' @description S&P400 components monthly adjusted stock price returns
 #' @format data frame
 "sp400_prices"
+
+#' S&P500 components data
+#' @description S&P500 components and metadata
+#' @format data frame
+"sp500_desc"
+
+#' sp400_prices data
+#' @description S&P500 components monthly adjusted stock price returns
+#' @format data frame
+"sp500_prices"
 
 #' Tweets data from Donald Trump
 #' @description Trump tweets from 2016-2020

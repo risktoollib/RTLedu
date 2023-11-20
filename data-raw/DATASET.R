@@ -30,7 +30,23 @@ library(RTL)
 library(tidyquant)
 source("~/now/packages.R")
 
-## Trading Hubs
+## sp500
+
+sp500_desc <- tidyquant::tq_index("SP500") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
+
+sp500_prices <- tidyquant::tq_get(#sort(sp500_desc$symbol),
+                                  sort(grep(pattern = "^-",x = sp500_desc$symbol,value = TRUE,invert = TRUE)),
+                                  get  = "stock.prices",
+                                  from = "2011-01-01",
+                                  to = Sys.Date()) %>%
+  stats::na.omit() %>%
+  dplyr::group_by(symbol) %>%
+  dplyr::select(symbol, date, close = adjusted) %>%
+  tidyquant::tq_transmute(select = close, mutate_fun = to.monthly, indexAt = "lastof")
+usethis::use_data(sp500_desc, overwrite = T)
+usethis::use_data(sp500_prices, overwrite = T)
+
+## sp400
 
 sp400_desc <- tidyquant::tq_index("SP400") #%>% dplyr::filter(!stringr::str_detect(symbol,"BRK.B|BF.B"))
 

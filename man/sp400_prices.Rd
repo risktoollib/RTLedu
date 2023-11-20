@@ -11,6 +11,6 @@ data frame
 sp400_prices
 }
 \description{
-S&P500 components monthly adjusted stock price returns
+S&P400 components monthly adjusted stock price returns
 }
 \keyword{datasets}
