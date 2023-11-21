@@ -17,6 +17,7 @@ Imports:
     rlang,
     lifecycle,
     glue,
+    RTL
 Suggests: 
     sf, sp, lubridate
 Encoding: UTF-8
