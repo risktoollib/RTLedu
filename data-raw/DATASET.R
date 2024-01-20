@@ -46,6 +46,8 @@ sp500_prices <- tidyquant::tq_get(#sort(sp500_desc$symbol),
   tidyquant::tq_transmute(select = close, mutate_fun = to.monthly, indexAt = "lastof")
 usethis::use_data(sp500_desc, overwrite = T)
 usethis::use_data(sp500_prices, overwrite = T)
+sp500_prices <- sp500_prices %>%
+  dplyr::select(date,series = symbol, value = close)
 feather::write_feather(sp500_desc,"~/data/sp500_desc")
 feather::write_feather(sp500_prices,"~/data/sp500_prices")
 
