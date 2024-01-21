@@ -48,8 +48,8 @@ usethis::use_data(sp500_desc, overwrite = T)
 usethis::use_data(sp500_prices, overwrite = T)
 sp500_prices <- sp500_prices %>%
   dplyr::select(date,series = symbol, value = close)
-feather::write_feather(sp500_desc,"~/data/sp500_desc")
-feather::write_feather(sp500_prices,"~/data/sp500_prices")
+feather::write_feather(sp500_desc,"~/data/sp500_desc.feather")
+feather::write_feather(sp500_prices,"~/data/sp500_prices.feather")
 
 ## sp400
 
@@ -66,6 +66,10 @@ sp400_prices <- tidyquant::tq_get(sort(sp400_desc$symbol),
   tidyquant::tq_transmute(select = close, mutate_fun = to.monthly, indexAt = "lastof")
 usethis::use_data(sp400_desc, overwrite = T)
 usethis::use_data(sp400_prices, overwrite = T)
+sp400_prices <- sp400_prices %>%
+  dplyr::select(date,series = symbol, value = close)
+feather::write_feather(sp400_desc,"~/data/sp400_desc.feather")
+feather::write_feather(sp400_prices,"~/data/sp400_prices.feather")
 
 # lpg eia data set
 
