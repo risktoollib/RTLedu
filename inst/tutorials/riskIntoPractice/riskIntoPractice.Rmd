@@ -1,0 +1,282 @@
+---
+title: "Canadian Energy Exports"
+output: 
+  html_document:
+    theme:
+      version: 5
+      bg: rgb(43, 62, 80)
+      fg: rgb(235, 235, 235)
+      primary: "lime"
+      secondary: "#51616F"
+      base_font:
+        google: Prompt
+      heading_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+---
+
+```{r setup, include=FALSE, message=FALSE, warnings = F}
+# global variables
+fromExports = as.Date("2009-01-01")
+fromOthers = as.Date("2019-01-01")
+
+to = lubridate::rollback(Sys.Date())
+storageDay <- "2019-02-13"
+WorkingCapCost <- .04
+storageCost <- 0.4
+
+
+#if (requireNamespace("thematic")) thematic::thematic_rmd(font = "auto")
+library(dplyr)
+library(gt)
+library(lubridate)
+library(tidyverse)
+library(RTL)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  cache = FALSE,
+  fig.width = 9,
+  fig.height = 6,
+  fig.align = "center",
+  tidy = FALSE,
+  strip.white = TRUE,
+  out.width = '100%'
+)
+bd_txt <-
+  function(x,
+           title = "Grading",
+           subtitle = "-",
+           width = 700) {
+    if (nchar(gsub(" ", "", subtitle)) == 0) {
+      subtitle <- "-"
+    }
+    y <- x %>% gt::gt() %>%
+      gt::tab_header(title = title, subtitle = subtitle) %>%
+      gt::tab_style(style = cell_text(weight = "bold"),
+                    locations = cells_column_labels(colnames(.))) %>%
+      gt::tab_style(style = list(
+        cell_fill(color = "royalblue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      locations = cells_title(groups = c("title")))
+    y = y %>% tab_options(table.width = px(width),
+                          table.font.size = pct(80))
+    return(y)
+  }
+
+bd_lo <- function(x, width = 700) {
+  y <- x %>% gt::gt(rowname_col = rownames(.)) %>%
+    gt::tab_header(title = "Learning Objectives",
+                   subtitle = "Desired Outcomes Sought for Mastery of Material") %>%
+    gt::tab_style(style = cell_text(weight = "bold"),
+                  locations = cells_column_labels(colnames(.))) %>%
+    gt::tab_style(style = list(
+      cell_fill(color = "royalblue"),
+      cell_text(color = "white", weight = "bold")
+    ),
+    locations = cells_title(groups = c("title")))
+  y = y %>% tab_options(table.width = px(width),
+                        table.font.size = pct(80))
+  return(y)
+}
+
+crudepipelines <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/CrudeOil_Pipelines_US_EIA.zip")
+
+refineries <- RTL::getGIS(url = "https://www.eia.gov/maps/map_data/Petroleum_Refineries_US_EIA.zip")
+
+
+```
+
+## {.tabset .tabset-pills}
+
+You are asked to demonstrate your recently acquired skills in risk management in a business context. The  project will also prepare you gradually for the final Risk Management hedging project.
+
+### Framing the Problem
+
++ You were recently hired by a top tier Investment Bank, `Insights Capital`.
++ `Insights Capital` hires MBAs both for their expertise and professionalism in communication with clients.
++ `Insights Capital` was recently approached by `SmartOil` to produce a fact-based short paper to understand context and risk associated with Oil and Natural Gas in Canada.
++ `SmartOil` is a consortium of senior executives with a background in extracting industries and require this knowledge to better understand the economics of monetizing resources after a molecule is produced.
+
+### Skills Practiced & Requirements
+
++ Use of APIs for Enterprise workflow i.e. strictly no Excel, csv or use of other local files.
++ Data wrangling and parsing. You must use tidy data with long and wide data frames.
++ Choice of effective visualization in communication.
++ Data analytics and an ability to tell a story from it.
++ Foundational risk management skills.
++ Clean, clear and concise rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. I reserve the right to award a maximum of `r scales::percent(.5)` for any document not properly presented. Some characteristics of a properly presented document:
+
+    + A clear heading with title and who it is from.
+    + Cleaning organized by business questions asked i.e. not a technical step rendering of your workflow.
+    + Charts properly formatted and self explanatory.
+
++ Each question should be answered as if you were presenting to a client: you would not show code to a client!
++ Learning to learn: Using new packages and functions as you see fit to achieve the desired outcome.
+
+Whilst there are many packages to format tables the following are suggested:
+
++ [gt](https://gt.rstudio.com/).
++ [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+
+### Data
+
+You will use the following sources of data:
+
+1. You will be using data from the [US Energy Information Administration](https://www.eia.gov/) and `Morningstar Commodities`.
+2. The `RTL::fizdiffs` randomized data sets of Crude oil prices in key trading locations across North America:
+      
+    + Edmonton, AB.
+    + Hardisty, AB.
+    + Cushing, OK.
+    + Houston (Nederland), TX.
+
+```{r, fig.cap = fig.title, out.width="800px"}
+fig.title = "Simplified NA Energy Infrastructure Maps"
+
+hubs <- dplyr::tibble(lat = c(53.5460,52.6735,35.9851,29.99), long = c(-113.348,-111.3075,-96.76,-94), hub = c("Edmonton","Hardisty", "Cushing", "Houston"))
+
+require(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = -98, lat = 42, zoom = 3.5) %>%
+  leaflet::addLegend(
+    "topleft",
+    colors = c("red", "blue"),
+    labels = c("Refinery", "Oil Pipelines"),
+    opacity = 0.8
+  ) %>%
+  addPolylines(
+    data = crudepipelines,
+    color = "blue",
+    weight = 0.8,
+    popup = ~ Pipename,
+    group = "oil"
+  ) %>%
+  addCircleMarkers(
+    data = refineries,
+    color = ~ "red",
+    radius =  ~ AD_Mbpd / 100,
+    popup = ~ paste0(Corp, "-", Site),
+    group = "oil"
+  ) %>% 
+  addMarkers(data = hubs, lng = ~long, lat = ~lat,popup = ~hub,label = ~hub)
+```
+
+### Your Ask
+
++ Using `Rmarkdown` or `quarto`, render into a clean and concise `html` document. 
++ Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca` before the deadline. 
++ This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty. For clarity this includes any online chat platforms (e.g. Discord) where I or the UoA might find evidence of communication in a formal investigation.  
++ Grading is in the class note `Grading` module and any late submission will be assigned a grade of 0% - no questions asked. 
+
+#### Part 1: Canadian Exports (2 points)
+
+`SmartOil` needs context on the level and trends of Canadian exports to the US since `r fromExports`.
+
+Use the following data from the `EIA` to tell the story.
+
++ [U.S. Net Imports from Canada of Crude Oil, Monthly](https://www.eia.gov/opendata/qb.php?category=323934&sdid=PET.MCRNTUSCA2.M).
++ [U.S. Natural Gas Pipeline Imports From Canada, Monthly](https://www.eia.gov/opendata/qb.php?category=475737&sdid=NG.N9102CN2.M).
+
+```{r}
+# solution
+
+## build data set to github
+# EIAkey = "d4670719a51231d01c79e07508243077"
+# NG_Exports <- RTL::eia2tidy(ticker = "NG.N9102CN2.M", key = EIAkey, name = "NG_Exports")
+# Oil_Exports<- RTL::eia2tidy(ticker = "PET.MCRNTUSCA2.M", key = EIAkey, name = "Oil_Exports")
+# 
+# arrow::write_feather(NG_Exports, "NG_Exports.feather")
+# arrow::write_feather(Oil_Exports, "Oil_Exports.feather")
+
+## solution 
+
+
+
+ticks <- tibble::tribble(
+  ~ ticker, ~ name,
+  "NG.N9102CN2.M", "NaturalGas",
+  "PET.MCRNTUSCA2.M", "Oil"
+) 
+
+dat <- RTL::eia2tidy_all(tickers = ticks,key = "d4670719a51231d01c79e07508243077",long = TRUE) %>% 
+  dplyr::filter(date >= as.Date(fromExports))
+dat %>%
+  dplyr::mutate(value = dplyr::case_when(series == "NaturalGas" ~ value / 100,
+                                         TRUE ~ value)) %>%
+  plotly::plot_ly(
+    x =  ~ date,
+    y =  ~ value,
+    name =  ~ series,
+    type = "scatter",
+    mode = "lines"
+  ) %>% 
+   plotly::layout(
+    title = list(text = "US Imports from Canada", x = 0.05),
+    xaxis = list(title = ""),
+    yaxis = list(title = "Oil in kbd and NG in Million Cubic Feet / 100")
+  )
+```
+
+#### Part 2: Commodity Valuation (5 points)
+
+The benchmark crude oil grade in Alberta is `Western Canadian Select ("WCS")`.  `SmartOil` executives need factual information on the value of `WCS` a producer may obtain by selling in Alberta or exporting to Houston. This export additional value is then compared to the costs and risks of taking on pipeline shipper commitments. 
+
+`SmartOil` is only concerned with economics from `r fromOthers` as the `Government of Alberta` introduced [production curtailment legislation](https://context.capp.ca/energy-matters/2021/alberta-government-ends-production-curtailment/){target="_blank"} in 2018 limiting downside risk.
+
+Using the `RTL::fizdiffs` randomized dataset below, prepare the following in your report:
+
+1. Plot a time series of the values in Alberta, Houston and the price difference that could be realized by selling the crude in Houston instead of Alberta (a delivery location arbitrage).
+2. What would be the average gain of exporting from Alberta to Houston?
+3. Compute and discuss the average daily risk in dollars per barrel for the value in Alberta, Houston, and in the export arbitrage opportunity. `SmartOil` needs insights on the implications pertaining to a potential negotiation on seeking a pipeline commitment instead of selling `WCS` in Alberta. 
+
+```{r, echo = TRUE}
+RTL::fizdiffs %>% 
+  dplyr::transmute(date = date,
+                   Alberta = WTI.CMA01 + WCS.HDY,
+                   Houston = WTI.CMA01 + WCS.HOU)
+```
+
+#### Part 3: Delivery Timing  (8 points)  
+
+`SmartOil` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of the [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html){target="_blank"}. As an additional example, you can find on [Marketwatch Crude Oil Continuous Contract](https://www.marketwatch.com/investing/future/cl00){target="_blank"} the same information on a different commercial data vendor. Hint: the first example of how to extract these type of contracts from Morningstar is in the tutorial on how to use Morningstar.  
+
+```{r}
+RTL::dflong %>% 
+  dplyr::filter(series == "CL01") %>% 
+  plotly::plot_ly(x=~date, y = ~value,type="scatter", mode="lines") %>% 
+   plotly::layout(
+    title = list(text = "WTI ContinPrice - 1st (front) Contract", x = 0.05),
+    xaxis = list(title = ""),
+    yaxis = list(title = "$ per barrel")
+   )
+```
+
+They are considering making decisions on storing from the **2nd** to the **3rd** contract month.
+You, as a specialist, know that there are futures contracts for different delivery months and using data from Morningstar from `r as.Date(fromOthers)` to `r as.Date(to)`:
+
+1. Describe and explain the residual risk in using this futures contract to hedge `WCS` crude in Alberta or Houston.
+2. Chart the time series of this storage spread over time assuming zero costs of storage and financing. Indicate on the chart or in an explanation when the market is in contango or backwardation.
+3. With `r as.Date(storageDay)` futures prices, compute whether it would economical to store assuming a financing cost of `r scales::percent(WorkingCapCost)` per annum and monthly storage costs of `r scales::dollar(storageCost)` per barrel.
+4. As different firms may have different working capital costs, show a sensitivity chart of the value of storage versus working capital costs between `r scales::percent(.01)` and `r scales::percent(.1)`. Effectively, it would give the breakeven rate at which point storage economics are no longer economical. Use `mapply()` as covered in class or `purrr::pmap()` if you want to experiment. We will use the latter for more complex risk management problems at a later stage.
+
+#### Part 4: Project Financing (5 points)  
+
+`SmartOil` often has to provide advice on matters of financing terms. In this specific case, the client has the choice of financing for:
+
++ A `r RTLedu::bankOffer$maturity[2]`-year term that will then be refinanced at maturity for the remaining `r RTLedu::bankOffer$maturity[5] - RTLedu::bankOffer$maturity[2] ` years.
++ A full `r RTLedu::bankOffer$maturity[5]`-year term. 
+
+The problem they have is that their usual decision-making process is of low quality: they have no idea as of today what the implied refinancing rate is and therefore engage in broad qualitative conversations around the future path of interest rates.
+
+1. Assuming interest rates are simple annual compounding, what is the implied 7-year annualized refinancing rate?
+2. Assuming interest rates are continuous compounding, what is the implied 7-year annualized refinancing rate?
+
+```{r, echo=TRUE}
+RTLedu::bankOffer
+```
+
