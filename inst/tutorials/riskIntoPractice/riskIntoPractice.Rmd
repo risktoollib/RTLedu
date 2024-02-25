@@ -18,6 +18,7 @@ output:
 
 ```{r setup, include=FALSE, message=FALSE, warnings = F}
 # global variables
+bondDate = as.Date("2024-02-20")
 fromExports = as.Date("2009-01-01")
 fromOthers = as.Date("2019-01-01")
 
@@ -108,14 +109,17 @@ You are asked to demonstrate your recently acquired skills in risk management in
 + Choice of effective visualization in communication.
 + Data analytics and an ability to tell a story from it.
 + Foundational risk management skills.
-+ Clean, clear and concise rendering of a business document. You may refer to the [Rmarkdown cheatsheet](https://www.rstudio.com/resources/cheatsheets/) or any other online document to customize your output. I reserve the right to award a maximum of `r scales::percent(.5)` for any document not properly presented. Some characteristics of a properly presented document:
++ Clean, clear and concise rendering of a business document. You may refer to [quarto.org](https://quarto.org/) or any other online document to customize your output. I reserve the right to award a maximum of `r scales::percent(.5)` for any document not properly presented. Some characteristics of a properly presented document:
 
     + A clear heading with title and who it is from.
     + Cleaning organized by business questions asked i.e. not a technical step rendering of your workflow.
     + Charts properly formatted and self explanatory.
 
 + Each question should be answered as if you were presenting to a client: you would not show code to a client!
-+ Learning to learn: Using new packages and functions as you see fit to achieve the desired outcome.
++ Learning to learn: 
+
+  + Using new packages and functions as you see fit to achieve the desired outcome.
+  + The [arrow package](https://arrow.apache.org/docs/r/) with the use of the `arrow::read_feather()` function is a good example of a package that is not covered in class but is a good example of a package that is used in the industry to import data frames.
 
 Whilst there are many packages to format tables the following are suggested:
 
@@ -133,6 +137,9 @@ You will use the following sources of data:
     + Hardisty, AB.
     + Cushing, OK.
     + Houston (Nederland), TX.
+    
+3. At this point in class, assume that the WCS grade is traded at a discount/premium to the WTI grade in Cushing, OK. Much in the same manner as if I tell you that the price of the benchmark apple pricing in international trading is the Fuji apple and the price of a Macintosh apple is traded at a discount/premium to the Fuji apple.
+
 
 ```{r, fig.cap = fig.title, out.width="800px"}
 fig.title = "Simplified NA Energy Infrastructure Maps"
@@ -168,10 +175,12 @@ leaflet() %>%
 
 ### Your Ask
 
-+ Using `Rmarkdown` or `quarto`, render into a clean and concise `html` document. 
-+ Name your file `firstNameLastName.Rmd` and send it to `pcote@ualberta.ca` before the deadline. 
++ Using `quarto`, render into a clean and concise `html` document. No `.Rmd` file will be accepted. 
++ Name your file `firstNameLastName.qmd` and send it to `pcote@ualberta.ca` before the deadline. 
 + This is strictly an individual exercise. Any attempt to communicate or cooperate with any other person will be deemed a violation of Academic Integrity and Honesty. For clarity this includes any online chat platforms (e.g. Discord) where I or the UoA might find evidence of communication in a formal investigation.  
-+ Grading is in the class note `Grading` module and any late submission will be assigned a grade of 0% - no questions asked. 
++ Any late submission will be assigned a grade of 0% - no questions asked. 
++ You must use `tidyverse` workflow. 
++ Points will be deducted if you don't code with `package::function()` for all functions used in your code as well as loading unnecessary packages in your `qmd` file. 
 
 #### Part 1: Canadian Exports (2 points)
 
@@ -179,48 +188,10 @@ leaflet() %>%
 
 Use the following data from the `EIA` to tell the story.
 
-+ [U.S. Net Imports from Canada of Crude Oil, Monthly](https://www.eia.gov/opendata/qb.php?category=323934&sdid=PET.MCRNTUSCA2.M).
-+ [U.S. Natural Gas Pipeline Imports From Canada, Monthly](https://www.eia.gov/opendata/qb.php?category=475737&sdid=NG.N9102CN2.M).
++ [U.S. Net Imports from Canada of Crude Oil, Monthly](https://github.com/risktoollib/data/raw/master/NG_Exports.feather).
++ [U.S. Natural Gas Pipeline Imports From Canada, Monthly](https://github.com/risktoollib/data/raw/master/Oil_Exports.feather).
 
-```{r}
-# solution
-
-## build data set to github
-# EIAkey = "d4670719a51231d01c79e07508243077"
-# NG_Exports <- RTL::eia2tidy(ticker = "NG.N9102CN2.M", key = EIAkey, name = "NG_Exports")
-# Oil_Exports<- RTL::eia2tidy(ticker = "PET.MCRNTUSCA2.M", key = EIAkey, name = "Oil_Exports")
-# 
-# arrow::write_feather(NG_Exports, "NG_Exports.feather")
-# arrow::write_feather(Oil_Exports, "Oil_Exports.feather")
-
-## solution 
-
-
-
-ticks <- tibble::tribble(
-  ~ ticker, ~ name,
-  "NG.N9102CN2.M", "NaturalGas",
-  "PET.MCRNTUSCA2.M", "Oil"
-) 
-
-dat <- RTL::eia2tidy_all(tickers = ticks,key = "d4670719a51231d01c79e07508243077",long = TRUE) %>% 
-  dplyr::filter(date >= as.Date(fromExports))
-dat %>%
-  dplyr::mutate(value = dplyr::case_when(series == "NaturalGas" ~ value / 100,
-                                         TRUE ~ value)) %>%
-  plotly::plot_ly(
-    x =  ~ date,
-    y =  ~ value,
-    name =  ~ series,
-    type = "scatter",
-    mode = "lines"
-  ) %>% 
-   plotly::layout(
-    title = list(text = "US Imports from Canada", x = 0.05),
-    xaxis = list(title = ""),
-    yaxis = list(title = "Oil in kbd and NG in Million Cubic Feet / 100")
-  )
-```
+You are free to use the `arrow` package to import the data, or use the `RTL::eia2tidy()` and/or `RTL::eia2tidy_all()` functions to extract the data via the EIA API. If you choose the latter, you will need to use the tickers are `NG.N9102CN2.M` and `PET.MCRNTUSCA2.M` respectively.
 
 #### Part 2: Commodity Valuation (5 points)
 
@@ -245,12 +216,13 @@ RTL::fizdiffs %>%
 
 `SmartOil` clients have at times to make decisions on temporary storage and all they see in the financial news headlines is the price of the [WTI crude](https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.html){target="_blank"}. As an additional example, you can find on [Marketwatch Crude Oil Continuous Contract](https://www.marketwatch.com/investing/future/cl00){target="_blank"} the same information on a different commercial data vendor. Hint: the first example of how to extract these type of contracts from Morningstar is in the tutorial on how to use Morningstar.  
 
+
 ```{r}
 RTL::dflong %>% 
   dplyr::filter(series == "CL01") %>% 
   plotly::plot_ly(x=~date, y = ~value,type="scatter", mode="lines") %>% 
    plotly::layout(
-    title = list(text = "WTI ContinPrice - 1st (front) Contract", x = 0.05),
+    title = list(text = "WTI Price - 1st or Front Contract", x = 0.05),
     xaxis = list(title = ""),
     yaxis = list(title = "$ per barrel")
    )
@@ -279,4 +251,23 @@ The problem they have is that their usual decision-making process is of low qual
 ```{r, echo=TRUE}
 RTLedu::bankOffer
 ```
+
+#### Part 5 Financing Risk (10 points)
+
+`Insights Capital` has also be retained to provide risk management advice to a Bank who may be involved in underwriting and holding the bonds issued by `SmartOil`. With your recent knowledge of interest rate risk, you are asked to provide a risk profile of the Bank's portfolio of US Government bonds prior to entering into transaction with the company.
+
+The Bank will be holding the following US bonds in its portfolio:
+
++ Long $1,000,000 of a 5-year bond.
++ Short $500,000 of a 30-year bond.
++ Short $500,000 of a 2-year bond.
+
+All bonds are Constant Maturity Treasuries (CMT). You must use the relevant yield to maturities and coupons from [FRED](https://fred.stlouisfed.org/) as of `r bondDate`.
+
+You must:
+
+1. Compute and graph the delta and gamma central difference sensitivities of the portfolio to a 1 basis point change in yield across a $\pm 2 \%$ range of yield changes. For clarity, your `y-axis` should be changes in the value of the portfolio in dollars and the `x-axis` should be the yield change in percentage points across that range where zero is the current ytm.
+2. You must explain the risk profile you see in the graph and the implications for the Bank's portfolio. Remember you are drafting a consulting report and not a technical document sent to your Prof. 
+
+
 
